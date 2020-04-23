@@ -1,2 +1,2 @@
 # web2general
- Web 2 PHP E-Commerce Project 
+ Web 2 PHP E-Commerce Project - SGU
