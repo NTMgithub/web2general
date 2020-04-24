@@ -94,6 +94,7 @@
 			$productName = mysqli_real_escape_string($this->db->link, $data['productName']); //Connect database
 			$cate = mysqli_real_escape_string($this->db->link, $data['cate']);
 			$productSize = mysqli_real_escape_string($this->db->link, $data['productSize']);
+			$productAmount = mysqli_real_escape_string($this->db->link, $data['productAmount']);
 			$productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
 			$productPrice = mysqli_real_escape_string($this->db->link, $data['productPrice']);
 			$id = mysqli_real_escape_string($this->db->link, $id); //Connect database
@@ -110,7 +111,7 @@
 			$uploaded_image  = 'uploads/'.$unique_image; 
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
 
-			if ($productName == "" || $cate == "" || $productSize == "" || $productDesc == ""|| $productPrice == ""){
+			if ($productName == "" || $cate == "" || $productSize == "" || $productDesc == ""|| $productPrice == "" || $productAmount == ""){
 				$alert = "<p style='color: red;'>Không được để trống!</p>";
 				return $alert;
 			}
@@ -139,7 +140,8 @@
 								productSize = '$productSize',
 								productDesc = '$productDesc',
 								productPrice = '$productPrice',
-								productImage = '$unique_image'
+								productImage = '$unique_image',
+								productAmount = '$productAmount'
 
 								WHERE productID = '$id' ";
 
@@ -150,7 +152,8 @@
 								catID = '$cate',
 								productSize = '$productSize',
 								productDesc = '$productDesc',
-								productPrice = '$productPrice'								
+								productPrice = '$productPrice',
+								productAmount = '$productAmount'							
 
 								WHERE productID = '$id' "; //Không có productImage
 				}
