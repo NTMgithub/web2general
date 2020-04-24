@@ -44,6 +44,7 @@
                                                     <th>Tên sản phẩm</th>
                                                     <th>Tên danh mục</th>
                                                     <th>Size</th>
+                                                    <th>Số lượng</th>
                                                     <th>Giá</th>
                                                     <th>Miêu tả sản phẩm</th>
                                                     <th>Trạng thái</th>
@@ -66,6 +67,7 @@
                                                     <td><?php echo $result['productName']; ?></td>
                                                     <td><?php echo $result['catName']; ?></td>
                                                     <td class="center"><?php echo $result['productSize']; ?></td>
+                                                    <td><?php echo $result['productAmount']; ?></td>
                                                     <td class="center"><?php echo $result['productPrice']; ?></td>
 
                                                     <td>

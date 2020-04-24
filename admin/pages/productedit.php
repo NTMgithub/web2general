@@ -108,6 +108,15 @@
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td class="tabLabel">
+                                        <label class="labelAddProduct">Số lượng: </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="productAmount" value="<?php echo $result_prod['productAmount'] ?>" class="inputAddProduct" >
+                                    </td>
+                                </tr>
+
                                  <tr>
                                     <td class="tabLabel">
                                         <label class="labelAddProduct">Miêu tả sản phẩm: </label>
