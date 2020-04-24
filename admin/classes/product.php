@@ -77,7 +77,7 @@
 
 		public function show_product()
 		{
-			$query = "SELECT * FROM tbl_product, tbl_category WHERE tbl_product.catID = tbl_category.catID  ORDER BY productID ASC";
+			$query = "SELECT * FROM tbl_product, tbl_category WHERE tbl_product.catID = tbl_category.catID ORDER BY productID ASC";
 			$result = $this->db->select($query);
 			return $result;
 		}
@@ -171,6 +171,25 @@
 			}
 		}
 		
+
+		public function hide_product($id) //Xóa danh mục
+		{
+			$query = "UPDATE tbl_product SET productStatus = 0 WHERE productID = '$id' ";
+			$result = $this->db->update($query);
+			
+
+			if ($result)
+				{
+					$alert = "<p style='color: green;'>Đã ẩn sản phẩm !</p>";
+					return $alert;
+				}
+				else
+				{
+					$alert = "<p style='color: red;'>Ẩn sản phẩm không thành công!</p>";
+					return $alert;
+				}
+			
+		}
 		
 
 	}

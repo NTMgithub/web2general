@@ -105,7 +105,7 @@
 				}
 				else
 				{
-					$alert = "<p style='color: green;'>Xóa danh mục không thành công!</p>";
+					$alert = "<p style='color: red;'>Xóa danh mục không thành công!</p>";
 					return $alert;
 				}
 			
