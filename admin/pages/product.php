@@ -3,6 +3,15 @@
 <?php  include_once '../../helpers/format.php' ?>
 <?php
     $fm = new Format();
+    $prod = new product();
+    //
+    if (!isset($_GET['hideid']) || $_GET['hideid'] == ''){
+        echo "<script>'window.location = 'product.php'</script>";
+    }else{
+
+        $id = $_GET['hideid'];
+        $hideCategory = $prod->hide_product($id);
+    } 
 ?>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -16,10 +25,17 @@
                         <div class="panel-heading">
                             <span class="textHeading">DANH SÁCH SẢN PHẨM</span>
                         </div>
+                        
                         <div class="panel-body">   
                             <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
                             <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default" > 
                             <a href="productadd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm sản phẩm</button></a>
+                            <p></p>
+                            <?php
+                                    if (isset($hideCategory)){
+                                        echo $hideCategory;
+                                    }
+                            ?>
                                     <div class="table-responsive" style="margin-top: 2%">
                                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                             <thead>
@@ -30,18 +46,20 @@
                                                     <th>Size</th>
                                                     <th>Giá</th>
                                                     <th>Miêu tả sản phẩm</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Ảnh sản phẩm</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
 
-                                                    $prod = new product();
                                                     $prodList = $prod->show_product();
                                                     if ($prodList){
                                                         $i = 0;
                                                         while ($result = $prodList->fetch_assoc()){
-                                                            $i++;           
+                                                            if ($result['productStatus'] == 1){
+                                                                $i++;           
+
                                                 ?>
                                                 <tr class="odd gradeX">
                                                     <td><?php echo $i; ?></td>
@@ -55,13 +73,21 @@
                                                             echo $textSh = $fm->textShorten($result['productDesc'], 20); //Giới hạn kí tự để hiển thị
                                                         ?>    
                                                     </td>
+                                                    <td class="center">
+                                                    <?php 
+                                                        if ($result['productStatus'] == 1) {
+                                                            echo '<button type="button" class="btn btn-outline btn-success">Còn hàng</button>';
+                                                        }; 
+                                                    ?>    
+                                                    </td>
                                                     <td><img src="uploads/<?php echo $result['productImage']; ?>" width='80'> </td>
                                                     <td>
                                                         <a href="productedit.php?productid=<?php echo $result['productID'] ?>" onclick="return popitup('productedit.php?productid=<?php echo $result['productID'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
-                                                        <button type="button" class="btn btn-warning">Ẩn</button>
+                                                        <a href="?hideid=<?php echo $result['productID'] ?>" onclick="return confirm('Bạn có chắc muốn ẩn sản phẩm này không?')"><button type="button" class="btn btn-danger" >Ẩn</button></a>
                                                     </td>
                                                 </tr>
                                                 <?php 
+                                                    }
                                                     }
                                                 }
                                                 ?>
