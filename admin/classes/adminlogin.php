@@ -20,37 +20,46 @@
 		}
 
 
-		public function login_admin($adminUser,$adminPass)
+		public function login_admin($userName,$userPass)
 		{
-			$adminUser = $this->fm->validation($adminUser); //Check định dạng ký tự nhập vào
-			$adminPass = $this->fm->validation($adminPass);	//Check định dạng ký tự nhập vào
+			$userName = $this->fm->validation($userName); //Check định dạng ký tự nhập vào
+			$userPass = $this->fm->validation($userPass);	//Check định dạng ký tự nhập vào
 
-			$adminUser = mysqli_real_escape_string($this->db->link, $adminUser); //Connect database
-			$adminPass = mysqli_real_escape_string($this->db->link, $adminPass); //Connect database
+			$userName = mysqli_real_escape_string($this->db->link, $userName); //Connect database
+			$userPass = mysqli_real_escape_string($this->db->link, $userPass); //Connect database
 
-			if (empty($adminUser) || empty($adminPass) )
+			if (empty($userName) || empty($userPass) )
 			{
-				$alert = "Không được để trống!";
+				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
-				$query = "SELECT * FROM tbl_admin WHERE adminUser = '$adminUser' AND adminPass = '$adminPass' LIMIT 1 ";
+				$query = "SELECT * FROM tbl_user WHERE userName = '$userName' AND userPass = '$userPass' AND userType != 'user' LIMIT 1 ";
 				$result = $this->db->select($query);
 
 				if ($result != false )
-				{
+				{		
 					$value = $result->fetch_assoc(); // fetch dữ liệu từ query
-					Session::set('login', true);	// Set phiên đăng nhập cho admin
-					Session::set('adminId', $value['adminId']);
-					Session::set('adminUser', $value['adminUser']);
-					Session::set('adminPass', $value['adminPass']);
-					Session::set('adminName', $value['adminName']);
-					header('Location:pages/index.php');
+					if ($value['userStatus'] === 'Active') {
+						Session::set('login', true);	// Set phiên đăng nhập cho admin
+						Session::set('userID', $value['userID']);
+						Session::set('userName', $value['userName']);
+						Session::set('userPass', $value['userPass']);
+						Session::set('userFullName', $value['userFullName']);
+						Session::set('userType', $value['userType']);
+						header('Location:pages/index.php');
+					}
+					else
+					{
+						$alert = "<div class= 'alert alert-danger'>Tài khoản đã bị khóa!</div>";
+						return $alert;
+					}
+					
 				}
 				else
 				{
-					$alert = "Sai thông tin đăng nhập!";
+					$alert = "<div class= 'alert alert-danger'>Sai thông tin đăng nhập!</div>";
 					return $alert;
 				}
 			}

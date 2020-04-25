@@ -26,6 +26,7 @@
 			$category = mysqli_real_escape_string($this->db->link, $data['category']);
 			$productSize = mysqli_real_escape_string($this->db->link, $data['productSize']);
 			$productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
+			$productAmount = mysqli_real_escape_string($this->db->link, $data['productAmount']);
 			$productPrice = mysqli_real_escape_string($this->db->link, $data['productPrice']);
 
 			
@@ -42,20 +43,20 @@
 			$uploaded_image  = 'uploads/'.$unique_image;
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
 
-			if ($productName == "" || $category == "" || $productSize == "" || $productDesc == ""|| $productPrice == ""|| $file_name == "")
+			if ($productName == "" || $category == "" || $productSize == "" || $productDesc == ""|| $productPrice == "" || $productAmount == "" || $file_name == "")
 			{
-				$alert = "<p style='color: red;'>Không được để trống!</p>";
+				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
 				move_uploaded_file($file_temp, $uploaded_image);
 
-				$query = "INSERT INTO tbl_product(productName, catID, productSize, productDesc, productPrice, productImage) VALUES('$productName','$category', '$productSize', '$productDesc', '$productPrice', '$unique_image') ";
+				$query = "INSERT INTO tbl_product(productName, catID, productSize, productDesc, productPrice, productImage, productAmount) VALUES('$productName','$category', '$productSize', '$productDesc', '$productPrice', '$unique_image','$productAmount') ";
 
 				
-				$query2 = "UPDATE tbl_category SET catNumberProducts = 1 + (SELECT catNumberProducts FROM tbl_category WHERE catID = '$category')  WHERE catID = '$category' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
-				$result2 = $this->db->update($query2);
+				//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount + (SELECT catNumberProducts FROM tbl_category WHERE catID = '$category')  WHERE catID = '$category' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
+				//$result2 = $this->db->update($query2);
 
 
 
@@ -63,12 +64,12 @@
 
 				if ($result)
 				{
-					$alert = "<p style='color: green;'>Thêm sản phẩm thành công!</p>";
+					$alert = "<div class= 'alert alert-success'>Thêm sản phẩm thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Thêm sản phẩm không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Thêm sản phẩm không thành công!</div>";
 					return $alert;
 				}
 				
@@ -82,7 +83,7 @@
 			return $result;
 		}
 
-		public function getproductbyId($id){
+		public function getproductbyId($id){ //Dùng để sửa
 			$query = "SELECT * FROM tbl_product WHERE productID = '$id' ";
 			$result = $this->db->select($query);
 			return $result;
@@ -112,7 +113,7 @@
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
 
 			if ($productName == "" || $cate == "" || $productSize == "" || $productDesc == ""|| $productPrice == "" || $productAmount == ""){
-				$alert = "<p style='color: red;'>Không được để trống!</p>";
+				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else //Kiểm tra việc upload ảnh
@@ -122,12 +123,12 @@
 
 					//Check file
 					if ($file_name > 10240){
-							$alert = "<p style='color: red;'>Chỉ được upload ảnh có dung lượng dưới 10MB!</p>";
+							$alert = "<div class= 'alert alert-danger'>Chỉ được upload ảnh có dung lượng dưới 10MB!</div>";
 							return $alert;
 					}
 					else if (in_array($file_ext, $permited) == false) //Chỉ được upload đuôi ảnh trong $permited
 					{
-							$alert = "<p style='color: red;'>Chỉ được upload:-".implode('.', $permited)."</p>";
+							$alert = "<div class= 'alert alert-danger' >Chỉ được upload:-".implode('.', $permited)."</div>";
 							return $alert;
 					}
 					//Check file
@@ -145,6 +146,9 @@
 
 								WHERE productID = '$id' ";
 
+					//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount  WHERE catID = '$cate' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
+					//$result2 = $this->db->update($query2);
+
 				}else{
 					//Nếu người dùng không chọn ảnh
 					$query = "UPDATE tbl_product SET 
@@ -156,6 +160,10 @@
 								productAmount = '$productAmount'							
 
 								WHERE productID = '$id' "; //Không có productImage
+
+					//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount  WHERE catID = '$cate' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
+					//$result2 = $this->db->update($query2);
+
 				}
 
 				
@@ -163,12 +171,12 @@
 
 				if ($result)
 				{
-					$alert = "<p style='color: green;'>Sửa sản phẩm thành công!</p>";
+					$alert = "<div class= 'alert alert-success'>Sửa sản phẩm thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Sửa sản phẩm không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Thêm sản phẩm không thành công!</div>";
 					return $alert;
 				}
 			}
@@ -183,12 +191,12 @@
 
 			if ($result)
 				{
-					$alert = "<p style='color: green;'>Đã ẩn sản phẩm !</p>";
+					$alert = "<div class= 'alert alert-success'>Ẩn sản phẩm thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Ẩn sản phẩm không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Ẩn sản phẩm không thành công!</div>";
 					return $alert;
 				}
 			

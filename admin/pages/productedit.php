@@ -39,14 +39,14 @@
                                 while ($result_prod = $get_product_by_id->fetch_assoc()) {
                               
                         ?>
-                            <form action="" method="POST" enctype="multipart/form-data"> <!--enctype để có thể thêm hình ảnh -->
+                            <form action="" method="POST" enctype="multipart/form-data" name="formUser" onsubmit="return validationForm();"> <!--enctype để có thể thêm hình ảnh -->
                                 <table style="width: 100%;">
                                 <tr>
                                     <td class="tabLabel">
                                         <label class="labelAddProduct">Tên sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productName" value="<?php echo $result_prod['productName'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="productName" value="<?php echo $result_prod['productName'] ?>" class="inputAddProduct" autofocus required>
                                     </td>
                                 </tr>
 
@@ -55,8 +55,8 @@
                                         <label class="labelAddProduct">Danh mục sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="cate">
-                                            <option>----Chọn danh mục----</option>
+                                        <select class="inputAddProduct" name="cate" required>
+                                            <option value="0">----Chọn danh mục----</option>
                                             <?php 
                                                 $cat = new category();
                                                 $catlist = $cat->show_category();
@@ -86,8 +86,8 @@
                                         <label class="labelAddProduct">Size: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="productSize" >
-                                            <option>----Chọn size----</option>
+                                        <select class="inputAddProduct" name="productSize" required>
+                                            <option value="0">----Chọn size----</option>
                                             <?php 
                                                 $i= 36;
                                                 while ($i < 46){
@@ -113,7 +113,7 @@
                                         <label class="labelAddProduct">Số lượng: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productAmount" value="<?php echo $result_prod['productAmount'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="productAmount" value="<?php echo $result_prod['productAmount'] ?>" class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -122,7 +122,7 @@
                                         <label class="labelAddProduct">Miêu tả sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <textarea name="productDesc" rows="2" cols="25" class="inputAddProduct" style="height: 80px;"><?php echo $result_prod['productDesc'] ?></textarea>
+                                        <textarea name="productDesc" rows="2" cols="25" class="inputAddProduct" style="height: 80px;" required><?php echo $result_prod['productDesc'] ?></textarea>
                                     </td>
                                 </tr>
 
@@ -131,7 +131,7 @@
                                         <label class="labelAddProduct">Giá: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productPrice" value="<?php echo $result_prod['productPrice'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="productPrice" value="<?php echo $result_prod['productPrice'] ?>" class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -199,7 +199,28 @@
                 });
             });
         </script>
-        
+        <script type="text/javascript">
+            function validationForm(){
+
+                var category=document.formUser.cate.value; 
+                var productSize=document.formUser.productSize.value;  
+                
+
+                if ( category == '0'){
+                    alert("Chưa chọn danh mục sản phẩm!");
+                    return false;
+                }else if ( productSize == '0'){
+                        alert("Chưa chọn size sản phẩm!");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                
+            }      
+
+        </script>
+
+
         <script>
             var loadFile = function(event) {
                 var output = document.getElementById('output');

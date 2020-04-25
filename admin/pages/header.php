@@ -18,8 +18,14 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>ADMIN B.STORE</title>
+        <title><?php  
+            if (Session::get('userType') == 'admin'){
+                echo 'ADMIN B.STORE';
+            }else echo 'MANAGER B.STORE';
 
+        ?></title>
+        
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <!-- Bootstrap Core CSS -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
 
@@ -52,7 +58,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php"><?php echo Session::get('adminName'); ?></a>
+                    <a class="navbar-brand" href="index.php"><?php echo Session::get('userFullName'); ?></a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -101,7 +107,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>
-                                <?php echo Session::get('adminName'); ?>
+                                <?php echo Session::get('userFullName'); ?>
                                 <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
@@ -136,6 +142,13 @@
                             <li>
                                 <a href="index.php" class="active"><i class="fa fa-dashboard fa-fw"></i> Trang chủ</a>
                             </li>
+                            
+                            <?php 
+                                if (Session::get('userType') == 'admin'){
+                                        echo '<li><a href="userlist.php"><i class="fa fa-users"></i> Quản lý người dùng</a></li>';
+                                    }
+                            ?>
+                        
                             <li>
                                 <a href="#"><i class="fa fa-product-hunt"></i> Quản lý sản phẩm <span class="fa arrow"></span> </a>
                                 <ul class="nav nav-second-level">
@@ -149,7 +162,7 @@
                                                 <a href="product.php"><span class="fa fa-caret-right"></span>  Danh sách sản phẩm</a>
                                             </li>
                                             <li>
-                                                <a href="addproduct.php"><span class="fa fa-caret-right"></span>  Thêm sản phẩm</a>
+                                                <a href="productadd.php"><span class="fa fa-caret-right"></span>  Thêm sản phẩm</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -158,9 +171,7 @@
                             <li>
                                 <a href="orders.php"><i class="fa fa-shopping-cart"></i> Quản lý đơn hàng</a>
                             </li>
-                            <li>
-                                <a href="forms.php"><i class="fa fa-users"></i> Quản lý người dùng</a>
-                            </li>
+                           
                            <li>
                                 <a href="forms.php"><i class="fa fa-area-chart"></i> Thống kê doanh thu</a>
                             </li>

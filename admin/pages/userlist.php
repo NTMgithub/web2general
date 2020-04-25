@@ -1,39 +1,52 @@
 <?php  include 'header.php'; ?>
-<?php  include_once '../classes/product.php' ?>
-<?php  include_once '../../helpers/format.php' ?>
+<?php  include_once '../classes/user.php' ?>
 <?php
-    $fm = new Format();
-    $prod = new product();
-    //
-    if (!isset($_GET['hideid']) || $_GET['hideid'] == ''){
-        echo "<script>'window.location = 'product.php'</script>";
+   
+    $user = new user();
+    //Khóa/Mở người dùng
+    if (!isset($_GET['statusid']) || $_GET['statusid'] == ''){
+        echo "<script>'window.location = 'userlist.php'</script>";
     }else{
 
-        $id = $_GET['hideid'];
-        $hideCategory = $prod->hide_product($id);
+        $id = $_GET['statusid'];
+        $changeStatusUser = $user->changeStatusUser($id);
+    } 
+
+    //Xóa người dùng
+    if (!isset($_GET['deleteid']) || $_GET['deleteid'] == ''){
+        echo "<script>'window.location = 'userlist.php'</script>";
+    }else{
+
+        $id = $_GET['deleteid'];
+        $deleteUser = $user->delete_user($id);
     } 
 ?>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sản phẩm</h1>
+                            <h1 class="page-header">Quản lý người dùng</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <span class="textHeading">DANH SÁCH SẢN PHẨM</span>
+                            <span class="textHeading">Danh sách người dùng</span>
                         </div>
                         
                         <div class="panel-body">   
-                            <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
+                            <input type="text" name="userName" placeholder="Nhập người dùng..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
                             <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default" > 
-                            <a href="productadd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm sản phẩm</button></a>
+                            <a href="useradd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm người dùng</button></a>
                             <p></p>
                             <?php
-                                    if (isset($hideCategory)){
-                                        echo $hideCategory;
+                                    if (isset($changeStatusUser)){
+                                        echo $changeStatusUser;
+                                    }
+                            ?>
+                            <?php
+                                    if (isset($deleteUser)){
+                                        echo $deleteUser;
                                     }
                             ?>
                                     <div class="table-responsive" style="margin-top: 2%">
@@ -41,51 +54,46 @@
                                             <thead>
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Tên danh mục</th>
-                                                    <th>Size</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Giá</th>
-                                                    <th>Miêu tả sản phẩm</th>
+                                                    <th>Tên tài khoản</th>
+                                                    <th>Họ tên</th>
+                                                    <th>Email</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Ảnh sản phẩm</th>
+                                                    <th>Loại tài khoản</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
 
-                                                    $prodList = $prod->show_product();
-                                                    if ($prodList){
+                                                    $userList = $user->show_user();
+                                                    if ($userList){
                                                         $i = 0;
-                                                        while ($result = $prodList->fetch_assoc()){
-                                                            if ($result['productStatus'] == 1){
+                                                        while ($result = $userList->fetch_assoc()){ 
+                                                            if ($result['userID'] > '1'){ //Ẩn tài khoản admin mặc định
                                                                 $i++;           
-
+                                                            
                                                 ?>
                                                 <tr class="odd gradeX">
                                                     <td><?php echo $i; ?></td>
-                                                    <td><?php echo $result['productName']; ?></td>
-                                                    <td><?php echo $result['catName']; ?></td>
-                                                    <td class="center"><?php echo $result['productSize']; ?></td>
-                                                    <td><?php echo $result['productAmount']; ?></td>
-                                                    <td class="center"><?php echo $result['productPrice']; ?></td>
-
-                                                    <td>
-                                                        <?php
-                                                            echo $textSh = $fm->textShorten($result['productDesc'], 20); //Giới hạn kí tự để hiển thị
-                                                        ?>    
-                                                    </td>
+                                                    <td><?php echo $result['userName']; ?></td>
+                                                    <td><?php echo $result['userFullName']; ?></td>
+                                                    <td><?php echo $result['userEmail']; ?></td>
                                                     <td class="center">
                                                     <?php 
-                                                        if ($result['productStatus'] == 1) {
-                                                            echo '<button type="button" class="btn btn-outline btn-success">Còn hàng</button>';
-                                                        }; 
+                                                        if ($result['userStatus'] == 'Active') {
+                                                            echo '<button type="button" class="btn btn-outline btn-success">Hoạt động</button>';
+                                                        }else echo '<button type="button" class="btn btn-outline btn-danger">Khóa</button>';
                                                     ?>    
                                                     </td>
-                                                    <td><img src="uploads/<?php echo $result['productImage']; ?>" width='80'> </td>
+
+                                                    <td><?php echo $result['userType']; ?></td>
+                                                    
                                                     <td>
-                                                        <a href="productedit.php?productid=<?php echo $result['productID'] ?>" onclick="return popitup('productedit.php?productid=<?php echo $result['productID'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
-                                                        <a href="?hideid=<?php echo $result['productID'] ?>" onclick="return confirm('Bạn có chắc muốn ẩn sản phẩm này không?')"><button type="button" class="btn btn-warning " >Ẩn</button></a>
+                                                        <a href="useredit.php?userid=<?php echo $result['userID'] ?>" onclick="return popitup('useredit.php?userid=<?php echo $result['userID'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
+                                                        
+                                                        <a href="?deleteid=<?php echo $result['userID'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a>
+
+                                                        <a href="?statusid=<?php echo $result['userID'] ?>" ><button type="button" class="btn btn-warning">Thay đổi trạng thái</button></a>
+      
                                                     </td>
                                                 </tr>
                                                 <?php 
@@ -155,5 +163,7 @@
             }
 
         </script>
+
     </body>
+
 </html>
