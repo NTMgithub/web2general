@@ -28,7 +28,7 @@
 
 			if (empty($catName))
 			{
-				$alert = "<p style='color: red;'>Không được để trống!</p>";
+				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
@@ -38,12 +38,12 @@
 
 				if ($result)
 				{
-					$alert = "<p style='color: green;'>Thêm danh mục thành công!</p>";
+					$alert = "<div class= 'alert alert-success'>Thêm danh mục thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Thêm danh mục không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Thêm danh mục không thành công!</div>";
 					return $alert;
 				}
 			}
@@ -72,7 +72,7 @@
 
 			if (empty($catName))
 			{
-				$alert = "<p style='color: red;'>Không được để trống!</p>";
+				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
@@ -82,12 +82,12 @@
 
 				if ($result)
 				{
-					$alert = "<p style='color: green;'>Sửa danh mục thành công!</p>";
+					$alert = "<div class= 'alert alert-success'>Sửa danh mục thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Sửa danh mục không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Sửa danh mục không thành công!</div>";
 					return $alert;
 				}
 			}
@@ -100,12 +100,12 @@
 
 			if ($result)
 				{
-					$alert = "<p style='color: green;'>Xóa danh mục thành công!</p>";
+					$alert = "<div class= 'alert alert-success'>Xóa danh mục thành công!</div>";
 					return $alert;
 				}
 				else
 				{
-					$alert = "<p style='color: red;'>Xóa danh mục không thành công!</p>";
+					$alert = "<div class= 'alert alert-danger'>Xóa danh mục không thành công!</div>";
 					return $alert;
 				}
 			

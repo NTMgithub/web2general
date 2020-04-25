@@ -56,7 +56,7 @@
                                                 <tr>
                                                     <th>STT</th>
                                                     <th>Tên danh mục</th>
-                                                    <th>Số lượng sản phẩm</th>
+                                                    
                                                     
                                                 </tr>
                                             </thead>
@@ -74,7 +74,7 @@
                                                                                                    
                                                     <td><?php echo $result['catName']; ?></td>  
                                                     
-                                                    <td><?php echo $result['catNumberProducts']; ?></td>
+                                                    
 
                                                     <td>
                                                        
@@ -129,6 +129,7 @@
         <!-- Custom Theme JavaScript -->
         <script src="../js/startmin.js"></script>
 
+       
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {
@@ -148,5 +149,7 @@
             }
 
         </script>
+
+
     </body>
 </html>

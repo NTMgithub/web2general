@@ -43,7 +43,7 @@
                            <form action="" method="POST"> 
                                 <p style="text-transform: uppercase;font-weight: bold;">Sửa danh mục sản phẩm</p>
                                
-                                <input type="text" value="<?php echo $result['catName'] ?>" name="catName" placeholder="Nhập tên danh mục..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
+                                <input type="text" value="<?php echo $result['catName'] ?>" name="catName" placeholder="Nhập tên danh mục..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" autofocus>
                                 <input type="submit" name="submit" value="Cập nhật" class="btn btn-default" > 
                             </form>
                             <?php 

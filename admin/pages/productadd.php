@@ -27,14 +27,14 @@
                                         echo $insertProduct;
                                     }
                         ?>   
-                            <form  method="POST" enctype="multipart/form-data"> <!--enctype để có thể thêm hình ảnh -->
+                            <form  method="POST" enctype="multipart/form-data" name="formUser" onsubmit="return validationForm();"> <!--enctype để có thể thêm hình ảnh -->
                                 <table style="width: 100%;">
                                 <tr>
                                     <td class="tabLabel">
                                         <label class="labelAddProduct">Tên sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." class="inputAddProduct" >
+                                        <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." class="inputAddProduct" autofocus required>
                                     </td>
                                 </tr>
 
@@ -43,8 +43,8 @@
                                         <label class="labelAddProduct">Danh mục sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="category">
-                                            <option>----Chọn danh mục----</option>
+                                        <select class="inputAddProduct" name="category" required>
+                                            <option value="0">----Chọn danh mục----</option>
                                             <?php 
                                                 $cat = new category();
                                                 $catlist = $cat->show_category();
@@ -67,19 +67,28 @@
                                         <label class="labelAddProduct">Size: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="productSize" >
-                                            <option>----Chọn size----</option>
-                                            <option value="37">37</option>
-                                            <option value="38">38</option>
-                                            <option value="39">39</option>
-                                            <option value="40">40</option>
-                                            <option value="41">41</option>
-                                            <option value="42">42</option>
-                                            <option value="43">43</option>
-                                            <option value="44">44</option>
-                                            <option value="45">45</option>
-                                            <option value="46">46</option>
+                                        <select class="inputAddProduct" name="productSize" required>
+                                            <option value="0">----Chọn size----</option>
+                                            <?php 
+                                                $i= 36;
+                                                while ($i < 46){
+                                                    $i++;
+
+                                            ?>
+                                            <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                            <?php 
+                                                }
+                                            ?>
                                         </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tabLabel" >
+                                        <label class="labelAddProduct">Số lượng: </label>
+                                    </td>
+                                    <td>
+                                         <input type="text" name="productAmount" value="1" class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -88,7 +97,7 @@
                                         <label class="labelAddProduct">Miêu tả sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <textarea name="productDesc" rows="2" cols="25" placeholder="Nhập miêu tả sản phẩm..." class="inputAddProduct" style="height: 80px;"></textarea>
+                                        <textarea name="productDesc" rows="2" cols="25" placeholder="Nhập miêu tả sản phẩm..." class="inputAddProduct" style="height: 80px;" required></textarea>
                                     </td>
                                 </tr>
 
@@ -97,16 +106,18 @@
                                         <label class="labelAddProduct">Giá: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productPrice" placeholder="Nhập giá..." class="inputAddProduct" >
+                                        <input type="text" name="productPrice" placeholder="Nhập giá..." class="inputAddProduct" required>
                                     </td>
                                 </tr>
+
+                                
 
                                  <tr>
                                     <td class="tabLabel">
                                         <label class="labelAddProduct">Hình ảnh sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <input name="image" type="file" accept="image/*" onchange="loadFile(event)">
+                                        <input name="image" type="file" accept="image/*" onchange="loadFile(event)" required>
                                         <img id="output" style="width: 20%;" />
                                     </td>
                                 </tr>
@@ -160,7 +171,31 @@
                 });
             });
         </script>
-        
+        <script type="text/javascript">
+            function validationForm(){
+
+                var category=document.formUser.category.value; 
+                var productSize=document.formUser.productSize.value;  
+                var image=document.formUser.image.value;
+
+                if ( category == '0'){
+                    alert("Chưa chọn danh mục sản phẩm!");
+                    return false;
+                }else if ( productSize == '0'){
+                        alert("Chưa chọn size sản phẩm!");
+                        return false;
+                    }else if (image == null){
+                        alert("Chưa chọn hình ảnh sản phẩm!");
+                        return false;
+                    }else{
+                        return true;
+                    }
+                
+            }      
+
+        </script>
+
+
         <script>
             var loadFile = function(event) {
                 var output = document.getElementById('output');
