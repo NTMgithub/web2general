@@ -1,24 +1,24 @@
 <?php  include 'header.php'; ?>
-<?php  include_once '../classes/user.php' ?>
+<?php  include_once '../classes/customer.php' ?>
 <?php
    
-    $user = new user();
+    $customer = new customer();
     //Khóa/Mở người dùng
-    if (!isset($_GET['statusname']) || $_GET['statusname'] == ''){
-        echo "<script>'window.location = 'userlist.php'</script>";
+    if (!isset($_GET['statusid']) || $_GET['statusid'] == ''){
+        echo "<script>'window.location = 'customerlist.php'</script>";
     }else{
 
-        $name = $_GET['statusname'];
-        $changeStatusUser = $user->changeStatusUser($name);
+        $id = $_GET['statusid'];
+        $changeStatusCustomer = $customer->changeStatusCustomer($id);
     } 
 
     //Xóa người dùng
-    if (!isset($_GET['deletename']) || $_GET['deletename'] == ''){
-        echo "<script>'window.location = 'userlist.php'</script>";
+    if (!isset($_GET['deleteid']) || $_GET['deleteid'] == ''){
+        echo "<script>'window.location = 'customerlist.php'</script>";
     }else{
 
-        $name = $_GET['deletename'];
-        $deleteUser = $user->delete_user($name);
+        $id = $_GET['deleteid'];
+        $deleteCustomer = $customer->delete_customer($id);
     } 
 ?>
             <div id="page-wrapper">
@@ -32,22 +32,22 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <span class="textHeading">Danh sách quản trị viên</span>
+                            <span class="textHeading">Danh sách khách hàng</span>
                         </div>
                         
                         <div class="panel-body">   
                             <input type="text" name="userName" placeholder="Nhập người dùng..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
                             <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default" > 
-                            <a href="useradd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm quản trị viên</button></a>
+                            <a href="customeradd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm khách hàng</button></a>
                             <p></p>
                             <?php
-                                    if (isset($changeStatusUser)){
-                                        echo $changeStatusUser;
+                                    if (isset($changeStatusCustomer)){
+                                        echo $changeStatusCustomer;
                                     }
                             ?>
                             <?php
-                                    if (isset($deleteUser)){
-                                        echo $deleteUser;
+                                    if (isset($deleteCustomer)){
+                                        echo $deleteCustomer;
                                     }
                             ?>
                                     <div class="table-responsive" style="margin-top: 2%">
@@ -58,26 +58,31 @@
                                                     <th>Họ tên</th>
                                                     <th>Tên đăng nhập</th>
                                                     <th>Email</th>
+                                                    <th>SDT</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Địa chỉ giao hàng</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Loại tài khoản</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php 
 
-                                                    $userList = $user->show_user();
-                                                    if ($userList){
+                                                    $customerList = $customer->show_customer();
+                                                    if ($customerList){
                                                         $i = 0;
-                                                        while ($result = $userList->fetch_assoc()){ 
-                                                            if ($result['tenDangNhap'] != 'admin'){ //Ẩn tài khoản admin mặc định
+                                                        while ($result = $customerList->fetch_assoc()){
                                                                 $i++;           
                                                             
                                                 ?>
                                                 <tr class="odd gradeX">
                                                     <td><?php echo $i; ?></td>
-                                                    <td><?php echo $result['tenNguoiQuanTri']; ?></td>
+                                                    <td><?php echo $result['hoTenKhachHang']; ?></td>
                                                     <td><?php echo $result['tenDangNhap']; ?></td>
-                                                    <td><?php echo $result['thuDienTuQT']; ?></td>
+                                                    <td><?php echo $result['thuDienTuKH']; ?></td>
+                                                    <td><?php echo $result['SDT']; ?></td>
+                                                    <td><?php echo $result['diaChi']; ?></td>
+                                                    <td><?php echo $result['diaChiGiaoHang']; ?></td>
+
                                                     <td class="center">
                                                     <?php 
                                                         if ($result['trangThai'] == 'Active') {
@@ -85,20 +90,17 @@
                                                         }else echo '<button type="button" class="btn btn-outline btn-danger">Khóa</button>';
                                                     ?>    
                                                     </td>
-                                                    
-                                                    <td><?php echo $result['tenVaiTro']; ?></td>
-
+                                         
                                                     <td>
-                                                        <a href="useredit.php?username=<?php echo $result['tenDangNhap'] ?>" onclick="return popitup('useredit.php?username=<?php echo $result['tenDangNhap'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
+                                                        <a href="customeredit.php?userid=<?php echo $result['maKhachHang'] ?>" onclick="return popitup('customeredit.php?userid=<?php echo $result['maKhachHang'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
                                                         
-                                                        <a href="?deletename=<?php echo $result['tenDangNhap'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a>
+                                                        <a href="?deleteid=<?php echo $result['maKhachHang'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a>
 
-                                                        <a href="?statusname=<?php echo $result['tenDangNhap'] ?>" ><button type="button" class="btn btn-warning">Mở / Khóa</button></a>
+                                                        <a href="?statusid=<?php echo $result['maKhachHang'] ?>" ><button type="button" class="btn btn-warning">Mở / Khóa</button></a>
       
                                                     </td>
                                                 </tr>
                                                 <?php 
-                                                    }
                                                     }
                                                 }
                                                 ?>

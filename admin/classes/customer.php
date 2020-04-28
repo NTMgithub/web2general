@@ -7,7 +7,7 @@
 
 
 <?php
-	class user
+	class customer
 	{
 		private $db;
 		private $fm;
@@ -18,35 +18,30 @@
 			$this->fm = new Format();
 		}
 
-		public function insert_user($data)
+		public function insert_customer($data)
 		{
+			$hoTenKhachHang = mysqli_real_escape_string($this->db->link, $data['hoTenKhachHang']);
+			$thuDienTuKH = mysqli_real_escape_string($this->db->link, $data['thuDienTuKH']);
+			$SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
+			$diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
+			$diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
 			$tenDangNhap = mysqli_real_escape_string($this->db->link, $data['tenDangNhap']);
 			$matKhau = mysqli_real_escape_string($this->db->link, $data['matKhau']);
-			$tenNguoiQuanTri = mysqli_real_escape_string($this->db->link, $data['tenNguoiQuanTri']);
-			$thuDienTuQT = mysqli_real_escape_string($this->db->link, $data['thuDienTuQT']);
-			$maVaiTro = mysqli_real_escape_string($this->db->link, $data['maVaiTro']);
 
 
-			if ($tenDangNhap == "" || $matKhau == "" || $tenNguoiQuanTri == "" || $thuDienTuQT == ""|| $maVaiTro == "" )
+			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $SDT == "" || $diaChi == ""|| $diaChiGiaoHang == "" || $tenDangNhap == "" || $matKhau == "" )
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
-				$queryTemp = "SELECT * FROM tbl_quantri ";
+				$queryTemp = "SELECT * FROM tbl_khachhang ";
 				$temp = $this->db->select($queryTemp);
 				$resultTemp = $temp->fetch_assoc();
-	
-				if ($resultTemp['tenDangNhap'] == $tenDangNhap) {
 
-					$alert = "<div class= 'alert alert-danger'>Tên đăng nhập đã tồn tại trong CSDL, mời nhập lại!</div>";
-					return $alert;
-					
-				}
-				else
-				{
-					$query = "INSERT INTO tbl_quantri(tenDangNhap, matKhau, tenNguoiQuanTri, thuDienTuQT, maVaiTro) VALUES('$tenDangNhap', '$matKhau', '$tenNguoiQuanTri', '$thuDienTuQT', '$maVaiTro') ";
+				if ($resultTemp['tenDangNhap'] != $tenDangNhap) {
+					$query = "INSERT INTO tbl_khachhang(hoTenKhachHang, thuDienTuKH, SDT, diaChi, diaChiGiaoHang, tenDangNhap, matKhau) VALUES('$hoTenKhachHang', '$thuDienTuKH', '$SDT', '$diaChi', '$diaChiGiaoHang', '$tenDangNhap', '$matKhau') ";
 
 					$result = $this->db->insert($query);
 
@@ -60,37 +55,36 @@
 						$alert = "<div class= 'alert alert-danger'>Thêm người dùng không thành công!</div>";
 						return $alert;
 					}
-				}		
+				}else{
+					$alert = "<div class= 'alert alert-danger'>Tên đăng nhập đã tồn tại trong CSDL, mời nhập lại!</div>";
+					return $alert;
+				}
 			}
 
 		}
 
-		public function show_user()
+		public function show_customer()
 		{
-			$query = "SELECT * FROM tbl_quantri, tbl_vaitro WHERE tbl_quantri.maVaiTro = tbl_vaitro.maVaiTro";
+			$query = "SELECT * FROM tbl_khachhang ";
 			$result = $this->db->select($query);
 			return $result;
 		}
 
-		public function count_user() //Đếm cả khách hàng
-		{
-			$query = "SELECT ( SELECT COUNT(*) FROM tbl_quantri ) + ( SELECT COUNT(*) FROM tbl_khachhang ) AS total_rows FROM tbl_khachhang  ";
+
+		public function getCustomerByID($id){ //Dùng để sửa
+			$query = "SELECT * FROM tbl_khachhang WHERE maKhachHang = '$id' ";
 			$result = $this->db->select($query);
 			return $result;
 		}
 
-		public function getUserByName($name){ //Dùng để sửa
-			$query = "SELECT * FROM tbl_quantri WHERE tenDangNhap = '$name' ";
-			$result = $this->db->select($query);
-			return $result;
-		}
+		
 
-		public function changeStatusUser($name)
+		public function changeStatusCustomer($id)
 		{
 
-			$queryActive = "UPDATE tbl_quantri SET trangThai = 'Active' WHERE tenDangNhap = '$name' ";
-			$queryInactive = "UPDATE tbl_quantri SET trangThai = 'Inactive' WHERE tenDangNhap = '$name' ";
-			$querySelect = "SELECT * FROM tbl_quantri WHERE tenDangNhap = '$name' ";
+			$queryActive = "UPDATE tbl_khachhang SET trangThai = 'Active' WHERE maKhachHang = '$id' ";
+			$queryInactive = "UPDATE tbl_khachhang SET trangThai = 'Inactive' WHERE maKhachHang = '$id' ";
+			$querySelect = "SELECT * FROM tbl_khachhang WHERE maKhachHang = '$id' ";
 
 			$resultSelect = $this->db->select($querySelect);
 			$value = $resultSelect->fetch_assoc();
@@ -129,9 +123,9 @@
 			}
 		}
 
-		public function delete_user($name) //Xóa danh mục
+		public function delete_customer($id) //Xóa danh mục
 		{
-			$query = "DELETE FROM tbl_quantri WHERE tenDangNhap = '$name' ";
+			$query = "DELETE FROM tbl_khachhang WHERE maKhachHang = '$id' ";
 			$result = $this->db->delete($query);
 
 			if ($result)
@@ -147,31 +141,26 @@
 			
 		}
 
-		public function show_usertype()
+		public function edit_customer($data, $id) //Sửa 
 		{
-			$query = "SELECT * FROM tbl_vaitro";
-			$result = $this->db->select($query);
-			return $result;
-		}
-
-
-		public function edit_user($data, $name) //Sửa 
-		{
+			$hoTenKhachHang = mysqli_real_escape_string($this->db->link, $data['hoTenKhachHang']);
+			$thuDienTuKH = mysqli_real_escape_string($this->db->link, $data['thuDienTuKH']);
+			$SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
+			$diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
+			$diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
 			$tenDangNhap = mysqli_real_escape_string($this->db->link, $data['tenDangNhap']);
 			$matKhau = mysqli_real_escape_string($this->db->link, $data['matKhau']);
-			$tenNguoiQuanTri = mysqli_real_escape_string($this->db->link, $data['tenNguoiQuanTri']);
-			$thuDienTuQT = mysqli_real_escape_string($this->db->link, $data['thuDienTuQT']);
-			$maVaiTro = mysqli_real_escape_string($this->db->link, $data['maVaiTro']);
-			$name = mysqli_real_escape_string($this->db->link, $name); //Connect database
+			$id = mysqli_real_escape_string($this->db->link, $id); //Connect database
 
 
-			if ($tenNguoiQuanTri == "" || $thuDienTuQT == "" || $tenDangNhap == "" || $matKhau == ""|| $maVaiTro == "" ){
+			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $SDT == "" || $diaChi == ""|| $diaChiGiaoHang == "" || $tenDangNhap == "" || $matKhau == "" )
+			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else //Kiểm tra việc upload ảnh
 			{
-				$queryTemp = "SELECT * FROM tbl_quantri ";
+				$queryTemp = "SELECT * FROM tbl_khachhang ";
 				$temp = $this->db->select($queryTemp);
 
 				$resultTemp = $temp->fetch_assoc();
@@ -181,13 +170,15 @@
 					return $alert;
 				}else{
 				
-					$query = "UPDATE tbl_quantri SET 
-									tenNguoiQuanTri = '$tenNguoiQuanTri', 
-									thuDienTuQT = '$thuDienTuQT',
+					$query = "UPDATE tbl_khachhang SET 
+									hoTenKhachHang = '$hoTenKhachHang', 
+									thuDienTuKH = '$thuDienTuKH',
+									SDT = '$SDT',
+									diaChi = '$diaChi',
+									diaChiGiaoHang = '$diaChiGiaoHang',
 									tenDangNhap = '$tenDangNhap',
-									matKhau = '$matKhau',
-									maVaiTro = '$maVaiTro'
-									WHERE tenDangNhap = '$name' ";
+									matKhau = '$matKhau'
+									WHERE maKhachHang = '$id' ";
 						
 					$result = $this->db->update($query);
 

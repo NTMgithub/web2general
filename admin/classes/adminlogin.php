@@ -20,34 +20,33 @@
 		}
 
 
-		public function login_admin($userName,$userPass)
+		public function login_admin($tenDangNhap,$matKhau)
 		{
-			$userName = $this->fm->validation($userName); //Check định dạng ký tự nhập vào
-			$userPass = $this->fm->validation($userPass);	//Check định dạng ký tự nhập vào
+			$tenDangNhap = $this->fm->validation($tenDangNhap); //Check định dạng ký tự nhập vào
+			$matKhau = $this->fm->validation($matKhau);	//Check định dạng ký tự nhập vào
 
-			$userName = mysqli_real_escape_string($this->db->link, $userName); //Connect database
-			$userPass = mysqli_real_escape_string($this->db->link, $userPass); //Connect database
+			$tenDangNhap = mysqli_real_escape_string($this->db->link, $tenDangNhap); //Connect database
+			$matKhau = mysqli_real_escape_string($this->db->link, $matKhau); //Connect database
 
-			if (empty($userName) || empty($userPass) )
+			if (empty($tenDangNhap) || empty($matKhau) )
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
-				$query = "SELECT * FROM tbl_user WHERE userName = '$userName' AND userPass = '$userPass' AND userType != 'user' LIMIT 1 ";
+				$query = "SELECT * FROM tbl_quantri WHERE tenDangNhap = '$tenDangNhap' AND matKhau = '$matKhau' LIMIT 1 ";
 				$result = $this->db->select($query);
 
 				if ($result != false )
 				{		
 					$value = $result->fetch_assoc(); // fetch dữ liệu từ query
-					if ($value['userStatus'] === 'Active') {
+					if ($value['trangThai'] === 'Active') {
 						Session::set('login', true);	// Set phiên đăng nhập cho admin
-						Session::set('userID', $value['userID']);
-						Session::set('userName', $value['userName']);
-						Session::set('userPass', $value['userPass']);
-						Session::set('userFullName', $value['userFullName']);
-						Session::set('userType', $value['userType']);
+						Session::set('tenDangNhap', $value['tenDangNhap']);
+						Session::set('matKhau', $value['matKhau']);
+						Session::set('tenNguoiQuanTri', $value['tenNguoiQuanTri']);
+						Session::set('maVaiTro', $value['maVaiTro']);
 						header('Location:pages/index.php');
 					}
 					else

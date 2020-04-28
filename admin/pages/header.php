@@ -8,7 +8,15 @@
      Session::destroy(); //Logout phiên đăng nhâp
   }
 ?>
+<?php 
+    include_once '../classes/product.php';
+    include_once '../classes/user.php';
+    include_once '../classes/customer.php';
 
+    $prod = new product();
+    $user = new user();
+    $customer = new customer();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +27,7 @@
         <meta name="author" content="">
 
         <title><?php  
-            if (Session::get('userType') == 'admin'){
+            if (Session::get('maVaiTro') == '1'){
                 echo 'ADMIN B.STORE';
             }else echo 'MANAGER B.STORE';
 
@@ -58,7 +66,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php"><?php echo Session::get('userFullName'); ?></a>
+                    <a class="navbar-brand" href="index.php"><?php echo Session::get('tenNguoiQuanTri'); ?></a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -107,7 +115,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>
-                                <?php echo Session::get('userFullName'); ?>
+                                <?php echo Session::get('tenNguoiQuanTri'); ?>
                                 <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
@@ -144,8 +152,19 @@
                             </li>
                             
                             <?php 
-                                if (Session::get('userType') == 'admin'){
-                                        echo '<li><a href="userlist.php"><i class="fa fa-users"></i> Quản lý người dùng</a></li>';
+                                if (Session::get('maVaiTro') == '1'){
+                                        echo '<li>
+                                                <a href="#"><i class="fa fa-users"></i> Quản lý người dùng<span class="fa arrow"></span></a>
+
+                                                <ul class="nav nav-second-level">
+                                                    <li>
+                                                        <a href="userlist.php"><span class="fa fa-caret-right"></span> Danh sách quản trị viên</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="customerlist.php"><span class="fa fa-caret-right"></span> Danh sách khách hàng</a>
+                                                    </li>
+                                                </ul>
+                                            </li>';
                                     }
                             ?>
                         

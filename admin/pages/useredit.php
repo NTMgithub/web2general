@@ -2,15 +2,15 @@
 <?php include_once '../classes/user.php'; ?>
 <?php 
     $user = new user();
-    if (!isset($_GET['userid']) || $_GET['userid'] == ''){
+    if (!isset($_GET['username']) || $_GET['username'] == ''){
         echo "<script>window.location = 'userlist.php'</script>";
     }else{
-        $id = $_GET['userid'];
+        $name = $_GET['username'];
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
 
-        $editUser = $user->edit_user($_POST, $id);
+        $editUser = $user->edit_user($_POST, $name);
     }
 
 ?>
@@ -18,13 +18,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sản phẩm</h1>
+                            <h1 class="page-header">Quản lý người dùng</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <span class="textHeading">Thêm sản phẩm</span>
+                            <span class="textHeading">Sửa thông tin quản trị viên</span>
                         </div>
                         <div class="panel-body">
                         <?php
@@ -33,7 +33,7 @@
                                     }
                         ?>   
                         <?php 
-                            $userList = $user->getUserById($id);
+                            $userList = $user->getUserByName($name);
                             if ($userList){
                                 while ($result_user = $userList->fetch_assoc()) {
                               
@@ -45,7 +45,7 @@
                                         <label class="labelAddProduct">Họ tên:  </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="userFullName" value="<?php echo $result_user['userFullName'] ?>" class="inputAddProduct" autofocus>
+                                        <input type="text" name="tenNguoiQuanTri" value="<?php echo $result_user['tenNguoiQuanTri'] ?>" class="inputAddProduct" autofocus>
                                     </td>
                                 </tr>
 
@@ -54,16 +54,16 @@
                                         <label class="labelAddProduct">Email: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="userEmail" value="<?php echo $result_user['userEmail'] ?>" class="inputAddProduct" >
+                                        <input type="email" name="thuDienTuQT" value="<?php echo $result_user['thuDienTuQT'] ?>" class="inputAddProduct" >
                                     </td>
                                 </tr>
 
                                   <tr>
                                     <td class="tabLabel">
-                                        <label class="labelAddProduct">Tên tài khoản: </label>
+                                        <label class="labelAddProduct">Tên đăng nhập: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="userName" value="<?php echo $result_user['userName'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="tenDangNhap" value="<?php echo $result_user['tenDangNhap'] ?>" class="inputAddProduct" >
                                     </td>
                                 </tr>
 
@@ -72,7 +72,7 @@
                                         <label class="labelAddProduct">Mật khẩu: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="userPass" value="<?php echo $result_user['userPass'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="matKhau" value="<?php echo $result_user['matKhau'] ?>" class="inputAddProduct" >
                                     </td>
                                 </tr>
 
@@ -81,7 +81,7 @@
                                         <label class="labelAddProduct">Nhập lại mật khẩu: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="userPassAgain" value="<?php echo $result_user['userPass'] ?>" class="inputAddProduct" >
+                                        <input type="text" name="matKhau2" value="<?php echo $result_user['matKhau'] ?>" class="inputAddProduct" >
                                     </td>
                                 </tr>
 
@@ -90,7 +90,7 @@
                                         <label class="labelAddProduct">Loại tài khoản: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="userType" required>
+                                        <select class="inputAddProduct" name="maVaiTro" required>
                                             <option value="0">----Chọn loại tài khoản----</option>
             
                                             <?php       
@@ -101,10 +101,10 @@
                                             ?>
                                             <option 
                                             <?php 
-                                                if ($result_type['userType'] == $result_user['userType'] ){ echo 'selected'; }
+                                                if ($result_type['maVaiTro'] == $result_user['maVaiTro'] ){ echo 'selected'; }
                                             ?>
 
-                                            value="<?php echo $result_user['userType']; ?>"><?php echo $result_type['userType']; ?>
+                                            value="<?php echo $result_type['maVaiTro']; ?>"><?php echo $result_type['tenVaiTro']; ?>
                                                 
                                             </option>
                                             <?php 
@@ -117,7 +117,7 @@
                                 </tr>
                                 
                                  </table>
-                                 <input type="submit" name="submit" value="Cập nhật người dùng" class="btn btn-success" style="margin: 10px;">
+                                 <input type="submit" name="submit" value="Cập nhật" class="btn btn-success" style="margin: 10px;">
                             </form>  
                             <?php 
                                 }
@@ -181,12 +181,12 @@
         </script>
         <script type="text/javascript">
             function validationForm(){
-                var userType=document.formUser.userType.value; 
-                var userPass=document.formUser.userPass.value;  
-                var userPassAgain=document.formUser.userPassAgain.value;
+                var maVaiTro=document.formUser.maVaiTro.value; 
+                var matKhau=document.formUser.matKhau.value;  
+                var matKhau2=document.formUser.matKhau2.value;
 
-                if (userPass == userPassAgain){
-                    if (userType == '0'){
+                if (matKhau == matKhau2){
+                    if (maVaiTro == '0'){
                         alert("Chưa chọn loại tài khoản!");
                         return false;
                     }else{

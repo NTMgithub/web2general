@@ -58,34 +58,34 @@
                                                     if ($prodList){
                                                         $i = 0;
                                                         while ($result = $prodList->fetch_assoc()){
-                                                            if ($result['productStatus'] == 1){
+                                                            if ($result['trangThaiSanPham'] == 1){
                                                                 $i++;           
 
                                                 ?>
                                                 <tr class="odd gradeX">
                                                     <td><?php echo $i; ?></td>
-                                                    <td><?php echo $result['productName']; ?></td>
-                                                    <td><?php echo $result['catName']; ?></td>
-                                                    <td class="center"><?php echo $result['productSize']; ?></td>
-                                                    <td><?php echo $result['productAmount']; ?></td>
-                                                    <td class="center"><?php echo $result['productPrice']; ?></td>
+                                                    <td><?php echo $result['tenSanPham']; ?></td>
+                                                    <td><?php echo $result['tenLoai']; ?></td>
+                                                    <td class="center"><?php echo $result['sizeSanPham']; ?></td>
+                                                    <td><?php echo $result['soLuongSanPham']; ?></td>
+                                                    <td class="center"><?php echo $result['giaSanPham']; ?></td>
 
                                                     <td>
                                                         <?php
-                                                            echo $textSh = $fm->textShorten($result['productDesc'], 20); //Giới hạn kí tự để hiển thị
+                                                            echo $textSh = $fm->textShorten($result['mieuTaSanPham'], 30); //Giới hạn kí tự để hiển thị
                                                         ?>    
                                                     </td>
                                                     <td class="center">
                                                     <?php 
-                                                        if ($result['productStatus'] == 1) {
+                                                        if ($result['trangThaiSanPham'] == 1) {
                                                             echo '<button type="button" class="btn btn-outline btn-success">Còn hàng</button>';
                                                         }; 
                                                     ?>    
                                                     </td>
-                                                    <td><img src="uploads/<?php echo $result['productImage']; ?>" width='80'> </td>
+                                                    <td><img src="uploads/<?php echo $result['hinhAnhSanPham']; ?>" width='80'> </td>
                                                     <td>
-                                                        <a href="productedit.php?productid=<?php echo $result['productID'] ?>" onclick="return popitup('productedit.php?productid=<?php echo $result['productID'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
-                                                        <a href="?hideid=<?php echo $result['productID'] ?>" onclick="return confirm('Bạn có chắc muốn ẩn sản phẩm này không?')"><button type="button" class="btn btn-warning " >Ẩn</button></a>
+                                                        <a href="productedit.php?productid=<?php echo $result['maSanPham'] ?>" onclick="return popitup('productedit.php?productid=<?php echo $result['maSanPham'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
+                                                        <a href="?hideid=<?php echo $result['maSanPham'] ?>" onclick="return confirm('Bạn có chắc muốn ẩn sản phẩm này không?')"><button type="button" class="btn btn-warning " >Ẩn</button></a>
                                                     </td>
                                                 </tr>
                                                 <?php 

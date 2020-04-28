@@ -19,21 +19,21 @@
 		}
 
 
-		public function insert_category($catName)
+		public function insert_category($tenLoai)
 		{
-			$catName = $this->fm->validation($catName); //Check định dạng ký tự nhập vào
+			$tenLoai = $this->fm->validation($tenLoai); //Check định dạng ký tự nhập vào
 
-			$catName = mysqli_real_escape_string($this->db->link, $catName); //Connect database
+			$tenLoai = mysqli_real_escape_string($this->db->link, $tenLoai); //Connect database
 
 
-			if (empty($catName))
+			if (empty($tenLoai))
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
-				$query = "INSERT INTO tbl_category(catName) VALUES('$catName') ";
+				$query = "INSERT INTO tbl_loaisanpham(tenLoai) VALUES('$tenLoai') ";
 				$result = $this->db->insert($query);
 
 				if ($result)
@@ -51,33 +51,33 @@
 
 		public function show_category()
 		{
-			$query = "SELECT * FROM tbl_category ORDER BY catID ASC";
+			$query = "SELECT * FROM tbl_loaisanpham ORDER BY maLoai ASC";
 			$result = $this->db->select($query);
 			return $result;
 		}
 
 		public function getcatbyId($id){
-			$query = "SELECT * FROM tbl_category WHERE catID = '$id' ";
+			$query = "SELECT * FROM tbl_loaisanpham WHERE maLoai = '$id' ";
 			$result = $this->db->select($query);
 			return $result;
 		}
 
-		public function edit_category($catName, $id) //Sửa danh mục
+		public function edit_category($tenLoai, $id) //Sửa danh mục
 		{
-			$catName = $this->fm->validation($catName); //Check định dạng ký tự nhập vào
+			$tenLoai = $this->fm->validation($tenLoai); //Check định dạng ký tự nhập vào
 
-			$catName = mysqli_real_escape_string($this->db->link, $catName);
+			$tenLoai = mysqli_real_escape_string($this->db->link, $tenLoai);
 			$id = mysqli_real_escape_string($this->db->link, $id); //Connect database
 
 
-			if (empty($catName))
+			if (empty($tenLoai))
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
 			else
 			{
-				$query = "UPDATE tbl_category SET catName = '$catName' WHERE catID = '$id' ";
+				$query = "UPDATE tbl_loaisanpham SET tenLoai = '$tenLoai' WHERE maLoai = '$id' ";
 				$result = $this->db->update($query);
 
 				if ($result)
@@ -95,7 +95,7 @@
 
 		public function delete_category($id) //Xóa danh mục
 		{
-			$query = "DELETE FROM tbl_category WHERE catID = '$id' ";
+			$query = "DELETE FROM tbl_loaisanpham WHERE maLoai = '$id' ";
 			$result = $this->db->delete($query);
 
 			if ($result)

@@ -19,7 +19,16 @@
                                             <i class="fa fa-product-hunt" style="font-size: 70px;"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
+                                            <div class="huge">
+
+                                            <?php 
+                                            $prodCount = $prod->count_product();
+                                            $resultCount = $prodCount->fetch_assoc();
+                                            echo $resultCount['soluongprod']; 
+
+                                            ?>      
+                                            </div>
+                                            
                                             <div>Sản phẩm!</div>
                                         </div>
                                     </div>
@@ -88,7 +97,19 @@
                                             <i class="fa fa-users" style="font-size: 70px;"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">13</div>
+                                            <?php
+                                                
+                                                
+                                            ?>
+                                            <div class="huge">
+                                            <?php 
+                                                $userCount = $user->count_user();
+                                                $resultCountUser = $userCount->fetch_assoc();
+
+                                                echo $resultCountUser['total_rows'] ; 
+                                            ?>        
+                                            </div>
+                                            
                                             <div>Người dùng!</div>
                                         </div>
                                     </div>

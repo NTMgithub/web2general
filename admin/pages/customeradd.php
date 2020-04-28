@@ -1,12 +1,12 @@
 <?php include 'header.php'; ?>
 <?php include_once '../classes/category.php'; ?>
-<?php include_once '../classes/user.php'; ?>
+<?php include_once '../classes/customer.php'; ?>
 
 <?php 
-    $user = new user();
+    $customer = new customer();
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
 
-        $insertUser = $user->insert_user($_POST);
+        $insertCustomer = $customer->insert_customer($_POST);
     }
 
 ?>
@@ -20,12 +20,12 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <span class="textHeading">Thêm quản trị viên</span>
+                            <span class="textHeading">Thêm khách hàng</span>
                         </div>
                         <div class="panel-body">
                         <?php
-                                    if (isset($insertUser)){
-                                        echo $insertUser;
+                                    if (isset($insertCustomer)){
+                                        echo $insertCustomer;
                                     }
                         ?>   
                             <form  method="POST" enctype="multipart/form-data" name="formUser" onsubmit="return validationForm()"> <!--enctype để có thể thêm hình ảnh -->
@@ -36,7 +36,7 @@
                                         <label class="labelAddProduct">Họ tên: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="tenNguoiQuanTri" placeholder="Nhập họ tên..." class="inputAddProduct" required autofocus>
+                                        <input type="text" name="hoTenKhachHang" placeholder="Nhập họ tên..." class="inputAddProduct" required autofocus>
                                     </td>
                                 </tr>
 
@@ -45,7 +45,34 @@
                                         <label class="labelAddProduct">Email: </label>
                                     </td>
                                     <td>
-                                        <input type="email" name="thuDienTuQT" placeholder="Nhập email..." class="inputAddProduct" required>
+                                        <input type="email" name="thuDienTuKH" placeholder="Nhập email..." class="inputAddProduct" required>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tabLabel">
+                                        <label class="labelAddProduct">Số điện thoại: </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="SDT" placeholder="Nhập số điện thoại..." class="inputAddProduct" required>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tabLabel">
+                                        <label class="labelAddProduct">Địa chỉ: </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="diaChi" placeholder="Nhập địa chỉ..." class="inputAddProduct" required>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="tabLabel">
+                                        <label class="labelAddProduct">Địa chỉ giao hàng: </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="diaChiGiaoHang" placeholder="Nhập địa chỉ giao hàng..." class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -77,30 +104,9 @@
                                 </tr>
 
                                 
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Loại tài khoản: </label>
-                                    </td>
-                                    <td>
-                                        <select class="inputAddProduct" name="maVaiTro" required>
-                                            <option value="0">----Chọn loại tài khoản----</option>
-                                            <?php 
-                                                $vaiTro = $user->show_usertype();
-                                                if ($vaiTro){
-                                                    while ($resultRole = $vaiTro->fetch_assoc()) {
-                                                    
-                                            ?>
-                                            <option value="<?php echo $resultRole['maVaiTro']; ?>"><?php echo $resultRole['tenVaiTro']; ?></option>
-                                            <?php 
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </td>                   
-                                </tr>
 
                                  </table>
-                                 <input type="submit" name="submit" value="Thêm quản trị viên" class="btn btn-success" style="margin: 10px;">
+                                 <input type="submit" name="submit" value="Thêm" class="btn btn-success" style="margin: 10px;">
                             </form>  
                          </div>  
                     </div>
@@ -150,18 +156,11 @@
         </script>
         <script type="text/javascript">
             function validationForm(){
-                var maVaiTro=document.formUser.maVaiTro.value; 
                 var matKhau=document.formUser.matKhau.value;  
                 var matKhau2=document.formUser.matKhau2.value;
 
-                if (matKhau == matKhau2){
-                    if (maVaiTro == '0'){
-                        alert("Chưa chọn loại tài khoản!");
-                        return false;
-                    }else{
+                if (matKhau == matKhau2){        
                         return true;
-                    }
-                    
                 }else{
                     alert("Mật khẩu không giống nhau! Mời nhập lại!");
                     return false;
