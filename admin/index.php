@@ -4,10 +4,10 @@
 <?php
     $class = new adminlogin();
     if ($_SERVER['REQUEST_METHOD'] === 'POST' ){
-        $userName = $_POST['userName'];
-        $userPass = $_POST['userPass'];
+        $tenDangNhap = $_POST['tenDangNhap'];
+        $matKhau = $_POST['matKhau'];
 
-        $login_check = $class->login_admin($userName,$userPass);
+        $login_check = $class->login_admin($tenDangNhap,$matKhau);
     }
     
 ?>
@@ -62,10 +62,10 @@
                             <form role="form" action="index.php" method="POST">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Tên tài khoản" name="userName" autofocus>
+                                        <input class="form-control" placeholder="Tên đăng nhập" name="tenDangNhap" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Mật khẩu" name="userPass" type="password" value="">
+                                        <input class="form-control" placeholder="Mật khẩu" name="matKhau" type="password" value="">
                                     </div>
                                 <!--    
                                     <div class="checkbox">

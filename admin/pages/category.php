@@ -1,5 +1,5 @@
 <?php include 'header.php';?>
-<?php include '../classes/category.php';?>
+<?php include_once '../classes/category.php';?>
 
 <?php
     $cat = new category();
@@ -15,8 +15,8 @@
     //Thêm danh mục
     if ($_SERVER['REQUEST_METHOD'] === 'POST' ){
 
-        $catName = $_POST['catName'];
-        $insertCategory = $cat->insert_category($catName);
+        $tenLoai = $_POST['tenLoai'];
+        $insertCategory = $cat->insert_category($tenLoai);
     }
 ?>
 
@@ -46,8 +46,8 @@
                                         echo $deleteCategory;
                                     }
                                 ?>
-                                <input type="text" name="catName" placeholder="Nhập tên danh mục..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
-                                <input type="submit" name="submit" value="Thêm" class="btn btn-default" > 
+                                <input type="text" name="tenLoai" placeholder="Nhập tên danh mục..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
+                                <input type="submit" name="submit" value="Thêm" class="btn btn-success" > 
                             </form>
                                 <!-- List danh mục-->
                                     <div class="table-responsive" style="margin-top: 2%">
@@ -72,14 +72,14 @@
                                                 <tr>
                                                     <td><?php echo $i; ?></td>
                                                                                                    
-                                                    <td><?php echo $result['catName']; ?></td>  
+                                                    <td><?php echo $result['tenLoai']; ?></td>  
                                                     
                                                     
 
                                                     <td>
                                                        
-                                                        <a href="categoryedit.php?catid=<?php echo $result['catID'] ?>" onclick="return popitup('categoryedit.php?catid=<?php echo $result['catID'] ?>')"><button type="button" class="btn btn-info" >Sửa</button></a>
-                                                        <a href="?deleteid=<?php echo $result['catID'] ?>" onclick="return confirm('Bạn có chắc muốn xóa không?')"><button type="button" class="btn btn-danger" >Xóa</button></a>
+                                                        <a href="categoryedit.php?catid=<?php echo $result['maLoai'] ?>" onclick="return popitup('categoryedit.php?catid=<?php echo $result['maLoai'] ?>')"><button type="button" class="btn btn-info" >Sửa</button></a>
+                                                        <a href="?deleteid=<?php echo $result['maLoai'] ?>" onclick="return confirm('Bạn có chắc muốn xóa không?')"><button type="button" class="btn btn-danger" >Xóa</button></a>
                                                     </td>
                                                 </tr>
                                                 <?php 

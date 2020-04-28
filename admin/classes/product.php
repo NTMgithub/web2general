@@ -18,16 +18,16 @@
 			$this->fm = new Format();
 		}
 
-
+		//START ADMIN
 		public function insert_product($data, $files)
 		{
 
-			$productName = mysqli_real_escape_string($this->db->link, $data['productName']); //Connect database
-			$category = mysqli_real_escape_string($this->db->link, $data['category']);
-			$productSize = mysqli_real_escape_string($this->db->link, $data['productSize']);
-			$productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
-			$productAmount = mysqli_real_escape_string($this->db->link, $data['productAmount']);
-			$productPrice = mysqli_real_escape_string($this->db->link, $data['productPrice']);
+			$tenSanPham = mysqli_real_escape_string($this->db->link, $data['tenSanPham']); //Connect database
+			$maLoai = mysqli_real_escape_string($this->db->link, $data['maLoai']);
+			$sizeSanPham = mysqli_real_escape_string($this->db->link, $data['sizeSanPham']);
+			$mieuTaSanPham = mysqli_real_escape_string($this->db->link, $data['mieuTaSanPham']);
+			$soLuongSanPham = mysqli_real_escape_string($this->db->link, $data['soLuongSanPham']);
+			$giaSanPham = mysqli_real_escape_string($this->db->link, $data['giaSanPham']);
 
 			
 
@@ -43,7 +43,7 @@
 			$uploaded_image  = 'uploads/'.$unique_image;
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
 
-			if ($productName == "" || $category == "" || $productSize == "" || $productDesc == ""|| $productPrice == "" || $productAmount == "" || $file_name == "")
+			if ($tenSanPham == "" || $maLoai == "" || $sizeSanPham == "" || $mieuTaSanPham == ""|| $giaSanPham == "" || $soLuongSanPham == "" || $file_name == "")
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
@@ -52,7 +52,7 @@
 			{
 				move_uploaded_file($file_temp, $uploaded_image);
 
-				$query = "INSERT INTO tbl_product(productName, catID, productSize, productDesc, productPrice, productImage, productAmount) VALUES('$productName','$category', '$productSize', '$productDesc', '$productPrice', '$unique_image','$productAmount') ";
+				$query = "INSERT INTO tbl_sanpham(tenSanPham, maLoai, sizeSanPham, mieuTaSanPham, giaSanPham, hinhAnhSanPham, soLuongSanPham) VALUES('$tenSanPham','$maLoai', '$sizeSanPham', '$mieuTaSanPham', '$giaSanPham', '$unique_image','$soLuongSanPham') ";
 
 				
 				//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount + (SELECT catNumberProducts FROM tbl_category WHERE catID = '$category')  WHERE catID = '$category' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
@@ -78,13 +78,21 @@
 
 		public function show_product()
 		{
-			$query = "SELECT * FROM tbl_product, tbl_category WHERE tbl_product.catID = tbl_category.catID ORDER BY productID ASC";
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham ASC";
 			$result = $this->db->select($query);
 			return $result;
 		}
 
+		public function count_product()
+		{
+			$query = "SELECT SUM(soLuongSanPham) AS soluongprod FROM tbl_sanpham";
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+
 		public function getproductbyId($id){ //Dùng để sửa
-			$query = "SELECT * FROM tbl_product WHERE productID = '$id' ";
+			$query = "SELECT * FROM tbl_sanpham WHERE maSanPham = '$id' ";
 			$result = $this->db->select($query);
 			return $result;
 		}
@@ -92,12 +100,12 @@
 
 		public function edit_product($data, $files, $id) //Sửa 
 		{
-			$productName = mysqli_real_escape_string($this->db->link, $data['productName']); //Connect database
-			$cate = mysqli_real_escape_string($this->db->link, $data['cate']);
-			$productSize = mysqli_real_escape_string($this->db->link, $data['productSize']);
-			$productAmount = mysqli_real_escape_string($this->db->link, $data['productAmount']);
-			$productDesc = mysqli_real_escape_string($this->db->link, $data['productDesc']);
-			$productPrice = mysqli_real_escape_string($this->db->link, $data['productPrice']);
+			$tenSanPham = mysqli_real_escape_string($this->db->link, $data['tenSanPham']); //Connect database
+			$maLoai = mysqli_real_escape_string($this->db->link, $data['maLoai']);
+			$sizeSanPham = mysqli_real_escape_string($this->db->link, $data['sizeSanPham']);
+			$mieuTaSanPham = mysqli_real_escape_string($this->db->link, $data['mieuTaSanPham']);
+			$soLuongSanPham = mysqli_real_escape_string($this->db->link, $data['soLuongSanPham']);
+			$giaSanPham = mysqli_real_escape_string($this->db->link, $data['giaSanPham']);
 			$id = mysqli_real_escape_string($this->db->link, $id); //Connect database
 
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
@@ -112,7 +120,7 @@
 			$uploaded_image  = 'uploads/'.$unique_image; 
 			//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
 
-			if ($productName == "" || $cate == "" || $productSize == "" || $productDesc == ""|| $productPrice == "" || $productAmount == ""){
+			if ($tenSanPham == "" || $maLoai == "" || $sizeSanPham == "" || $mieuTaSanPham == ""|| $giaSanPham == "" || $soLuongSanPham == ""){
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
 			}
@@ -135,31 +143,31 @@
 
 					move_uploaded_file($file_temp, $uploaded_image);
 
-					$query = "UPDATE tbl_product SET 
-								productName = '$productName', 
-								catID = '$cate',
-								productSize = '$productSize',
-								productDesc = '$productDesc',
-								productPrice = '$productPrice',
-								productImage = '$unique_image',
-								productAmount = '$productAmount'
+					$query = "UPDATE tbl_sanpham SET 
+								tenSanPham = '$tenSanPham', 
+								maLoai = '$maLoai',
+								sizeSanPham = '$sizeSanPham',
+								mieuTaSanPham = '$mieuTaSanPham',
+								giaSanPham = '$giaSanPham',
+								hinhAnhSanPham = '$unique_image', 
+								soLuongSanPham = '$soLuongSanPham'
 
-								WHERE productID = '$id' ";
+								WHERE maSanPham = '$id' ";
 
 					//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount  WHERE catID = '$cate' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
 					//$result2 = $this->db->update($query2);
 
 				}else{
 					//Nếu người dùng không chọn ảnh
-					$query = "UPDATE tbl_product SET 
-								productName = '$productName', 
-								catID = '$cate',
-								productSize = '$productSize',
-								productDesc = '$productDesc',
-								productPrice = '$productPrice',
-								productAmount = '$productAmount'							
+					$query = "UPDATE tbl_sanpham SET 
+								tenSanPham = '$tenSanPham', 
+								maLoai = '$maLoai',
+								sizeSanPham = '$sizeSanPham',
+								mieuTaSanPham = '$mieuTaSanPham',
+								giaSanPham = '$giaSanPham',
+								soLuongSanPham = '$soLuongSanPham'							
 
-								WHERE productID = '$id' "; //Không có productImage
+								WHERE maSanPham = '$id' "; //Không có productImage
 
 					//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount  WHERE catID = '$cate' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
 					//$result2 = $this->db->update($query2);
@@ -185,7 +193,7 @@
 
 		public function hide_product($id) //Xóa danh mục
 		{
-			$query = "UPDATE tbl_product SET productStatus = 0 WHERE productID = '$id' ";
+			$query = "UPDATE tbl_sanpham SET trangThaiSanPham = 0 WHERE maSanPham = '$id' ";
 			$result = $this->db->update($query);
 			
 
@@ -201,8 +209,16 @@
 				}
 			
 		}
+		//END ADMIN
 		
+		//START FRONT-END
 
+
+
+
+
+
+		//END FRONT-END
 	}
 
 ?>

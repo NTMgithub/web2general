@@ -1,6 +1,6 @@
 <?php include 'header.php'; ?>
-<?php include '../classes/category.php'; ?>
-<?php include '../classes/product.php'; ?>
+<?php include_once '../classes/category.php'; ?>
+<?php include_once '../classes/product.php'; ?>
 <?php 
     $prod = new product();
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
@@ -34,7 +34,7 @@
                                         <label class="labelAddProduct">Tên sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." class="inputAddProduct" autofocus required>
+                                        <input type="text" name="tenSanPham" placeholder="Nhập tên sản phẩm..." class="inputAddProduct" autofocus required>
                                     </td>
                                 </tr>
 
@@ -43,7 +43,7 @@
                                         <label class="labelAddProduct">Danh mục sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="category" required>
+                                        <select class="inputAddProduct" name="maLoai" required>
                                             <option value="0">----Chọn danh mục----</option>
                                             <?php 
                                                 $cat = new category();
@@ -52,7 +52,7 @@
                                                     while ($result = $catlist->fetch_assoc()) {
  
                                             ?>
-                                            <option value="<?php echo $result['catID']; ?>"><?php echo $result['catName']; ?></option>
+                                            <option value="<?php echo $result['maLoai']; ?>"><?php echo $result['tenLoai']; ?></option>
                                             <?php 
                                                 }
                                             }
@@ -67,7 +67,7 @@
                                         <label class="labelAddProduct">Size: </label>
                                     </td>
                                     <td>
-                                        <select class="inputAddProduct" name="productSize" required>
+                                        <select class="inputAddProduct" name="sizeSanPham" required>
                                             <option value="0">----Chọn size----</option>
                                             <?php 
                                                 $i= 36;
@@ -88,7 +88,7 @@
                                         <label class="labelAddProduct">Số lượng: </label>
                                     </td>
                                     <td>
-                                         <input type="text" name="productAmount" value="1" class="inputAddProduct" required>
+                                         <input type="text" name="soLuongSanPham" value="1" class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -97,7 +97,7 @@
                                         <label class="labelAddProduct">Miêu tả sản phẩm: </label>
                                     </td>
                                     <td>
-                                        <textarea name="productDesc" rows="2" cols="25" placeholder="Nhập miêu tả sản phẩm..." class="inputAddProduct" style="height: 80px;" required></textarea>
+                                        <textarea name="mieuTaSanPham" rows="2" cols="25" placeholder="Nhập miêu tả sản phẩm..." class="inputAddProduct" style="height: 80px;" required></textarea>
                                     </td>
                                 </tr>
 
@@ -106,7 +106,7 @@
                                         <label class="labelAddProduct">Giá: </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="productPrice" placeholder="Nhập giá..." class="inputAddProduct" required>
+                                        <input type="text" name="giaSanPham" placeholder="Nhập giá..." class="inputAddProduct" required>
                                     </td>
                                 </tr>
 
@@ -174,14 +174,14 @@
         <script type="text/javascript">
             function validationForm(){
 
-                var category=document.formUser.category.value; 
-                var productSize=document.formUser.productSize.value;  
+                var maLoai=document.formUser.maLoai.value; 
+                var sizeSanPham=document.formUser.sizeSanPham.value;  
                 var image=document.formUser.image.value;
 
-                if ( category == '0'){
+                if ( maLoai == '0'){
                     alert("Chưa chọn danh mục sản phẩm!");
                     return false;
-                }else if ( productSize == '0'){
+                }else if ( sizeSanPham == '0'){
                         alert("Chưa chọn size sản phẩm!");
                         return false;
                     }else if (image == null){

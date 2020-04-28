@@ -27,7 +27,7 @@ class Session{
     }
  }
 
- public static function checkSession(){ //Dùng để check phiên đăng nhập, trách người khác biết đường dẫn để vào
+ public static function checkSession(){ //Dùng để check phiên đăng nhập, tránh người khác biết đường dẫn để vào
     self::init();
     if (self::get("login")== false) {
      self::destroy();
@@ -39,6 +39,7 @@ class Session{
     self::init();
     if (self::get("login")== true) {
      header("Location:pages/index.php");
+     exit();
     }
  }
 
