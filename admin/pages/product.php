@@ -1,6 +1,6 @@
 <?php  include 'header.php'; ?>
 <?php  include_once '../classes/product.php' ?>
-<?php  include_once '../../helpers/format.php' ?>
+<?php  include_once '../helpers/format.php' ?>
 <?php
     $fm = new Format();
     $prod = new product();
