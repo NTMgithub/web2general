@@ -1,7 +1,7 @@
 <?php  
 
-	require_once '../lib/database.php';
-	require_once '../helpers/format.php';
+	require_once 'admin/lib/database.php';
+	require_once 'admin/helpers/format.php';
 ?>
 
 

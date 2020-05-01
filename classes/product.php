@@ -1,7 +1,7 @@
 <?php  
 
-	include_once '../lib/database.php';
-	include_once '../helpers/format.php';
+	include_once 'admin/lib/database.php';
+	include_once 'admin/helpers/format.php';
 ?>
 
 
@@ -79,6 +79,13 @@
 		public function show_product()
 		{
 			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham ASC";
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+		public function show_productLimit5() //FRONT-END
+		{
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai LIMIT 5";
 			$result = $this->db->select($query);
 			return $result;
 		}

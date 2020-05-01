@@ -141,7 +141,7 @@
                                     </td>
                                     <td>
                                         <img src="uploads/<?php echo $result_prod['hinhAnhSanPham'] ?>" width="110">
-                                        <input name="image" type="file" accept="image/*" >
+                                        <input name="image" type="file" accept="image/*" onchange="loadFile(event)" >
                                         <img id="output" style="width: 20%;" />
                                     </td>
                                 </tr>
