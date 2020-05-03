@@ -40,7 +40,7 @@
                                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                             <thead>
                                                 <tr>
-                                                    <th>STT</th>
+                                                    <th>Mã sản phẩm</th>
                                                     <th>Tên sản phẩm</th>
                                                     <th>Tên danh mục</th>
                                                     <th>Size</th>
@@ -56,14 +56,14 @@
 
                                                     $prodList = $prod->show_product();
                                                     if ($prodList){
-                                                        $i = 0;
+                                                        //$i = 0;
                                                         while ($result = $prodList->fetch_assoc()){
                                                             if ($result['trangThaiSanPham'] == 1){
-                                                                $i++;           
+                                                                //$i++;           
 
                                                 ?>
                                                 <tr class="odd gradeX">
-                                                    <td><?php echo $i; ?></td>
+                                                    <td><?php echo $result['maSanPham']; ?></td>
                                                     <td><?php echo $result['tenSanPham']; ?></td>
                                                     <td><?php echo $result['tenLoai']; ?></td>
                                                     <td class="center"><?php echo $result['sizeSanPham']; ?></td>
@@ -95,7 +95,44 @@
                                                 ?>
                                                 
                                             </tbody>
+                                            
                                         </table>
+                                        <div class="phanTrang">
+                                                <?php 
+                                                    $productAll = $prod->getAllProduct();
+                                                    $productCount = mysqli_num_rows($productAll); //Đến số dòng
+                                                    $productButton = ceil($productCount/10); //Số button sẽ hiển thị
+                                                    //$i = 1;
+
+                                                    if (!isset($_GET['trang'])){
+                                                        $trangHienTai = 1;
+                                                    }else{
+                                                        $trangHienTai = $_GET['trang'];
+                                                    }
+
+                                                    //Button Prev
+                                                    if ($trangHienTai > 1 && $productButton > 1){
+                                                        echo '<a href="?trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                    }
+
+                                                    //Create Button between start
+                                                    for ($i = 1; $i <= $productButton; $i++ ){
+                                                        if ($i == $trangHienTai ){
+                                                            echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //Active màu trang hiện tại
+                                                        }else{
+                                                            echo '<a href="?trang='.$i.' ">' .$i. '</a>';
+                                                        }
+                                                        
+                                                    }
+                                                    //Create Button between end
+
+                                                    //Button Next
+                                                    if ($trangHienTai < $productButton && $productButton > 1){
+                                                        echo '<a href="?trang='.($trangHienTai + 1).' ">Trang Sau <i class="fa fa-angle-double-right"></i></a>';
+                                                    }
+
+                                                ?>
+                                            </div>
                                     </div>
                                     <!-- /.table-responsive -->
                         </div>
@@ -136,6 +173,22 @@
         <!-- Custom Theme JavaScript -->
         <script src="../js/startmin.js"></script>
 
+        <style type="text/css">
+            .phanTrang a{
+                text-decoration: none;
+                cursor: pointer;
+                color: black;
+                float: left;
+                padding: 5px 15px;
+                border: 1px solid #999499;
+                margin: 0px 2px 5px;
+            }
+
+            .phanTrang a:hover{
+                background-color: grey;
+                transition: 500ms;
+            }
+        </style>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {
