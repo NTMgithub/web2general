@@ -14,6 +14,8 @@
 	$prod = new product();
 	$prodList = $prod->getproductbyId($idSanPham);
 	$resultProd = $prodList->fetch_assoc();
+
+
 ?>		
 
 <?php
@@ -37,7 +39,7 @@
 								$catList = $cat->getcatbyId($resultProd['maLoai']);
 								$resultCat = $catList->fetch_assoc();
 							?>
-							<a href="shop-gird.php"> Giày <?php echo $resultCat['tenLoai']; ?> </a>
+							<a href="shop-gird.php?maLoai=<?php echo $resultCat['maLoai']; ?>"> Giày <?php echo $resultCat['tenLoai']; ?> </a>
 
 							<span><?php echo $resultProd['tenSanPham']; ?></span>
 						</div>
@@ -160,11 +162,8 @@
 									</div>
 									-->
 									<div class="single-product-add-cart">
-										<?php 
-											if ($resultProd['trangThaiSanPham'] == '1') 
-												echo '
 												<div class="single-product-quantity">
-													<p class="small-title">Số lượng</p> 
+													<p class="small-title">Số lượng:</p> 
 													<div class="cart-quantity">
 														<div class="cart-plus-minus-button single-qty-btn">
 															<input class="cart-plus-minus sing-pro-qty" type="text" name="qtybutton" value="1">
@@ -172,17 +171,13 @@
 													</div>
 												</div>
 												<div class="single-product-size">
-													<p class="small-title">Size </p> 
+													<p class="small-title">Size: </p> 
 													<select name="product-size" id="product-size">
-														<option value="">38</option>
-														<option value="">39</option>
-														<option value="">40</option>
-														<option value="">41</option>
-														<option value="">42</option>
+														<option value="<?php echo $resultProd["sizeSanPham"]; ?>"><?php echo $resultProd["sizeSanPham"]; ?></option>
+														
 													</select>
 												</div>
-												<a class="add-cart-text" title="Add to cart" href="#">THÊM VÀO GIỎ HÀNG</a>';
-										?>
+												<a class="add-cart-text" title="Add to cart" href="#">THÊM VÀO GIỎ HÀNG</a>
 										
 									</div>
 								</div>
@@ -298,9 +293,11 @@
 															</div>
 														</div>
 														<a href="single-product.php?maSanPham=<?php echo $resultProdSame['maSanPham']; ?>">
+															<span style="text-transform: uppercase;">
 															<?php
                                                             	echo $textSh = $fm->textShorten($resultProdSame['tenSanPham'], 30); //Giới hạn kí tự để hiển thị
                                                         	?> 
+                                                        	</span>
 														</a>
 														<div class="price-box">
 															<span class="price"><?php echo $resultProdSame['giaSanPham']; ?> VND</span>
@@ -345,11 +342,11 @@
 								<li>
 									<a href="single-product.php?maSanPham=<?php echo $resultProdOther['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProdOther['hinhAnhSanPham']; ?>" width='80' alt="" /></a>
 									<div class="r-sidebar-pro-content">
-										<h5><a href="single-product.php?maSanPham=<?php echo $resultProdOther['maSanPham']; ?>"><?php
+										<h5 style="text-transform: uppercase;"><a href="single-product.php?maSanPham=<?php echo $resultProdOther['maSanPham']; ?>"><?php
                                                           echo $textShOther = $fm->textShorten($resultProdOther['tenSanPham'], 20); //Giới hạn kí tự để hiển thị
                                                        ?> </a></h5>
 										<p><?php
-                                                          echo $textShOther1 = $fm->textShorten($resultProdOther['mieuTaSanPham'], 20); //Giới hạn kí tự để hiển thị
+                                                          echo $textShOther1 = $fm->textShorten($resultProdOther['mieuTaSanPham'], 50); //Giới hạn kí tự để hiển thị
                                              ?></p>
 									</div>
 								</li>

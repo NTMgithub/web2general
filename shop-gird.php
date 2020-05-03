@@ -1,5 +1,25 @@
+<?php 
+	include_once 'classes/category.php';
+	include_once 'classes/product.php';
+	include_once 'admin/helpers/format.php';
+?>
+
+<?php 
+	if (!isset($_GET['maLoai']) || $_GET['maLoai'] == ''){
+        echo "<script>window.location = '404.php'</script>";
+    }else{
+        $idLoai = $_GET['maLoai'];
+    }
+
+    $fm = new Format();
+    $prod = new product();
+	$category = new category();
+	$catList = $category->getcatbyId($idLoai);
+	$resultCat = $catList->fetch_assoc();
+?>
+
 <?php
-	$pageTitle = "GIÀY ADIDAS | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
+	$pageTitle = "GIÀY ". $resultCat['tenLoai']." | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
 	<?php }
@@ -15,7 +35,7 @@
 						<div class="bstore-breadcrumb">
 							<a href="index.php">TRANG CHỦ</a>
 							<span><i class="fa fa-caret-right"></i></span>
-							<span>Giày ADIDAS</span>
+							<span>GIÀY <?php echo $resultCat['tenLoai']; ?></span>
 						</div>
 						<!-- BSTORE-BREADCRUMB END -->
 					</div>
@@ -30,7 +50,7 @@
 								<span class="sidebar-title">LOẠI ĐÃ LỌC: </span>
 								<ul class="filtering-menu">
 									<li>
-										Thương hiệu: Giày ADIDAS 
+										Thương hiệu: <?php echo $resultCat['tenLoai']; ?>
 										<a href="#"><i class="fa fa-remove"></i></a>
 									</li>
 									<li>
@@ -338,7 +358,7 @@
 							<!-- PRODUCT-CATEGORY-HEADER START -->
 							<div class="product-category-header">
 								<div class="category-header-image">
-									<img src="img/category-header1.png" alt="category-header" />
+									<img src="img/category-header1.jpg" width="870px" height="217px" alt="category-header" />
 								<!--
 									<div class="category-header-text">
 										<h2 style="background-color: #333;">ADIDAS </h2>
@@ -352,8 +372,19 @@
 							<div class="product-category-title">
 								<!-- PRODUCT-CATEGORY-TITLE START -->
 								<h1>
-									<span class="cat-name">Giày ADIDAS</span>
-									<span class="count-product">Có 17 sản phẩm.</span>
+									<span class="cat-name">GIÀY <?php echo $resultCat['tenLoai']; ?></span>
+									<span class="count-product">
+										Có 
+									<?php 
+										$countProd = $category->count_product_withcategoryID($idLoai);
+										$resultcountProd = $countProd->fetch_assoc();
+
+										if ($resultcountProd['soluongprod'] == '')
+										{
+											echo '0';
+										}
+										else echo $resultcountProd['soluongprod'];
+									?> sản phẩm.</span>
 								</h1>
 								<!-- PRODUCT-CATEGORY-TITLE END -->
 							</div>
@@ -369,13 +400,12 @@
 												<option value="">Giá: Cao nhất trước</option>
 												<option value="">Tên sản phẩm: A đến Z</option>
 												<option value="">Tên sản phẩm: Z đến A</option>
-												<option value="">Tình trạng hàng: Còn hàng</option>
 											</select>												
 										</div>
 									</div>
 									<!-- SHOORT-BY END -->
 									<!-- SHOW-PAGE START -->
-									<div class="show-page">
+									<!-- <div class="show-page">
 										<label for="perPage">Hiển thị</label>
 										<div class="s-page-select-option">
 											<select name="show" id="perPage">
@@ -384,20 +414,20 @@
 											</select>													
 										</div>
 										<span>sản phẩm trên một trang</span>										
-									</div>
+									</div> -->
 									<!-- SHOW-PAGE END -->
 									<!-- VIEW-SYSTEAM START -->
 									<div class="view-systeam">
 										<label for="perPage">Xem dạng:</label>
 										<ul>
-											<li class="active"><a href="shop-gird.php"><i class="fa fa-th-large"></i></a><br />Lưới</li>
-											<li><a href="shop-list.php"><i class="fa fa-th-list"></i></a><br />Danh sách</li>
+											<li class="active"><a href="shop-gird.php?maLoai=<?php echo $resultCat['maLoai']; ?>"><i class="fa fa-th-large"></i></a><br />Lưới</li>
+											<li><a href="shop-list.php?maLoai=<?php echo $resultCat['maLoai']; ?>"><i class="fa fa-th-list"></i></a><br />Danh sách</li>
 										</ul>
 									</div>
 									<!-- VIEW-SYSTEAM END -->
 								</div>
 								<!-- PRODUCT-SHOOTING-RESULT START -->
-								<div class="product-shooting-result">
+								<!-- <div class="product-shooting-result">
 									<form action="#">
 										<button class="btn compare-button">
 											SO SÁNH (<span class="compare-value">1</span>)
@@ -426,7 +456,7 @@
 											<button class="btn showall-button">Hiển thị tất cả</button>
 										</form>
 									</div>
-								</div>
+								</div> -->
 								<!-- PRODUCT-SHOOTING-RESULT END -->
 							</div>
 						</div>
@@ -434,12 +464,20 @@
 						<div class="all-gategory-product">
 							<div class="row">
 								<ul class="gategory-product">
+									<?php 
+										$prodList = $prod->show_product();
+										if ($prodList){
+											while ($resultProd = $prodList->fetch_assoc()){
+												if (($resultProd['trangThaiSanPham'] == '1') && ($resultProd['maLoai'] == $resultCat['maLoai']) ){
+
+									?>
+
 									<!-- SINGLE ITEM START -->
 									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
 										<div class="single-product-item">
 											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
+												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
+												<!-- <a href="single-product.php" class="new-mark-box">mới</a> -->
 												<div class="overlay-content">
 													<ul>
 														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
@@ -462,569 +500,40 @@
 														<span>1 Đánh giá</span>
 													</div>
 												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
+												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>">
+														<span style="text-transform: uppercase;" >
+															<?php echo $textSh = $fm->textShorten($resultProd['tenSanPham'], 40); //Giới hạn kí tự để hiển thị 
+															?>
+														</span>
+												</a>
 												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
+													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
 												</div>
 											</div>
 										</div>									
 									</li>
 									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->									
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/02.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS ALPHABOOST PARLEY BLACK</a>
-												<div class="price-box">
-													<span class="price">2,590,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->
-										<!-- SINGLE ITEM START -->
-									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
-										<div class="single-product-item">
-											<div class="product-image">
-												<a href="single-product.php"><img src="img/product/sale/04.jpg" alt="product-image" /></a>
-												<a href="single-product.php" class="new-mark-box">mới</a>
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="product-info">
-												<div class="customar-comments-box">
-													<div class="rating-box">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-half-empty"></i>
-													</div>
-													<div class="review-box">
-														<span>1 Đánh giá</span>
-													</div>
-												</div>
-												<a href="single-product.php">ADIDAS CONTINENTAL 80 BLACK RED</a>
-												<div class="price-box">
-													<span class="price">2,290,000 VND</span>
-												</div>
-											</div>
-										</div>									
-									</li>
-									<!-- SINGLE ITEM END -->							
+									<?php 
+											}
+										}
+									}
+									?>
+
 								</ul>
 							</div>
 						</div>
 						<!-- ALL GATEGORY-PRODUCT END -->
 						<!-- PRODUCT-SHOOTING-RESULT START -->
 						<div class="product-shooting-result product-shooting-result-border">
-							<form action="#">
+							<!-- <form action="#">
 								<button class="btn compare-button">
 									SO SÁNH (<strong class="compare-value">1</strong>)
 									<i class="fa fa-chevron-right"></i>
 								</button>
-							</form>
-							<div class="showing-item">
+							</form> -->
+							<!-- <div class="showing-item">
 								<span>Đang hiển thị 1 - 16 trên 17 sản phẩm</span>
-							</div>
+							</div> -->
 							<div class="showing-next-prev">
 								<ul class="pagination-bar">
 									<li class="disabled">
@@ -1040,9 +549,9 @@
 										<a href="#" >Trang sau<i class="fa fa-chevron-right"></i></a>
 									</li>
 								</ul>
-								<form action="#">
+								<!-- <form action="#">
 									<button class="btn showall-button">Hiển thị tất cả</button>
-								</form>
+								</form> -->
 							</div>
 						</div>	
 						<!-- PRODUCT-SHOOTING-RESULT END -->
