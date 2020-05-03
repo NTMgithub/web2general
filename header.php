@@ -309,145 +309,57 @@
 										</div>
 									-->
 										<!-- DROPDOWN MENU END -->
+									</li>
+
+									<?php 
+										$catTitle = $cat->show_categoryLimit5();
+										if ($catTitle){
+											while ($resultCatTitle = $catTitle->fetch_assoc()){
+											
+									?>
+									<li>
+										<a href="shop-gird.php?maLoai=<?php echo $resultCatTitle['maLoai']; ?>">GIÀY <?php echo $resultCatTitle['tenLoai']; ?></a>
 										
 									</li>
-									<li>
-										<a href="shop-gird.php">GIÀY ADIDAS</a>
+									<?php 
+										}
+									}
+									?>
+
+									<li><a href="#">KHÁC</a>
+
 										<!-- DRODOWN-MEGA-MENU START -->
-										<div class="drodown-mega-menu">
-											<div class="left-mega col-xs-6">
+										<div class="drodown-mega-menu" style="min-width: 230px;left: unset;">
+											<!-- <div class="left-mega col-xs-6"> -->
 												<div class="mega-menu-list">
 													<!--<a class="mega-menu-title" href="shop-gird.php">TOPS</a>-->
 													<ul>
-														<li><a href="shop-gird.php">YEEZY</a></li>
-														<li><a href="shop-gird.php">ULTRA BOOST</a></li>
-														<li><a href="shop-gird.php">ALPHABOUNCE</a></li>
-														<li><a href="shop-gird.php">STAN SMITH</a></li>
+														<?php 
+															$catTitleOther = $cat->show_categoryOthers();
+															if ($catTitleOther){
+																while ($resultCatTitleOther = $catTitleOther->fetch_assoc()){
+																	
+														?>
+														<li><a href="shop-gird.php?maLoai=<?php echo $resultCatTitleOther['maLoai']; ?>">GIÀY <?php echo $resultCatTitleOther['tenLoai']; ?></a>
+														</li>
+														<?php 
+															}
+														}
+														?>
 													</ul>
 												</div>
-											</div>
-											<div class="right-mega col-xs-6">
+											<!-- </div> -->
+											<!-- <div class="right-mega col-xs-6">
 												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">Prodect</a>-->
-													<ul>
-														<li><a href="shop-gird.php">SUPERSTAR</a></li>
-														<li><a href="shop-gird.php">PROPHERE</a></li>
-														<li><a href="shop-gird.php">EQT</a></li>
-														<li><a href="shop-gird.php">KHÁC</a></li>
-													</ul>
+													<a class="mega-menu-title" href="shop-gird.php">Prodect</a>
+													
 												</div>
-											</div>
+											</div> -->
 										</div>
 										<!-- DRODOWN-MEGA-MENU END -->
 									</li>
-									<li>
-										<a href="shop-gird.php">GIÀY NIKE</a>
-										<!-- DRODOWN-MEGA-MENU START -->
-										<div class="drodown-mega-menu">
-											<div class="left-mega col-xs-6">
-												<div class="mega-menu-list">
-													<ul>
-														<li><a href="shop-gird.php">NIKE AIR</a></li>
-														<li><a href="shop-gird.php">UNTEMPO</a></li>
-														<li><a href="shop-gird.php">M2K</a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="right-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">Prodect</a>-->
-													<ul>
-														<li><a href="shop-gird.php">PEGASUS</a></li>
-														<li><a href="shop-gird.php">CORTEZ</a></li>
-														<li><a href="shop-gird.php">KHÁC</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<!-- DRODOWN-MEGA-MENU END -->
-									</li>
-									<li>
-										<a href="shop-gird.php">GIÀY CONVERSE</a>
-										<!-- DRODOWN-MEGA-MENU START -->	
-										<div class="drodown-mega-menu">
-											<div class="left-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">TOPS</a>-->
-													<ul>
-														<li><a href="shop-gird.php">CHUCK 70S</a></li>
-														<li><a href="shop-gird.php">CLASSIC</a></li>
-														<li><a href="shop-gird.php">RENEW</a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="right-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">Prodect</a>-->			
-													<ul>
-														<li><a href="shop-gird.php">ONE STAR</a></li>
-														<li><a href="shop-gird.php">TWISTED CLASSIC</a></li>
-														<li><a href="shop-gird.php">KHÁC</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>	
-										<!-- DRODOWN-MEGA-MENU END -->										
-									</li>
-									<li>
-										<a href="shop-gird.php">GIÀY VANS</a>
-										<!-- DRODOWN-MEGA-MENU START -->	
-										<div class="drodown-mega-menu">
-											<div class="left-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">TOPS</a>-->
-													<ul>
-														<li><a href="shop-gird.php">VANS CLASSIC</a></li>
-														<li><a href="shop-gird.php">VANS OLD SKOOL</a></li>
-														<li><a href="shop-gird.php">VANS AUTHENTIC</a></li>
-														<li><a href="shop-gird.php">VANS SK9-HI</a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="right-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">Prodect</a>-->			
-													<ul>
-														<li><a href="shop-gird.php">VANS SLIP-ON</a></li>
-														<li><a href="shop-gird.php">VANS ERA</a></li>
-														<li><a href="shop-gird.php">KHÁC</a></li>	
-													</ul>
-												</div>
-											</div>
-										</div>	
-										<!-- DRODOWN-MEGA-MENU END -->
-									</li>
-									<li>
-										<a href="shop-gird.php">GIÀY BITI'S</a>
-										<!-- DRODOWN-MEGA-MENU START -->	
-										<div class="drodown-mega-menu">
-											<div class="left-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">TOPS</a>-->
-													<ul>
-														<li><a href="shop-gird.php">BITI'S HUNTER</a></li>
-														<li><a href="shop-gird.php">SANDAL</a></li>
-														<li><a href="shop-gird.php">GIÀY THỂ THAO</a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="right-mega col-xs-6">
-												<div class="mega-menu-list">
-													<!--<a class="mega-menu-title" href="shop-gird.php">Prodect</a>-->			
-													<ul>
-														<li><a href="shop-gird.php">DÉP</a></li>
-														<li><a href="shop-gird.php">KHÁC</a></li>
-													</ul>
-												</div>
-											</div>
-										</div>	
-										<!-- DRODOWN-MEGA-MENU END -->
-										</li>
-										<li><a href="#">KHÁC</a></li>
+
+
 										<!--<li><a href="about-us.php">About us</a></li>-->
 								</ul>
 							</nav>
@@ -467,59 +379,40 @@
 											<li><a href="index-2.html">Home variation 2</a></li>
 										</ul>														
 									</li>-->					
-									<li><a href="shop-gird.php">GIÀY ADIDAS</a>
-										<ul>
-											<li><a href="shop-gird.php">YEEZY</a></li>
-											<li><a href="shop-gird.php">ULTRA BOOST</a></li>
-											<li><a href="shop-gird.php">ALPHABOUNCE</a></li>
-											<li><a href="shop-gird.php">STAN SMITH</a></li>
-											<li><a href="shop-gird.php">SUPERSTAR</a></li>
-											<li><a href="shop-gird.php">PROPHERE</a></li>
-											<li><a href="shop-gird.php">EQT</a></li>
-											<li><a href="shop-gird.php">KHÁC</a></li>
-										</ul>
+									<?php 
+										$catTitle = $cat->show_categoryLimit5();
+										if ($catTitle){
+											while ($resultCatTitle = $catTitle->fetch_assoc()){
+											
+									?>
+									<li>
+										<a href="shop-gird.php?maLoai=<?php echo $resultCatTitle['maLoai']; ?>">GIÀY <?php echo $resultCatTitle['tenLoai']; ?></a>
+										
 									</li>
-									<li><a href="shop-gird.php">GIÀY NIKE</a>
-										<ul>											
-											<li><a href="shop-gird.php">NIKE AIR</a></li>
-											<li><a href="shop-gird.php">UNTEMPO</a></li>
-											<li><a href="shop-gird.php">M2K</a></li>
-											<li><a href="shop-gird.php">PEGASUS</a></li>
-											<li><a href="shop-gird.php">CORTEZ</a></li>
-											<li><a href="shop-gird.php">KHÁC</a></li>
-										</ul>										
+									<?php 
+										}
+									}
+									?>
+
+									<li><a href="#">KHÁC</a>
+		
+													<ul>
+														<?php 
+															$catTitleOther = $cat->show_categoryOthers();
+															if ($catTitleOther){
+																while ($resultCatTitleOther = $catTitleOther->fetch_assoc()){
+																	
+														?>
+														<li><a href="shop-gird.php?maLoai=<?php echo $resultCatTitleOther['maLoai']; ?>">GIÀY <?php echo $resultCatTitleOther['tenLoai']; ?></a>
+														</li>
+														<?php 
+															}
+														}
+														?>
+													</ul>
+											
+										</div>
 									</li>
-									<li><a href="shop-gird.php">GIÀY CONVERSE</a>
-										<ul>
-											<li><a href="shop-gird.php">CHUCK 70S</a></li>
-											<li><a href="shop-gird.php">CLASSIC</a></li>
-											<li><a href="shop-gird.php">RENEW</a></li>
-											<li><a href="shop-gird.php">ONE STAR</a></li>
-											<li><a href="shop-gird.php">TWISTED CLASSIC</a></li>
-											<li><a href="shop-gird.php">KHÁC</a></li>
-										</ul>
-									</li>
-									<li><a href="shop-gird.php">GIÀY VANS</a>
-										<ul>
-											<li><a href="shop-gird.php">VANS CLASSIC</a></li>
-											<li><a href="shop-gird.php">VANS OLD SKOOL</a></li>
-											<li><a href="shop-gird.php">VANS AUTHENTIC</a></li>
-											<li><a href="shop-gird.php">VANS SK9-HI</a></li>
-											<li><a href="shop-gird.php">VANS SLIP-ON</a></li>
-											<li><a href="shop-gird.php">VANS ERA</a></li>
-											<li><a href="shop-gird.php">KHÁC</a></li>	
-										</ul>
-									</li>
-									<li><a href="shop-gird.php">GIÀY BITI'S</a>
-										<ul>
-											<li><a href="shop-gird.php">BITI'S HUNTER</a></li>
-											<li><a href="shop-gird.php">SANDAL</a></li>
-											<li><a href="shop-gird.php">GIÀY THỂ THAO</a></li>
-											<li><a href="shop-gird.php">DÉP</a></li>
-											<li><a href="shop-gird.php">KHÁC</a></li>
-										</ul>
-									</li>
-									<li><a href="#">KHÁC</a></li>
 								</ul>
 							</nav>
 						</div>						

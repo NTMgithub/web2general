@@ -78,7 +78,7 @@
 
 		public function show_product()
 		{
-			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham ASC";
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham DESC"; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
 			$result = $this->db->select($query);
 			return $result;
 		}
