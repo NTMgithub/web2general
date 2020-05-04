@@ -465,10 +465,10 @@
 							<div class="row">
 								<ul class="gategory-product">
 									<?php 
-										$prodList = $prod->show_product();
+										$prodList = $prod->show_productbyCat($resultCat['maLoai']);
 										if ($prodList){
 											while ($resultProd = $prodList->fetch_assoc()){
-												if (($resultProd['trangThaiSanPham'] == '1') && ($resultProd['maLoai'] == $resultCat['maLoai']) ){
+												if ( $resultProd['trangThaiSanPham'] == '1' ){
 
 									?>
 
@@ -508,9 +508,10 @@
 												</a>
 												<div class="price-box">
 													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
-												</div>
+												</div>	
 											</div>
-										</div>									
+										</div>	
+																	
 									</li>
 									<!-- SINGLE ITEM END -->
 									<?php 
@@ -523,6 +524,8 @@
 							</div>
 						</div>
 						<!-- ALL GATEGORY-PRODUCT END -->
+
+
 						<!-- PRODUCT-SHOOTING-RESULT START -->
 						<div class="product-shooting-result product-shooting-result-border">
 							<!-- <form action="#">
@@ -534,25 +537,43 @@
 							<!-- <div class="showing-item">
 								<span>Đang hiển thị 1 - 16 trên 17 sản phẩm</span>
 							</div> -->
-							<div class="showing-next-prev">
-								<ul class="pagination-bar">
-									<li class="disabled">
-										<a href="#" ><i class="fa fa-chevron-left"></i>Trang trước</a>
-									</li>
-									<li class="active">
-										<span><a class="pagi-num" href="#">1</a></span>
-									</li>
-									<li>
-										<span><a class="pagi-num" href="#">2</a></span>
-									</li>
-									<li>
-										<a href="#" >Trang sau<i class="fa fa-chevron-right"></i></a>
-									</li>
-								</ul>
-								<!-- <form action="#">
-									<button class="btn showall-button">Hiển thị tất cả</button>
-								</form> -->
-							</div>
+							<div class="phanTrang">
+                                                <?php 
+                                                    $productAll = $prod->getAllProductbyCat($resultCat['maLoai']);
+                                                    $productCount = mysqli_num_rows($productAll); //Đếm số dòng
+                                                    $productButton = ceil($productCount/8); //Số button sẽ hiển thị,  sản phẩm/trang, ceil làm tròn
+                                                    //$i = 1;
+
+                                                    if (!isset($_GET['trang'])){
+                                                        $trangHienTai = 1;
+                                                    }else{
+                                                        $trangHienTai = $_GET['trang'];
+                                                    }
+
+                                                    
+                                                    //Button Prev
+                                                    if ($trangHienTai > 1 && $productButton > 1){
+                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                    }
+
+                                                    //Create Button between start
+                                                    for ($i = 1; $i <= $productButton; $i++ ){
+                                                        if ($i == $trangHienTai ){
+                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+                                                        }else{
+                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
+                                                        }
+                                                        
+                                                    }
+                                                    //Create Button between end
+
+                                                    //Button Next
+                                                    if ($trangHienTai < $productButton && $productButton > 1){
+                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+                                                    }
+
+                                                ?>
+                                </div>
 						</div>	
 						<!-- PRODUCT-SHOOTING-RESULT END -->
 					</div>
@@ -563,6 +584,23 @@
 <?php
 	include 'footer.php';
 ?>
+
+		<style type="text/css">
+            .phanTrang a{
+                text-decoration: none;
+                cursor: pointer;
+                color: black;
+                float: left;
+                padding: 5px 15px;
+                border: 1px solid #999499;
+                margin: 0px 2px 5px;
+            }
+
+            .phanTrang a:hover{
+                background-color: grey;
+                transition: 500ms;
+            }
+        </style>
 		<!-- JS 
 		===============================================-->
 		<!-- jquery js -->
