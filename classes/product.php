@@ -78,7 +78,32 @@
 
 		public function show_product()
 		{
-			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham ASC";
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai ORDER BY maSanPham ASC"; //DESC: mới nhất lên đầu
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+		public function show_productbyCat($idLoai)
+		{
+			$sanPhamTungTrang = 8; //Sản phẩm từng trang
+
+			if (!isset($_GET['trang'])){
+				$trang = 1;
+			}else{
+				$trang = $_GET['trang'];
+			}
+			$tungTrang = ($trang - 1) * $sanPhamTungTrang; //Vị trí bắt đầu $trang
+
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham ASC LIMIT $tungTrang, $sanPhamTungTrang "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+			$result = $this->db->select($query);
+			return $result;
+
+			
+		}
+
+		public function getAllProductbyCat($idLoai)
+		{
+			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham ASC "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
 			$result = $this->db->select($query);
 			return $result;
 		}

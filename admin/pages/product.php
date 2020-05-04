@@ -58,7 +58,7 @@
                                                     if ($prodList){
                                                         //$i = 0;
                                                         while ($result = $prodList->fetch_assoc()){
-                                                            if ($result['trangThaiSanPham'] == 1){
+                                                           if ($result['trangThaiSanPham'] == 1){
                                                                 //$i++;           
 
                                                 ?>
@@ -100,8 +100,8 @@
                                         <div class="phanTrang">
                                                 <?php 
                                                     $productAll = $prod->getAllProduct();
-                                                    $productCount = mysqli_num_rows($productAll); //Đến số dòng
-                                                    $productButton = ceil($productCount/10); //Số button sẽ hiển thị
+                                                    $productCount = mysqli_num_rows($productAll); //Đếm số dòng
+                                                    $productButton = ceil($productCount/10); //Số button sẽ hiển thị, 10 sản phẩm thì chia 10
                                                     //$i = 1;
 
                                                     if (!isset($_GET['trang'])){
@@ -118,7 +118,7 @@
                                                     //Create Button between start
                                                     for ($i = 1; $i <= $productButton; $i++ ){
                                                         if ($i == $trangHienTai ){
-                                                            echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //Active màu trang hiện tại
+                                                            echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
                                                         }else{
                                                             echo '<a href="?trang='.$i.' ">' .$i. '</a>';
                                                         }
