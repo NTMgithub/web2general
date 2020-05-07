@@ -12,7 +12,7 @@
         $idLoai = $_GET['value'];
     }
 	$qry = "SELECT * FROM  tbl_sanpham WHERE tenSanPham LIKE '%$idLoai%' OR sizeSanPham LIKE '%$idLoai%' 
-			OR mieuTaSanPham LIKE '%$idLoai%' OR giaSanPham LIKE '%$idLoai%'";
+			OR mieuTaSanPham LIKE '%$idLoai%' OR giaSanPham LIKE '%$idLoai%' LIMIT 8";
 	$fm = new Format();
 	$db = new database();
     $prod = new product();

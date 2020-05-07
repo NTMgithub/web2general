@@ -443,7 +443,10 @@ input[type="reset"],
 input[type="submit"] {
     -webkit-appearance: button; /* 2 */
     cursor: pointer; /* 3 */
-    *overflow: visible;  /* 4 */
+    *overflow: visible; 
+    background-color: red;
+    height: 45px;
+    width: 209px; /* 4 */
 }
 
 /**

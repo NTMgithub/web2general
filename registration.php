@@ -27,14 +27,14 @@
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<!-- CREATE-NEW-ACCOUNT START -->
 						<div class="create-new-account">
-							<form class="new-account-box primari-box" id="create-new-account" method="post" action="#">
+						<form class="new-account-box primari-box" id="create-new-account" method="post" action="#">
 								<h3 class="box-subheading">Tạo tài khoản</h3>
 								<div class="form-content">
-									<p>Vui lòng nhập địa chỉ email để tạo tài khoản.</p>
+									<!--p>Vui lòng nhập địa chỉ email để tạo tài khoản.</p>
 									<div class="form-group primary-form-group">
 										<label for="email">Địa chỉ email</label>
 										<input type="text" value="" name="email" id="email" class="form-control input-feild" required>
-									</div>
+									</div-->
 									<div class="submit-button">
 										<a href="checkout-registration.php" id="SubmitCreate" class="btn main-btn">
 											<span>
@@ -44,36 +44,37 @@
 										</a>
 									</div>
 								</div>
-							</form>							
+							</form>						
 						</div>
 						<!-- CREATE-NEW-ACCOUNT END -->
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<!-- REGISTERED-ACCOUNT START -->
 						<div class="primari-box registered-account">
-							<form class="new-account-box" id="accountLogin" method="post" action="#">
+						<form class="new-account-box" id="accountLogin" name="Forms" onsubmit="return validate()" method="post" action="check1.php">
 								<h3 class="box-subheading">ĐÃ CÓ TÀI KHOẢN?</h3>
 								<div class="form-content">
 									<div class="form-group primary-form-group">
-										<label for="loginemail">Địa chỉ email</label>
-										<input type="text" value="" name="email" id="loginemail" class="form-control input-feild">
+										<label for="loginemail">Tên đăng nhập</label>
+										<input type="text" value="" name="loginname" id="loginname" class="form-control input-feild">
 									</div>
 									<div class="form-group primary-form-group">
 										<label for="password">Mật khẩu</label>
-										<input type="password" value="" name="password" id="password" class="form-control input-feild">
+										<input type="password" value="" name="loginpassword" id="loginpassword" class="form-control input-feild">
 									</div>
 									<div class="forget-password">
 										<p><a href="#">Quên mật khẩu?</a></p>
 									</div>
 									<div class="submit-button">
-										<a href="my-account.php" id="signinCreate" class="btn main-btn">
+										<input type="submit"  id="signinCreate" class="btn main-btn" value=" ĐĂNG NHẬP" >
 										<span>
 											<i class="fa fa-lock submit-icon"></i>
-											 ĐĂNG NHẬP
+											 
 										</span>
 										</a>
 									</div>
 								</div>
+								
 							</form>							
 						</div>
 						<!-- REGISTERED-ACCOUNT END -->

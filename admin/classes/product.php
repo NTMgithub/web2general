@@ -209,7 +209,6 @@
 			}
 		}
 		
-		
 
 		public function hide_product($id) //Xóa danh mục
 		{

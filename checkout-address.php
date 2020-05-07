@@ -50,87 +50,121 @@
 					<!-- ADDRESS AREA START --> 
 					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
 						<div class="form-group primary-form-group p-info-group deli-address-group">
-							<label>Chọn một địa chỉ giao hàng:</label>
+						<form class="primari-box personal-info-box" id="personalinfo" name="Formadress" onsubmit="return validateAdress()" method="post" action="#" >
+						  <label>Chọn một địa chỉ giao hàng:</label>
 							<div class="birth-day delivery-address">
 								<select id="deli-address" name="deliveryaddress">
-									<option value="">Địa chỉ 1</option>
-									<option value="">Địa chỉ 2</option>
-									<option value="">Địa chỉ khác</option>
+									<option value="">Vũng Tàu</option>
+									<option value="">Đồng Nai</option>
+									<option value="">TPHCM</option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									 
 								</select>												
 							</div>
-						</div>	
-						<div class="form-group primary-form-group p-info-group chose-address">
-							<label class="cheker">
-								<input type="checkbox" name="checkbox">
-								<span></span>
-							</label>
-							<a href="#">Dùng địa chỉ giao hàng làm địa chỉ trên hóa đơn.</a>
-						</div>							
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-						<div class="first_item primari-box">
-							<!-- DELIVERY ADDRESS START -->
-							<ul class="address">
-								<li>
-									<h3 class="page-subheading box-subheading">
-										Địa chỉ giao hàng của bạn
-									</h3>
-								</li>
-								<li><span class="address_name">BootExperts</span></li>
-								<li><span class="address_company">Web development Company</span></li>
-								<li><span class="address_address1">Bonossri</span></li>
-								<li><span class="address_address2">D-Block</span></li>
-								<li><span class="">Rampura</span></li>
-								<li><span class="">Dhaka</span></li>
-								<li><span class="address_phone">+880 1735161598</span></li>
-								<li><span class="address_phone_mobile">+880 1975161598</span></li>
-								<li class="update-button">
-									<a href="my-cart-step-2-info.php">Cập nhật<i class="fa fa-chevron-right"></i></a>
-								</li>								
-							</ul>	
-							<!-- DELIVERY ADDRESS END -->
-						</div>						
-					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-						<div class="second_item primari-box">
-							<!-- BILLING ADDRESS START -->
-							<ul class="address">
-								<li>
-									<h3 class="page-subheading box-subheading">
-										Địa chỉ hóa đơn của bạn
-									</h3>
-								</li>
-								<li><span class="address_name">BootExperts</span></li>
-								<li><span class="address_company">Web development Company</span></li>
-								<li><span class="address_address1">Dhaka</span></li>
-								<li><span class="address_address2">Bonossri</span></li>
-								<li><span class="">Dhaka-1205</span></li>
-								<li><span class="">Rampura</span></li>
-								<li><span class="address_phone">+880 1735161598</span></li>
-								<li><span class="address_phone_mobile">+880 1975161598</span></li>
-								<li class="update-button">
-									<a href="my-cart-step-2-info.php">Cập nhật<i class="fa fa-chevron-right"></i></a>
-								</li>									
-							</ul>	
-							<!-- BILLING ADDRESS END -->
+							       <div class="form-group primary-form-group p-info-group">
+										<label for="firstname">Tên người nhận<sup>*</sup></label>
+										<input type="text" value="" name="firstname" id="firstname" class="form-control input-feild">
+									</div>
+									<div class="form-group primary-form-group p-info-group">
+										<label for="lastname">Số điện thoại <sup>*</sup></label>
+										<input type="text" value="" name="phone" id="phone" class="form-control input-feild">
+									</div>
+									<div class="form-group primary-form-group p-info-group">
+										<label for="email">Địa chỉ giao hàng<sup>*</sup></label>
+										<input type="text" value="" name="address" id="address" class="form-control input-feild">
+								   </div>
+								   
+
+							<div class="form-group primary-form-group p-info-group chose-address">
+								<label class="cheker">
+									<input type="checkbox" name="checkbox">
+									<span></span>
+								</label>
+								<a href="#">Dùng địa chỉ giao hàng làm địa chỉ trên hóa đơn.</a>
+								<div class="form-group primary-form-group p-info-group chose-address">
+								<label class="cheker">
+									<input type="checkbox" name="checkbox">
+									<span></span>
+								</label>
+								<a href="#">Dùng địa chỉ giao hàng làm địa chỉ trên hóa đơn.</a>
 						</div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="add-new-address">
-							<a href="my-cart-step-2-info.php" class="new-address-link">Thêm một địa chỉ mới<i class="fa fa-chevron-right"></i></a>
-							<div class="form-group p-info-group type-address-group">
-								<label>Ghi chú cho đơn hàng (nếu có)</label>
-								<textarea class="form-control input-feild " name="addcomment"></textarea>
-							</div>							
-						</div>
-						<!-- ADDRESS AREA START --> 
-						<!-- RETURNE-CONTINUE-SHOP START -->
-						<div class="returne-continue-shop ship-address">
-							<a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a>
-							<a href="checkout-shipping.php" class="procedtocheckout">Tiếp tục đơn hàng<i class="fa fa-chevron-right"></i></a>
-						</div>	
+	                   </div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="add-new-address">
+								<!--a href="my-cart-step-2-info.php" class="new-address-link"><i class="fa fa-chevron-right"></i></a-->
+								<div class="form-group p-info-group type-address-group">
+									<label>Ghi chú cho đơn hàng (nếu có)</label>
+									<textarea class="form-control input-feild " name="addcomment"></textarea>
+								</div>							
+							</div>
+							<!-- ADDRESS AREA START --> 
+							<!-- RETURNE-CONTINUE-SHOP START -->
+							<div class="returne-continue-shop ship-address">
+								<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
+								<input   type="submit" value="Đặt hàng"  > 
+							</div>	
+							<!-- RETURNE-CONTINUE-SHOP END -->		
+					   </div>
+	          </form>	
 						<!-- RETURNE-CONTINUE-SHOP END -->		
 					</div>					
 				</div>

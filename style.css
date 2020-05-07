@@ -3827,8 +3827,7 @@ a.cart_quantity_delete i:hover{
 	line-height:25px;
 	font-family:"Open Sans",sans-serif;
 }
-.cart-total-price{} 
-.total-price-container{} 
+
 ul.address li{
 	line-height:22px;
 }
@@ -3839,12 +3838,13 @@ ul.address li span{
 .returne-continue-shop{
 	margin:0 0 20px;
 	overflow: hidden;
+	float:right;
 }
 .returne-continue-shop a.continueshoping{
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
 	color: #333;
-	font-size: 17px;
+	font-size: 21px;
 	padding: 0;
 	line-height:50px;
 }
