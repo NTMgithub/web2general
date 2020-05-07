@@ -1,4 +1,5 @@
 <?php
+session_start();
 	$pageTitle = "TÀI KHOẢN CỦA TÔI | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
@@ -56,7 +57,9 @@
 						<!-- BACK TO HOME START -->
 						<div class="home-link-menu">
 							<ul>
-								<li><a href="index.php"><i class="fa fa-chevron-left"></i> Trang chủ</a></li>
+							<?php if(isset($_SESSION['ten']))
+								unset($_SESSION['ten']);
+								echo'<li><a href="index.php"><i class="fa fa-chevron-left"></i> ĐĂNG XUẤT</a></li>';?>
 							</ul>
 						</div>
 						<!-- BACK TO HOME END -->

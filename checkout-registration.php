@@ -27,7 +27,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- PERSONAL-INFOMATION START -->
 						<div class="personal-infomation">
-							<form class="primari-box personal-info-box" id="personalinfo" method="post" action="#">
+						<form class="primari-box personal-info-box" id="personalinfo" name="Form" onsubmit="return validateform()" method="post" action="check.php" >
 								<h3 class="box-subheading">Thông tin cá nhân của bạn</h3>
 								<div class="personal-info-content">
 									<div class="form-group primary-form-group p-info-group">
@@ -46,10 +46,10 @@
 										<label for="firstname">Tên<sup>*</sup></label>
 										<input type="text" value="" name="firstname" id="firstname" class="form-control input-feild">
 									</div>
-									<div class="form-group primary-form-group p-info-group">
+									<!--div class="form-group primary-form-group p-info-group">
 										<label for="lastname">Họ <sup>*</sup></label>
 										<input type="text" value="" name="lastname" id="lastname" class="form-control input-feild">
-									</div>
+									</div-->
 									<div class="form-group primary-form-group p-info-group">
 										<label for="email">Email<sup>*</sup></label>
 										<input type="email" value="" name="email" id="email" class="form-control input-feild">
@@ -251,16 +251,16 @@
 										<a href="#">Nhận ưu đãi từ đối tác của chúng tôi!</a>
 									</div>
 									<div class="submit-button p-info-submit-button">
-										<a href="checkout-address.php" id="SubmitCreate" class="btn main-btn">
-											<span>
+										<input type="submit" id="SubmitCreate" class="btn main-btn">
+											<!--span>
 												ĐĂNG KÝ
 												<i class="fa fa-chevron-right"></i>
-											</span>											
-										</a>
+											</span-->											
+										<!--/a-->
 										<span class="required-field"><sup>*</sup>Không được để trống</span>
 									</div>
 								</div>
-							</form>							
+							</form>								
 						</div>
 						<!-- PERSONAL-INFOMATION END -->
 					</div>

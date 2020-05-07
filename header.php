@@ -1,6 +1,9 @@
 <?php 
+    session_start();
 	include_once 'classes/product.php';
 	include_once 'classes/category.php';
+	//include_once 'admin/config/config.php';
+	include 'shopping_cart.php';
 ?>
 <?php 
 	$prod = new product();
@@ -100,6 +103,9 @@
 		<!-- MODERNIZR JS 
 		============================================ -->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+		<!-- MODERNIZR JS 
+		============================================ -->
+        <script src="js/check.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -160,7 +166,11 @@
 								<ul class="list-inline">
 									<li><a href="checkout.php">KIỂM TRA ĐƠN HÀNG</a></li>
 									<li><a href="wishlist.php">DANH SÁCH YÊU THÍCH</a></li>
-									<li><a href="my-account.php">TÀI KHOẢN CỦA TÔI</a></li>
+									<?php
+									 if(isset($_SESSION['ten']))
+									{
+										echo'<li><a href="my-account.php">TÀI KHOẢN CỦA TÔI</a></li>';
+									}?>
 									<li><a href="cart.php">GIỎ HÀNG</a></li>
 									<li><a href="registration.php">ĐĂNG NHẬP</a></li>
 								</ul>									
@@ -187,7 +197,7 @@
 							<h3>HOTLINE</h3>
 							<span>0123-456-789</span>
 						</div>
-						<!-- HEADER-RIGHT-CALLUS END -->
+						<!-- HEADER-RIGHT-CALLUS END tuiddang ráp cái searchc ủa tui dô file Nhung à  -->
 						<!-- CATEGORYS-PRODUCT-SEARCH START -->
 						<div class="categorys-product-search">
 							<form action="search-gird.php" method="get" class="search-form-cat">
@@ -228,7 +238,7 @@
 									<input type="text" style="width:90%;" class="form-control search-form" name="value" placeholder="Tìm kiếm... " />
 									<button class="search-button" value="Search" name="submit" type="submit">
 										<i class="fa fa-search"></i>
-									</button>									 
+									</button>										 
 								</div>
 							</form>
 						</div>
@@ -249,9 +259,11 @@
 								<a class="shop-link" href="cart.php" title="View my shopping cart">
 									<i class="fa fa-shopping-cart cart-icon"></i>
 									<b>GIỎ HÀNG</b>
-									<span class="ajax-cart-quantity">1</span>
+									<span class="ajax-cart-quantity">
+									   <?php echo$_SESSION['cart'][$id];?>
+									</span>
 								</a>
-								<div class="shipping-cart-overly">
+								<!--div class="shipping-cart-overly">
 									<div class="shipping-item">
 										<span class="cross-icon"><i class="fa fa-times-circle"></i></span>
 										<div class="shipping-item-image">
@@ -263,7 +275,7 @@
 											<p>4,500,000 VND</p>
 										</div>
 									</div>
-									<!--<div class="shipping-item">
+									<!-<div class="shipping-item">
 										<span class="cross-icon"><i class="fa fa-times-circle"></i></span>
 										<div class="shipping-item-image">
 											<a href="#"><img src="img/shopping-image21.png" alt="shopping image" /></a>
@@ -273,7 +285,7 @@
 											<span class="pro-quality"><a href="#">Size: 40</a></span>
 											<p>2,290,000 VND</p>
 										</div>
-									</div>-->
+									</div>->
 									<div class="shipping-total-bill">
 										<div class="cart-prices">
 											<span class="shipping-cost">0 VND</span>
@@ -287,7 +299,7 @@
 									<div class="shipping-checkout-btn">
 										<a href="checkout.php">TIẾP TỤC <i class="fa fa-chevron-right"></i></a>
 									</div>
-								</div>
+								</div-->
 							</div>
 						</div>
 					</div>	
