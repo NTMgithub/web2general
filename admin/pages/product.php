@@ -4,17 +4,14 @@
 <?php
     $fm = new Format();
     $prod = new product();
-    //Ẩn product
+    //
     if (!isset($_GET['hideid']) || $_GET['hideid'] == ''){
         echo "<script>'window.location = 'product.php'</script>";
     }else{
 
         $id = $_GET['hideid'];
-        $hideProduct = $prod->hide_product($id);
+        $hideCategory = $prod->hide_product($id);
     } 
-
-    //Tìm cơ bản theo tên
-    
 ?>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -29,23 +26,14 @@
                             <span class="textHeading">DANH SÁCH SẢN PHẨM</span>
                         </div>
                         
-
-
                         <div class="panel-body">   
-                            <form action="" method="get">
-                               <input type="text" name="nameSearch" placeholder="Nhập tên sản phẩm..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" value="<?php if (isset($_GET['nameSearch'])  && !empty($_GET['nameSearch']) ) echo $_GET['nameSearch'];?>" autofocus>
-                                <input type="submit" name="search" value="Tìm kiếm" class="btn btn-default" >
-
-                                <a href="product.php"><input type="button" name="search" value="Hiện tất cả" class="btn btn-default" ></a>
-
-                                <a href="productadd.php"><button type="button" class="btn btn-success" style="float: right;">
-                            </form>
-
-                            Thêm sản phẩm</button></a>
+                            <input type="text" name="productName" placeholder="Nhập tên sản phẩm..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
+                            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-default" > 
+                            <a href="productadd.php"><button type="button" class="btn btn-success" style="float: right;">Thêm sản phẩm</button></a>
                             <p></p>
                             <?php
-                                    if (isset($hideProduct)){
-                                        echo $hideProduct;
+                                    if (isset($hideCategory)){
+                                        echo $hideCategory;
                                     }
                             ?>
                                     <div class="table-responsive" style="margin-top: 2%">
@@ -66,7 +54,7 @@
                                             <tbody>
                                                 <?php 
 
-                                                    $prodList = $prod->show_product(); //Có search cơ bản
+                                                    $prodList = $prod->show_product();
                                                     if ($prodList){
                                                         //$i = 0;
                                                         while ($result = $prodList->fetch_assoc()){
@@ -101,21 +89,19 @@
                                                     </td>
                                                 </tr>
                                                 <?php 
-                                                        }
                                                     }
-
-                                                }else echo '<script>alert("Không tìm thấy dữ liệu!");history.back();</script>';
+                                                    }
+                                                }
                                                 ?>
-
                                                 
                                             </tbody>
                                             
                                         </table>
                                         <div class="phanTrang">
                                                 <?php 
-                                                    $productAll = $prod->getAllProduct(); //Lấy số sản phẩm 
+                                                    $productAll = $prod->getAllProduct();
                                                     $productCount = mysqli_num_rows($productAll); //Đếm số dòng
-                                                    $productButton = ceil($productCount/5); //Số button sẽ hiển thị, 10 sản phẩm thì chia 10
+                                                    $productButton = ceil($productCount/10); //Số button sẽ hiển thị, 10 sản phẩm thì chia 10
                                                     //$i = 1;
 
                                                     if (!isset($_GET['trang'])){
@@ -124,53 +110,25 @@
                                                         $trangHienTai = $_GET['trang'];
                                                     }
 
+                                                    //Button Prev
+                                                    if ($trangHienTai > 1 && $productButton > 1){
+                                                        echo '<a href="?trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                    }
 
-                                                    if (isset($_GET['nameSearch'])  && !empty($_GET['nameSearch']) ){
-
-                                                         $nameSearch = $_GET['nameSearch'];
-
-                                                        //Button Prev
-                                                        if ($trangHienTai > 1 && $productButton > 1){
-                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                    //Create Button between start
+                                                    for ($i = 1; $i <= $productButton; $i++ ){
+                                                        if ($i == $trangHienTai ){
+                                                            echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+                                                        }else{
+                                                            echo '<a href="?trang='.$i.' ">' .$i. '</a>';
                                                         }
+                                                        
+                                                    }
+                                                    //Create Button between end
 
-                                                        //Create Button between start
-                                                        for ($i = 1; $i <= $productButton; $i++ ){
-                                                            if ($i == $trangHienTai ){
-                                                                echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
-                                                            }else{
-                                                                echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.$i.' ">' .$i. '</a>';
-                                                            }
-                                                            
-                                                        }
-                                                        //Create Button between end
-
-                                                        //Button Next
-                                                        if ($trangHienTai < $productButton && $productButton > 1){
-                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
-                                                        }
-
-                                                    }else{
-                                                        //Button Prev
-                                                        if ($trangHienTai > 1 && $productButton > 1){
-                                                            echo '<a href="trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
-                                                        }
-
-                                                        //Create Button between start
-                                                        for ($i = 1; $i <= $productButton; $i++ ){
-                                                            if ($i == $trangHienTai ){
-                                                                echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
-                                                            }else{
-                                                                echo '<a href="?trang='.$i.' ">' .$i. '</a>';
-                                                            }
-                                                            
-                                                        }
-                                                        //Create Button between end
-
-                                                        //Button Next
-                                                        if ($trangHienTai < $productButton && $productButton > 1){
-                                                            echo '<a href="?trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
-                                                        }
+                                                    //Button Next
+                                                    if ($trangHienTai < $productButton && $productButton > 1){
+                                                        echo '<a href="?trang='.($trangHienTai + 1).' ">Trang Sau <i class="fa fa-angle-double-right"></i></a>';
                                                     }
 
                                                 ?>

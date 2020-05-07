@@ -190,10 +190,10 @@
 						<!-- HEADER-RIGHT-CALLUS END -->
 						<!-- CATEGORYS-PRODUCT-SEARCH START -->
 						<div class="categorys-product-search">
-							<form action="#" method="get" class="search-form-cat">
+							<form action="search-gird.php" method="get" class="search-form-cat">
 								<div class="search-product form-group">
-									<select name="catsearch" class="cat-search">
-										<option value="">Thương hiệu</option>
+									<!-- <select name="catsearch" class="cat-search">
+										<option value="">Thương hiệu</option> -->
 										<!--
 										<option value="2">--Women</option>
 										<option value="3">---T-Shirts</option>
@@ -224,9 +224,9 @@
 										<option value="66">--phone</option>
 										<option value="27">---house</option>	
 										-->								
-									</select>
-									<input type="text" class="form-control search-form" name="s" placeholder="Tìm kiếm... " />
-									<button class="search-button" value="Search" name="s" type="submit">
+									<!-- </select> -->
+									<input type="text" style="width:90%;" class="form-control search-form" name="value" placeholder="Tìm kiếm... " />
+									<button class="search-button" value="Search" name="submit" type="submit">
 										<i class="fa fa-search"></i>
 									</button>									 
 								</div>
