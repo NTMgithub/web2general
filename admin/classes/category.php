@@ -61,6 +61,12 @@
 			$result = $this->db->select($query);
 			return $result;
 		}
+		public function get_list($sql)
+		{
+			$query = $sql;
+			$result = $this->db->select($query);
+			return $result;
+		}
 
 		public function edit_category($tenLoai, $id) //Sửa danh mục
 		{
