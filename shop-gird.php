@@ -478,14 +478,18 @@
 											<div class="product-image">
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 												<!-- <a href="single-product.php" class="new-mark-box">mới</a> -->
-												<div class="overlay-content">
-													<ul>
-														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-													</ul>
-												</div>
+												<form action="shopping_cart.php" method="get">
+													<div class="overlay-content">
+														<ul>
+															<!-- <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
+															<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
+															<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
+															<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li> -->
+															<li><input type="hidden" name="value" value="<?php echo $resultProd['maSanPham']; ?>"/></li>
+															<li><input type="submit" value="submit"/></li>
+														</ul>
+													</div>
+												</form>
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
