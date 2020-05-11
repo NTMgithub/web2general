@@ -190,11 +190,11 @@
 						<!-- HEADER-RIGHT-CALLUS END -->
 						<!-- CATEGORYS-PRODUCT-SEARCH START -->
 						<div class="categorys-product-search">
-							<form action="#" method="get" class="search-form-cat">
+							<form action="search-result.php" method="get" class="search-form-cat">
 								<div class="search-product form-group">
-									<select name="catsearch" class="cat-search">
+									<!-- <select name="catsearch" class="cat-search">
 										<option value="">Thương hiệu</option>
-										<!--
+										
 										<option value="2">--Women</option>
 										<option value="3">---T-Shirts</option>
 										<option value="4">--Men</option>
@@ -223,10 +223,10 @@
 										<option value="25">-handb</option>
 										<option value="66">--phone</option>
 										<option value="27">---house</option>	
-										-->								
-									</select>
-									<input type="text" class="form-control search-form" name="s" placeholder="Tìm kiếm... " />
-									<button class="search-button" value="Search" name="s" type="submit">
+																		
+									</select> -->
+									<input type="text" class="form-control search-form" name="nameSearch" placeholder="Tìm kiếm... " value="<?php if (isset($_GET['nameSearch'])) echo $_GET['nameSearch'];  ?>" style="width: 90%;" />
+									<button class="search-button" value="Tìm kiếm" name="search" type="submit">
 										<i class="fa fa-search"></i>
 									</button>									 
 								</div>

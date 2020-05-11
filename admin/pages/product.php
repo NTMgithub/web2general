@@ -112,7 +112,7 @@
                                             
                                         </table>
                                         <div class="phanTrang">
-                                                <?php 
+                                            <?php 
                                                     $productAll = $prod->getAllProduct(); //Lấy số sản phẩm 
                                                     $productCount = mysqli_num_rows($productAll); //Đếm số dòng
                                                     $productButton = ceil($productCount/5); //Số button sẽ hiển thị, 10 sản phẩm thì chia 10
@@ -131,7 +131,7 @@
 
                                                         //Button Prev
                                                         if ($trangHienTai > 1 && $productButton > 1){
-                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai - 1).' " ><i class="fa fa-angle-double-left"></i> Trang trước</a>';
                                                         }
 
                                                         //Create Button between start
@@ -153,7 +153,7 @@
                                                     }else{
                                                         //Button Prev
                                                         if ($trangHienTai > 1 && $productButton > 1){
-                                                            echo '<a href="trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                            echo '<a href="?trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
                                                         }
 
                                                         //Create Button between start
@@ -174,7 +174,7 @@
                                                     }
 
                                                 ?>
-                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.table-responsive -->
                         </div>
@@ -199,6 +199,7 @@
         </div>
         <!-- /#wrapper -->
 
+        
         <!-- jQuery -->
         <script src="../js/jquery.min.js"></script>
 

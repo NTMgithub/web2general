@@ -1,6 +1,6 @@
 <?php 
     include '../../lib/session.php';
-    Session::checkSession(); //Check phiên đăng nhập hiện tại
+    Session::checkSession(); //Check phiên đăng nhập hiện tại, nếu có giữ nguyên
 ?>
 <?php 
   if (isset($_GET['action']) && $_GET['action'] == 'logout')
