@@ -1,9 +1,10 @@
 <?php
+session_start();
 	$pageTitle = "GIỎ HÀNG | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
 	<?php }
-
+    include_once 'admin/config/config.php';
 	include 'header.php';
 ?>
 		<!-- MAIN-CONTENT-SECTION START -->
@@ -69,35 +70,49 @@
 								<!-- TABLE BODY START -->
 								<tbody>	
 									<!-- SINGLE CART_ITEM START -->
-									<tr>
-										<td class="cart-product">
-											<a href="#"><img alt="Blouse" src="img/product/cart-image1.png"></a>
-										</td>
-										<td class="cart-description">
-											<p class="product-name"><a href="#">AIR FORCE 1 SHADOW AQUA PINK</a></p>
-											<small>SKU : demo_1</small>
-											<small><a href="#">Size : 41, Màu : Aqua Pink</a></small>
-										</td>
-										<td class="cart-avail"><span class="label label-success">Còn hàng</span></td>
-										<td class="cart-unit">
-											<ul class="price text-right">
-												<li class="price">4,500,000 VND</li>
-											</ul>
-										</td>
-										<td class="cart_quantity text-center">
-											<div class="cart-plus-minus-button">
-												<input class="cart-plus-minus" type="text" name="qtybutton" value="1">
+									<div id="infocart">
+									 <?php  
+										foreach($_SESSION['cart']as $key=>$value)//lặp danh sách masanpham.
+										{
+											$item[]=$key;//($key như masanpham)
+										}
+										$str=implode(",",$item);
+
+									    $ds=mysqli_query($conn,"SELECT `tenSanPham`,`mieuTaSanPham`,`trangThaiSanPham`,`giaSanPham` FROM `web2`.`tbl_sanpham`WHERE `maSanPham`IN ('$str')");
+											while($row=mysqli_fetch_array($ds))
+											{?>
+											<tr>
+												<td class="cart-product">
+													<a href="#"><img alt="Blouse" src="admin/pages/uploads/<?php echo $row['hinhAnhSanPham'];?>"></a>
+												</td>
+												<td class="cart-description">
+													<p class="product-name"><a href="#"><?php echo $row['tenSanPham'];?></a></p>
+													<small>SKU : demo_1</small>
+													<small><a href="#">Size : 41, Màu : Aqua Pink</a></small>
+												</td>
+												<td class="cart-avail"><span class="label label-success">Còn hàng</span></td>
+												<td class="cart-unit">
+													<ul class="price text-right">
+														<li class="price"><?php echo $row['giaSanPham'];?></li>
+													</ul>
+												</td>
+												<td class="cart_quantity text-center">
+													<div class="cart-plus-minus-button">
+														<input class="cart-plus-minus" type="text" name="qtybutton" value="1">
+													</div>
+												</td>
+												<td class="cart-delete text-center">
+													<span>
+														<a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
+													</span>
+												</td>
+												<td class="cart-total">
+													<span class="price">4,500,000 VND</span>
+												</td>
+											</tr>
+											<?php}?>
+												
 											</div>
-										</td>
-										<td class="cart-delete text-center">
-											<span>
-												<a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
-											</span>
-										</td>
-										<td class="cart-total">
-											<span class="price">4,500,000 VND</span>
-										</td>
-									</tr>
 									<!-- SINGLE CART_ITEM END -->
 									
 									<!-- SINGLE CART_ITEM START -->
@@ -178,27 +193,11 @@
 										<td id="total_shipping" class="price" colspan="1">0 VND</td>
 									</tr>
 									<tr>
-										<td class="text-right" colspan="3">Khuyến mãi</td>
-										<td class="price" colspan="1">0 VND</td>
-									</tr>
-									<tr>
-										<td class="total-price-container text-right" colspan="3">
-											<span>Tổng thanh toán</span>
-										</td>
-										<td id="total-price-container" class="price" colspan="1">
-											<span id="total-price">4,500,000 VND</span>
-										</td>
-									</tr>
-								</tfoot>		
-								<!-- TABLE FOOTER END -->									
-							</table>
-							<!-- TABLE END -->
-						</div>
-						<!-- CART TABLE_BLOCK END -->
+												<!-- CART TABLE_BLOCK END -->
 					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<div class="first_item primari-box mycartaddress-info">
-							<!-- SINGLE ADDRESS START -->
+							<!- SINGLE ADDRESS START ->
 							<ul class="address">
 								<li>
 									<h3 class="page-subheading box-subheading">
@@ -214,12 +213,12 @@
 								<li><span class="address_phone">+880 1735161598</span></li>
 								<li><span class="address_phone_mobile">+880 1975161598</span></li>
 							</ul>	
-							<!-- SINGLE ADDRESS END -->
-						</div>						
-					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<!- SINGLE ADDRESS END ->
+						</div->						
+					</div-->
+					<!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<div class="second_item primari-box mycartaddress-info">
-							<!-- SINGLE ADDRESS START -->
+							<!- SINGLE ADDRESS START ->
 							<ul class="address">
 								<li>
 									<h3 class="page-subheading box-subheading">
@@ -235,14 +234,21 @@
 								<li><span class="address_phone">+880 1735161598</span></li>
 								<li><span class="address_phone_mobile">+880 1975161598</span></li>
 							</ul>	
-							<!-- SINGLE ADDRESS END -->
+							<!- SINGLE ADDRESS END ->
 						</div>
-					</div>
+					</div-->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- RETURNE-CONTINUE-SHOP START -->
 						<div class="returne-continue-shop">
-							<a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a>
-							<a href="checkout-signin.php" class="procedtocheckout">Tiếp tục đơn hàng<i class="fa fa-chevron-right"></i></a>
+							<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
+							<?php	
+						        if( isset($_SESSION['ten']))
+						            {
+										echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+									}
+								else {
+										echo'<a  href="registration.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+									}?>
 						</div>	
 						<!-- RETURNE-CONTINUE-SHOP END -->						
 					</div>
