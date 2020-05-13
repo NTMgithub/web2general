@@ -47,7 +47,7 @@
                                     }
                                 ?>
                                 <input type="text" name="tenLoai" placeholder="Nhập tên danh mục..." style="width: 50%;height: 34px;padding: 6px 12px;font-size: 14px;" >
-                                <input type="submit" name="submit" value="Thêm" class="btn btn-success" > 
+                                <input type="submit" name="submit" id="addbtn" value="Thêm" class="btn btn-success" > 
                             </form>
                                 <!-- List danh mục-->
                                     <div class="table-responsive" style="margin-top: 2%">
@@ -129,7 +129,8 @@
         <!-- Custom Theme JavaScript -->
         <script src="../js/startmin.js"></script>
 
-       
+
+
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {

@@ -144,6 +144,44 @@
 		}
 
 
+		public function show_search_result($nameSearch)// Show product ,có tìm kiếm theo tên, kết quả tìm kiếm phân trang
+		{
+			//Phân trang
+			$sanPhamTungTrang = 8; //Sản phẩm từng trang
+
+			if (!isset($_GET['trang'])){
+					$trang = 1;
+			}else{
+					$trang = $_GET['trang'];
+			}
+			$tungTrang = ($trang - 1) * $sanPhamTungTrang; //Vị trí bắt đầu $trang
+
+			//Search và show
+			    
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' 
+					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%'
+
+					ORDER BY maSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang "; // Khác biệt với getAllProduct
+			
+				 
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+		public function getAllProductSearch($nameSearch) //Dùng cho phân trang,...
+		{
+			    
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' 
+					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%'
+
+					ORDER BY maSanPham DESC ";
+			
+
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+
 		// public function edit_product($data, $files, $id) //Sửa 
 		// {
 		// 	$tenSanPham = mysqli_real_escape_string($this->db->link, $data['tenSanPham']); //Connect database

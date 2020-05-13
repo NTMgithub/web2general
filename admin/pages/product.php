@@ -98,8 +98,10 @@
                                             
                                         </table>
                                         <div class="phanTrang">
+
                                                 <?php 
                                                     $productAll = $prod->getAllProduct();
+
                                                     $productCount = mysqli_num_rows($productAll); //Đếm số dòng
                                                     $productButton = ceil($productCount/10); //Số button sẽ hiển thị, 10 sản phẩm thì chia 10
                                                     //$i = 1;
@@ -115,24 +117,53 @@
                                                         echo '<a href="?trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
                                                     }
 
-                                                    //Create Button between start
-                                                    for ($i = 1; $i <= $productButton; $i++ ){
-                                                        if ($i == $trangHienTai ){
-                                                            echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
-                                                        }else{
-                                                            echo '<a href="?trang='.$i.' ">' .$i. '</a>';
-                                                        }
-                                                        
-                                                    }
-                                                    //Create Button between end
 
+                                                    if (isset($_GET['nameSearch'])  && !empty($_GET['nameSearch']) ){
+
+                                                         $nameSearch = $_GET['nameSearch'];
+
+                                                        //Button Prev
+                                                        if ($trangHienTai > 1 && $productButton > 1){
+                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai - 1).' " ><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                        }
+
+                                                        //Create Button between start
+                                                        for ($i = 1; $i <= $productButton; $i++ ){
+                                                            if ($i == $trangHienTai ){
+                                                                echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+                                                            }else{
+                                                                echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.$i.' ">' .$i. '</a>';
+                                                            }
+                                                            
+                                                        }
+                                                        //Create Button between end
+
+                                                        //Button Next
+                                                        if ($trangHienTai < $productButton && $productButton > 1){
+                                                            echo '<a href="?nameSearch='.$nameSearch.'&search=Tìm+kiếm&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+                                                        }
+
+                                                    }else{
+                                                        //Button Prev
+                                                        if ($trangHienTai > 1 && $productButton > 1){
+                                                            echo '<a href="?trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                        }
+
+                                                        //Create Button between start
+                                                        for ($i = 1; $i <= $productButton; $i++ ){
+                                                            if ($i == $trangHienTai ){
+                                                                echo '<a href="?trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+                                                            }else{
+                                                                echo '<a href="?trang='.$i.' ">' .$i. '</a>';
+                                                            }
+                                                            
                                                     //Button Next
                                                     if ($trangHienTai < $productButton && $productButton > 1){
                                                         echo '<a href="?trang='.($trangHienTai + 1).' ">Trang Sau <i class="fa fa-angle-double-right"></i></a>';
                                                     }
 
                                                 ?>
-                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.table-responsive -->
                         </div>
@@ -157,6 +188,7 @@
         </div>
         <!-- /#wrapper -->
 
+        
         <!-- jQuery -->
         <script src="../js/jquery.min.js"></script>
 
