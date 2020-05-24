@@ -91,14 +91,27 @@
                                                     <td>
                                                         <a href="useredit.php?username=<?php echo $result['tenDangNhap'] ?>" onclick="return popitup('useredit.php?username=<?php echo $result['tenDangNhap'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
                                                         
-                                                        <a href="?deletename=<?php echo $result['tenDangNhap'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a>
+                                                       <!--  <a href="?deletename=<?php echo $result['tenDangNhap'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a> -->
+                                                    
+                                                       <?php 
 
-                                                        <a href="?statusname=<?php echo $result['tenDangNhap'] ?>" ><button type="button" class="btn btn-warning">Mở / Khóa</button></a>
+                                                       $tenDN = $result['tenDangNhap'];
+                                                        if (Session::get('tenDangNhap') != $tenDN){
+                                                                
+                                                         echo "
+                                                        <a href='?statusname=$tenDN' >
+                                                         <button type='submit' class='btn btn-warning'>Mở / Khóa</button>
+                                                         </a>
+                                                         ";
+
+                                                        }
+
+                                                        ?>
       
                                                     </td>
                                                 </tr>
                                                 <?php 
-                                                    }
+                                                        }
                                                     }
                                                 }
                                                 ?>
