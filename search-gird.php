@@ -2,24 +2,28 @@
 	include_once 'classes/category.php';
 	include_once 'classes/product.php';
 	include_once 'admin/helpers/format.php';
+	include_once 'admin/lib/database.php';
 ?>
 
 <?php 
-	if (!isset($_GET['maLoai']) || $_GET['maLoai'] == ''){
+	if (!isset($_GET['value']) || $_GET['value'] == ''){
         echo "<script>window.location = '404.php'</script>";
     }else{
-        $idLoai = $_GET['maLoai'];
+        $idLoai = $_GET['value'];
     }
-
-    $fm = new Format();
+	$qry = "SELECT * FROM  tbl_sanpham WHERE tenSanPham LIKE '%$idLoai%' OR sizeSanPham LIKE '%$idLoai%' 
+			OR mieuTaSanPham LIKE '%$idLoai%' OR giaSanPham LIKE '%$idLoai%' LIMIT 8";
+	$fm = new Format();
+	$db = new database();
     $prod = new product();
 	$category = new category();
-	$catList = $category->getcatbyId($idLoai);
-	$resultCat = $catList->fetch_assoc();
+	$result = $db->select($qry);
+	// $catList = $category->getcatbyID($idLoai);
+	// $resultCat = $catList->fetch_assoc();
 ?>
 
 <?php
-	$pageTitle = "GIÀY ". $resultCat['tenLoai']." | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
+	$pageTitle = "Tìm kiếm | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
 	<?php }
@@ -35,7 +39,7 @@
 						<div class="bstore-breadcrumb">
 							<a href="index.php">TRANG CHỦ</a>
 							<span><i class="fa fa-caret-right"></i></span>
-							<span>GIÀY <?php echo $resultCat['tenLoai']; ?></span>
+							<span>KẾT QUẢ TÌM KIẾM</span>
 						</div>
 						<!-- BSTORE-BREADCRUMB END -->
 					</div>
@@ -50,7 +54,7 @@
 								<span class="sidebar-title">LOẠI ĐÃ LỌC: </span>
 								<ul class="filtering-menu">
 									<li>
-										Thương hiệu: <?php echo $resultCat['tenLoai']; ?>
+										Thương hiệu: Tất cả
 										<a href="#"><i class="fa fa-remove"></i></a>
 									</li>
 									<li>
@@ -237,105 +241,7 @@
 									</li>
 								</ul>
 							</div>
-							<!-- SINGLE SIDEBAR COLOR END -->
-							<!-- SINGLE SIDEBAR COMPOSITIONS START -->
-						<!--	<div class="product-single-sidebar">
-								<span class="sidebar-title">Compositions</span>
-								<ul>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="compositions"/>
-											<span></span>
-										</label>
-										<a href="#">Cotton<span>(8)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="compositions"/>
-											<span></span>
-										</label>
-										<a href="#"> Polyester<span>(3)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="compositions"/>
-											<span></span>
-										</label>
-										<a href="#"> Viscose<span>(2)</span></a>
-									</li>
-								</ul>
-							</div> -->
-							<!-- SINGLE SIDEBAR COMPOSITIONS END -->
-							<!-- SINGLE SIDEBAR STYLES START -->
-						<!--	<div class="product-single-sidebar">
-								<span class="sidebar-title">Styles</span>
-								<ul>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="styles"/>
-											<span></span>
-										</label>
-										<a href="#">Casual<span>(5)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="styles"/>
-											<span></span>
-										</label>
-										<a href="#">Dressy<span>(1)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="styles"/>
-											<span></span>
-										</label>
-										<a href="#">Girly<span>(7)</span></a>
-									</li>
-								</ul>
-							</div>	-->
-							<!-- SINGLE SIDEBAR STYLES END -->
-							<!-- SINGLE SIDEBAR PROPERTIES START -->
-						<!--	<div class="product-single-sidebar">
-								<span class="sidebar-title">Properties</span>
-								<ul>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="properties"/>
-											<span></span>
-										</label>
-										<a href="#">Colorful Dress<span>(4)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="properties"/>
-											<span></span>
-										</label>
-										<a href="#">Maxi Dress <span>(1)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="properties"/>
-											<span></span>
-										</label>
-										<a href="#">Midi Dress<span>(2)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="properties"/>
-											<span></span>
-										</label>
-										<a href="#">Short Dress<span>(2)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="properties"/>
-											<span></span>
-										</label>
-										<a href="#"> Short Sleeve<span>(4)</span></a>
-									</li>
-								</ul>
-							</div>	-->
-							<!-- SINGLE SIDEBAR PROPERTIES END -->
+						
 						</div>
 						<!-- PRODUCT-LEFT-SIDEBAR END -->
 						<!-- SINGLE SIDEBAR TAG START -->
@@ -372,18 +278,16 @@
 							<div class="product-category-title">
 								<!-- PRODUCT-CATEGORY-TITLE START -->
 								<h1>
-									<span class="cat-name">GIÀY <?php echo $resultCat['tenLoai']; ?></span>
+									<!-- <span class="cat-name">GIÀY <?php echo $resultCat['tenLoai']; ?></span> -->
 									<span class="count-product">
 										Có 
 									<?php 
-										$countProd = $category->count_product_withcategoryID($idLoai);
-										$resultcountProd = $countProd->fetch_assoc();
-
-										if ($resultcountProd['soluongprod'] == '')
+									$length=mysqli_num_rows($result);
+										if ($length== 0)
 										{
 											echo '0';
 										}
-										else echo $resultcountProd['soluongprod'];
+										else echo $length;
 									?> sản phẩm.</span>
 								</h1>
 								<!-- PRODUCT-CATEGORY-TITLE END -->
@@ -403,20 +307,7 @@
 											</select>												
 										</div>
 									</div>
-									<!-- SHOORT-BY END -->
-									<!-- SHOW-PAGE START -->
-									<!-- <div class="show-page">
-										<label for="perPage">Hiển thị</label>
-										<div class="s-page-select-option">
-											<select name="show" id="perPage">
-												<option value="">11</option>
-												<option value="">12</option>
-											</select>													
-										</div>
-										<span>sản phẩm trên một trang</span>										
-									</div> -->
-									<!-- SHOW-PAGE END -->
-									<!-- VIEW-SYSTEAM START -->
+								
 									<div class="view-systeam">
 										<label for="perPage">Xem dạng:</label>
 										<ul>
@@ -426,38 +317,7 @@
 									</div>
 									<!-- VIEW-SYSTEAM END -->
 								</div>
-								<!-- PRODUCT-SHOOTING-RESULT START -->
-								<!-- <div class="product-shooting-result">
-									<form action="#">
-										<button class="btn compare-button">
-											SO SÁNH (<span class="compare-value">1</span>)
-											<i class="fa fa-chevron-right"></i>
-										</button>
-									</form>
-									<div class="showing-item">
-										<span>Đang hiển thị 1 - 16 trên 17 sản phẩm</span>
-									</div>
-									<div class="showing-next-prev">
-										<ul class="pagination-bar">
-											<li class="disabled">
-												<a href="#" ><i class="fa fa-chevron-left"></i>Trang trước</a>
-											</li>
-											<li class="active">
-												<span><a class="pagi-num" href="#">1</a></span>
-											</li>
-											<li>
-												<span><a class="pagi-num" href="#">2</a></span>
-											</li>
-											<li>
-												<a href="#" >Trang sau<i class="fa fa-chevron-right"></i></a>
-											</li>
-										</ul>
-										<form action="#">
-											<button class="btn showall-button">Hiển thị tất cả</button>
-										</form>
-									</div>
-								</div> -->
-								<!-- PRODUCT-SHOOTING-RESULT END -->
+							
 							</div>
 						</div>
 						<!-- ALL GATEGORY-PRODUCT START -->
@@ -465,10 +325,8 @@
 							<div class="row">
 								<ul class="gategory-product">
 									<?php 
-										$prodList = $prod->show_productbyCat($resultCat['maLoai']);
-										if ($prodList){
-											while ($resultProd = $prodList->fetch_assoc()){
-												if ( $resultProd['trangThaiSanPham'] == '1' ){
+										while ($row=mysqli_fetch_assoc($result)){
+											if ($row['trangThaiSanPham'] == '1' ){
 
 									?>
 
@@ -476,20 +334,16 @@
 									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
 										<div class="single-product-item">
 											<div class="product-image">
-												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
+												<a href="single-product.php?maSanPham=<?php echo $row['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $row['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 												<!-- <a href="single-product.php" class="new-mark-box">mới</a> -->
-												<form action="shopping_cart.php" method="get">
-													<div class="overlay-content">
-														<ul>
-															<!-- <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li> -->
-															<li><input type="hidden" name="value" value="<?php echo $resultProd['maSanPham']; ?>"/></li>
-															<li><input type="submit" value="submit"/></li>
-														</ul>
-													</div>
-												</form>
+												<div class="overlay-content">
+													<ul>
+														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
+														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
+														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
+														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+													</ul>
+												</div>
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
@@ -504,14 +358,14 @@
 														<span>1 Đánh giá</span>
 													</div>
 												</div>
-												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>">
+												<a href="single-product.php?maSanPham=<?php echo $row['maSanPham']; ?>">
 														<span style="text-transform: uppercase;" >
-															<?php echo $textSh = $fm->textShorten($resultProd['tenSanPham'], 40); //Giới hạn kí tự để hiển thị 
+															<?php echo $textSh = $fm->textShorten($row['tenSanPham'], 40); //Giới hạn kí tự để hiển thị 
 															?>
 														</span>
 												</a>
 												<div class="price-box">
-													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+													<span class="price"><?php echo $row['giaSanPham']; ?> VND</span>
 												</div>	
 											</div>
 										</div>	
@@ -521,7 +375,6 @@
 									<?php 
 											}
 										}
-									}
 									?>
 
 								</ul>
@@ -543,8 +396,7 @@
 							</div> -->
 							<div class="phanTrang">
                                                 <?php 
-                                                    $productAll = $prod->getAllProductbyCat($resultCat['maLoai']);
-                                                    $productCount = mysqli_num_rows($productAll); //Đếm số dòng
+                                                    $productCount = $length;
                                                     $productButton = ceil($productCount/8); //Số button sẽ hiển thị,  sản phẩm/trang, ceil làm tròn
                                                     //$i = 1;
 
@@ -557,15 +409,15 @@
                                                     
                                                     //Button Prev
                                                     if ($trangHienTai > 1 && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+                                                        echo '<a href="?value='.$idLoai.'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
                                                     }
 
                                                     //Create Button between start
                                                     for ($i = 1; $i <= $productButton; $i++ ){
                                                         if ($i == $trangHienTai ){
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+                                                            echo '<a href="?value='.$idLoai.'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
                                                         }else{
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
+                                                            echo '<a href="?value='.$idLoai.'&trang='.$i.' ">' .$i. '</a>';
                                                         }
                                                         
                                                     }
@@ -573,7 +425,7 @@
 
                                                     //Button Next
                                                     if ($trangHienTai < $productButton && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+                                                        echo '<a href="?value='.$idLoai.'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
                                                     }
 
                                                 ?>
