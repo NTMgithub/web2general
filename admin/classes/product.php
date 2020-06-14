@@ -76,28 +76,53 @@
 			}
 		}
 
-		public function show_product()
-		{
 
-			$sanPhamTungTrang = 10; //Sản phẩm từng trang
+		public function show_product()// Show product ,có tìm kiếm theo tên, kết quả tìm kiếm phân trang
+		{
+			//Phân trang
+			$sanPhamTungTrang = 5; //Sản phẩm từng trang
 
 			if (!isset($_GET['trang'])){
-				$trang = 1;
+					$trang = 1;
 			}else{
-				$trang = $_GET['trang'];
+					$trang = $_GET['trang'];
 			}
 			$tungTrang = ($trang - 1) * $sanPhamTungTrang; //Vị trí bắt đầu $trang
 
+			//Search và show
+			if (isset($_GET['nameSearch']) && !empty($_GET['nameSearch']) ){
 
-			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+			    $nameSearch = $_GET['nameSearch'];
+			    
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' 
+					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%'
+
+					ORDER BY maSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang "; // Khác biệt với getAllProduct
+			}else{
+
+			    $query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+			} 
+				 
 			$result = $this->db->select($query);
 			return $result;
 		}
 
-		public function getAllProduct()
+
+
+		public function getAllProduct() //Dùng cho phân trang,...
 		{
 
-			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham DESC "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+			if (isset($_GET['nameSearch']) && !empty($_GET['nameSearch']) ){
+				$nameSearch = $_GET['nameSearch'];
+			    
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' 
+					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%'
+
+					ORDER BY maSanPham DESC ";
+			}else{
+					$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham DESC "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+			}
+
 			$result = $this->db->select($query);
 			return $result;
 		}
@@ -228,6 +253,9 @@
 				}
 			
 		}
+		
+
+		
 		//END ADMIN
 		
 		//START FRONT-END

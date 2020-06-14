@@ -5,7 +5,7 @@
 ?>
 
 <?php 
-	if (!isset($_GET['maLoai']) || $_GET['maLoai'] == ''){
+	if (!isset($_GET['maLoai']) || $_GET['maLoai'] == ''|| $_GET['maLoai']>14 || $_GET['maLoai']<0  ){
         echo "<script>window.location = '404.php'</script>";
     }else{
         $idLoai = $_GET['maLoai'];
@@ -61,7 +61,7 @@
 							</div>
 							<!-- SINGLE SIDEBAR ENABLED FILTERS END -->
 							<!-- SINGLE SIDEBAR CATEGORIES START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Thương hiệu</span>
 								<ul>
 									<li>
@@ -93,10 +93,10 @@
 										<a href="#">Giày VANS<span> (10)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR CATEGORIES END -->
 							<!-- SINGLE SIDEBAR AVAILABILITY START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Tình trạng hàng</span>
 								<ul>
 									<li>
@@ -107,10 +107,10 @@
 										<a href="#">Còn hàng<span> (17)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR AVAILABILITY END -->
 							<!-- SINGLE SIDEBAR CONDITION START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Điều kiện</span>
 								<ul>
 									<li>
@@ -128,10 +128,10 @@
 										<a href="#">Khuyến mãi<span> (13)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR CONDITION END -->
 							<!-- SINGLE SIDEBAR MANUFACTURER START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Nhà cung cấp</span>
 								<ul>
 									<li>
@@ -149,7 +149,7 @@
 										<a href="#">Shopee<span> (13)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR MANUFACTURER END -->
 							<!-- SINGLE SIDEBAR PRICE START -->
 							<div class="product-single-sidebar">
@@ -168,39 +168,27 @@
 							<div class="product-single-sidebar">
 								<span class="sidebar-title">Size</span>
 								<ul>
+									<?php 
+										
+										$querySize = mysqli_query($conn, "SELECT *, COUNT(maSanPham) FROM `tbl_sanpham` WHERE trangThaiSanPham = '1' AND maLoai = '$idLoai' GROUP BY sizeSanPham ");
+										while ($fetchSize = mysqli_fetch_assoc($querySize)){
+
+									?>
 									<li>
-										<label class="cheker">
-											<input type="checkbox" name="Size"/>
-											<span></span>
-										</label>
-										<a href="#">38<span> (10)</span></a>
+										<span class="fa fa-angle-double-right"></span>
+										<a href="shop-gird.php?maLoai=<?php echo $idLoai; ?>&size=<?php echo $fetchSize['sizeSanPham'];  ?>"><?php echo $fetchSize['sizeSanPham'];  ?><span> (<?php echo $fetchSize['COUNT(maSanPham)'];  ?>)</span></a>
+										<?php 
+
+										?>
 									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="Size"/>
-											<span></span>
-										</label>
-										<a href="#">39<span> (10)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="Size"/>
-											<span></span>
-										</label>
-										<a href="#">40<span> (10)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="Size"/>
-											<span></span>
-										</label>
-										<a href="#">41<span> (10)</span></a>
-									</li>
+									<?php 
+										}
+									?>
 								</ul>
 							</div>
 							<!-- SINGLE SIDEBAR SIZE END -->
 							<!-- SINGLE SIDEBAR COLOR START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Màu</span>
 								<ul class="product-color-var">
 									<li>
@@ -236,7 +224,7 @@
 										<a href="#">Hồng<span> (6)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR COLOR END -->
 							<!-- SINGLE SIDEBAR COMPOSITIONS START -->
 						<!--	<div class="product-single-sidebar">
@@ -388,21 +376,30 @@
 								</h1>
 								<!-- PRODUCT-CATEGORY-TITLE END -->
 							</div>
+
 							<div class="product-shooting-area">
+
 								<div class="product-shooting-bar">
+
+									<form method="post" action="">
 									<!-- SHOORT-BY START -->
 									<div class="shoort-by">
 										<label for="productShort">Sắp xếp theo</label>
+										
 										<div class="short-select-option">
+											
 											<select name="sortby" id="productShort">
+												 
 												<option value="">--</option>
-												<option value="">Giá: Thấp nhất trước</option>
-												<option value="">Giá: Cao nhất trước</option>
-												<option value="">Tên sản phẩm: A đến Z</option>
-												<option value="">Tên sản phẩm: Z đến A</option>
-											</select>												
+												<option value='Thấp cao' <?php if (isset($_POST['sortby']) && $_POST['sortby'] == 'Thấp cao' ) echo 'selected'; ?> > Giá: Thấp nhất trước</option>
+												<option value='Cao thấp' <?php if (isset($_POST['sortby']) && $_POST['sortby'] == 'Cao thấp' ) echo 'selected'; ?> >Giá: Cao nhất trước</option>
+												
+											</select>
+																	
 										</div>
 									</div>
+									<input type="submit" value="Sắp xếp" style="width: 8%; background-color: #f7f2ec;height: 30px;">	
+									</form>	 
 									<!-- SHOORT-BY END -->
 									<!-- SHOW-PAGE START -->
 									<!-- <div class="show-page">
@@ -417,11 +414,11 @@
 									</div> -->
 									<!-- SHOW-PAGE END -->
 									<!-- VIEW-SYSTEAM START -->
-									<div class="view-systeam">
+									<div class="view-systeam" style="margin-top: -25px">
 										<label for="perPage">Xem dạng:</label>
 										<ul>
 											<li class="active"><a href="shop-gird.php?maLoai=<?php echo $resultCat['maLoai']; ?>"><i class="fa fa-th-large"></i></a><br />Lưới</li>
-											<li><a href="shop-list.php?maLoai=<?php echo $resultCat['maLoai']; ?>"><i class="fa fa-th-list"></i></a><br />Danh sách</li>
+											<!-- <li><a href="shop-list.php?maLoai=<?php //echo $resultCat['maLoai']; ?>"><i class="fa fa-th-list"></i></a><br />Danh sách</li> -->
 										</ul>
 									</div>
 									<!-- VIEW-SYSTEAM END -->
@@ -474,22 +471,26 @@
 
 									<!-- SINGLE ITEM START -->
 									<li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
+									
 										<div class="single-product-item">
 											<div class="product-image">
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 												<!-- <a href="single-product.php" class="new-mark-box">mới</a> -->
-												<form action="shopping_cart.php" method="get">
 													<div class="overlay-content">
-														<ul>
-															<!-- <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
+														<!--ul>
+															<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
+															
+															
+															<li><a href="add_cart.php?id=<?php echo $resultProd['maSanPham']; ?>" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
+															
 															<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li> -->
-															<li><input type="hidden" name="value" value="<?php echo $resultProd['maSanPham']; ?>"/></li>
-															<li><input type="submit" value="submit"/></li>
-														</ul>
+															<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+															<!- <li><input type="hidden" name="value" value=" //echo $resultProd['maSanPham']; ?>"/></li>
+															<li><input type="submit" value="submit"/></li> ->
+															
+														</ul-->
 													</div>
-												</form>
+													<!--?php include "add_cart.php";?-->
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
@@ -511,7 +512,7 @@
 														</span>
 												</a>
 												<div class="price-box">
-													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+													<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 												</div>	
 											</div>
 										</div>	
@@ -526,6 +527,7 @@
 
 								</ul>
 							</div>
+							
 						</div>
 						<!-- ALL GATEGORY-PRODUCT END -->
 
@@ -547,6 +549,9 @@
                                                     $productCount = mysqli_num_rows($productAll); //Đếm số dòng
                                                     $productButton = ceil($productCount/8); //Số button sẽ hiển thị,  sản phẩm/trang, ceil làm tròn
                                                     //$i = 1;
+                                                    if (isset($_POST['sortby']) && !empty($_POST['sortby'])){
+
+                                                    }
 
                                                     if (!isset($_GET['trang'])){
                                                         $trangHienTai = 1;
@@ -554,27 +559,51 @@
                                                         $trangHienTai = $_GET['trang'];
                                                     }
 
+                                                    if (isset($_GET['size']) && !empty($_GET['size'])){
+                                                    	$sizeSP = $_GET['size'];
+                                                    	//Button Prev
+	                                                    if ($trangHienTai > 1 && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+	                                                    }
+
+	                                                    //Create Button between start
+	                                                    for ($i = 1; $i <= $productButton; $i++ ){
+	                                                        if ($i == $trangHienTai ){
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+	                                                        }else{
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.$i.' ">' .$i. '</a>';
+	                                                        }
+	                                                        
+	                                                    }
+	                                                    //Create Button between end
+
+	                                                    //Button Next
+	                                                    if ($trangHienTai < $productButton && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+	                                                    }
+                                                    }else{
+                                                    	//Button Prev
+	                                                    if ($trangHienTai > 1 && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+	                                                    }
+
+	                                                    //Create Button between start
+	                                                    for ($i = 1; $i <= $productButton; $i++ ){
+	                                                        if ($i == $trangHienTai ){
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+	                                                        }else{
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
+	                                                        }
+	                                                        
+	                                                    }
+	                                                    //Create Button between end
+
+	                                                    //Button Next
+	                                                    if ($trangHienTai < $productButton && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+	                                                    }
+                                                    }
                                                     
-                                                    //Button Prev
-                                                    if ($trangHienTai > 1 && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
-                                                    }
-
-                                                    //Create Button between start
-                                                    for ($i = 1; $i <= $productButton; $i++ ){
-                                                        if ($i == $trangHienTai ){
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
-                                                        }else{
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
-                                                        }
-                                                        
-                                                    }
-                                                    //Create Button between end
-
-                                                    //Button Next
-                                                    if ($trangHienTai < $productButton && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
-                                                    }
 
                                                 ?>
                                 </div>
@@ -607,6 +636,13 @@
         </style>
 		<!-- JS 
 		===============================================-->
+
+		<script type="text/javascript">
+			function thapcao(){
+
+			}
+
+		</script>
 		<!-- jquery js -->
 		<script src="js/vendor/jquery-1.11.3.min.js"></script>
 		

@@ -85,12 +85,6 @@
 			return $result;
 		}
 
-		public function getUserByNameLimit1($name){ //Dùng để sửa
-			$query = "SELECT  FROM tbl_quantri WHERE tenDangNhap = '$name' LIMIT 1 ";
-			$result = $this->db->select($query);
-			return $result;
-		}
-
 		public function changeStatusUser($name)
 		{
 

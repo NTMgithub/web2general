@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 	$pageTitle = "ĐĂNG NHẬP/ĐĂNG KÝ | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
@@ -54,6 +57,15 @@
 						<form class="new-account-box" id="accountLogin" name="Forms" onsubmit="return validate()" method="post" action="check1.php">
 								<h3 class="box-subheading">ĐÃ CÓ TÀI KHOẢN?</h3>
 								<div class="form-content">
+								<div id="thongbao"><?php if(isset($_SESSION['success'])){
+									echo $_SESSION['success'];
+								}
+							//endif;
+								else {
+									unset($_SESSION['success']);
+								}
+							
+							// {unset ($_SESSION['success']);}?></div>
 									<div class="form-group primary-form-group">
 										<label for="loginemail">Tên đăng nhập</label>
 										<input type="text" value="" name="loginname" id="loginname" class="form-control input-feild">

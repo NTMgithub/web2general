@@ -12,10 +12,14 @@
     include_once '../classes/product.php';
     include_once '../classes/user.php';
     include_once '../classes/customer.php';
+    include_once '../classes/donhang.php';
+    include_once '../classes/hoadon.php';
 
     $prod = new product();
     $user = new user();
     $customer = new customer();
+    $donhang = new donhang();
+    $hoadon = new hoadon();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,10 +53,13 @@
         <!-- Morris Charts CSS -->
         <link href="../css/morris.css" rel="stylesheet">
 
+        <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
         <!-- Custom Fonts -->
         <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
         <link rel="shortcut icon" type="image/x-icon" href="../unnamed.png">
+
+        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -188,11 +195,30 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="orders.php"><i class="fa fa-shopping-cart"></i> Quản lý đơn hàng</a>
+                                <a href="#"><i class="fa fa-archive"></i> Quản lý hóa đơn <span class="fa arrow"></span> </a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="orders.php"><span class="fa fa-caret-right"></span><span class="fa fa-cart-plus"></span> Quản lý đơn hàng</a>
+                                    </li>
+                                    <li>
+                                        <a href="hoadonlist.php"><span class="fa fa-caret-right"></span><span class="fa fa-archive"></span> Quản lý hóa đơn</a>
+                                    </li>
+                                </ul>
                             </li>
                            
                            <li>
-                                <a href="forms.php"><i class="fa fa-area-chart"></i> Thống kê doanh thu</a>
+                                <!--a href="forms.php"><i class="fa fa-area-chart"></i> Thống kê doanh thu</a-->
+                                <a href="#"><i class="fa fa-pie-chart"></i> Thống kê doanh thu <span class="fa arrow"></span> </a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="statistical_product.php"><span class="fa fa-caret-right"></span> Thống kê theo sản phẩm</a>
+                                       
+                                    </li>
+                                    <li>
+                                        <a href="statistical_months.php"><span class="fa fa-caret-right"></span> Thống kê doanh thu theo tháng<span ></span></a>
+                                    </li>
+                                    
+                                </ul>
                             </li>
 
                              <li>

@@ -94,7 +94,7 @@
                                                     <td>
                                                         <a href="customeredit.php?userid=<?php echo $result['maKhachHang'] ?>" onclick="return popitup('customeredit.php?userid=<?php echo $result['maKhachHang'] ?>')"><button type="button" class="btn btn-info">Sửa</button></a>
                                                         
-                                                        <a href="?deleteid=<?php echo $result['maKhachHang'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a>
+                                                        <!-- <a href="?deleteid=<?php //echo $result['maKhachHang'] ?>" ><button type="button" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');" >Xóa</button></a> -->
 
                                                         <a href="?statusid=<?php echo $result['maKhachHang'] ?>" ><button type="button" class="btn btn-warning">Mở / Khóa</button></a>
       

@@ -5,7 +5,8 @@
 	<?php }
 
 	include 'header.php';
-?>f
+	include 'config.php';
+?>
 		<!-- MAIN-CONTENT-SECTION START -->
 		<section class="main-content-section">
 			<div class="container">
@@ -48,78 +49,39 @@
 						<!-- SHOPING-CART-MENU END -->
 					</div>
 					<!-- ADDRESS AREA START --> 
+					
 					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
 						<div class="form-group primary-form-group p-info-group deli-address-group">
-						<form class="primari-box personal-info-box" id="personalinfo" name="Formadress" onsubmit="return validateAdress()" method="post" action="#" >
-						  <label>Chọn một địa chỉ giao hàng:</label>
+						<?php $db=mysqli_query($conn,"SELECT *FROM `web2`.`tbl_diachi`");?>
+						<form class="primari-box personal-info-box" id="personalinfo" name="Formaddress" onsubmit="return validateAdress()" method="post" action="address.php" >
+						  <center >ĐỊA CHỈ</center>
+						<label>Chọn một địa chỉ giao hàng:</label>
 							<div class="birth-day delivery-address">
-								<select id="deli-address" name="deliveryaddress">
-									<option value="">Vũng Tàu</option>
-									<option value="">Đồng Nai</option>
-									<option value="">TPHCM</option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									<option value=""></option>
-									 
+							<select id="address_tinh" name="address_tinh">
+								<?php  while($row=mysqli_fetch_array($db))
+						{ ?>
+										<option value="<?php echo $row['id'];?>"><?php echo $row['address'];?></option>
+
+									<?php	}?> 
+								</select>
+																		
+							</div>
+							
+							<label>Chọn Quận/Huyện:</label>
+							<div class="birth-day delivery-address">
+								<select id="address1" name="address1" >
+								
 								</select>												
 							</div>
+							
+							<label>Chọn Xã</label>
+							<div class="birth-day delivery-address">
+								<select id="deli-address" name="deli-address" >
+									
+								</select>													
+							</div>
+							
+							
 							       <div class="form-group primary-form-group p-info-group">
 										<label for="firstname">Tên người nhận<sup>*</sup></label>
 										<input type="text" value="" name="firstname" id="firstname" class="form-control input-feild">
@@ -128,13 +90,13 @@
 										<label for="lastname">Số điện thoại <sup>*</sup></label>
 										<input type="text" value="" name="phone" id="phone" class="form-control input-feild">
 									</div>
-									<div class="form-group primary-form-group p-info-group">
+									<!--div class="form-group primary-form-group p-info-group">
 										<label for="email">Địa chỉ giao hàng<sup>*</sup></label>
 										<input type="text" value="" name="address" id="address" class="form-control input-feild">
-								   </div>
+								   </div-->
 								   
 
-							<div class="form-group primary-form-group p-info-group chose-address">
+							<!--div class="form-group primary-form-group p-info-group chose-address">
 								<label class="cheker">
 									<input type="checkbox" name="checkbox">
 									<span></span>
@@ -146,7 +108,7 @@
 									<span></span>
 								</label>
 								<a href="#">Dùng địa chỉ giao hàng làm địa chỉ trên hóa đơn.</a>
-						</div>
+						</div-->
 	                   </div>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="add-new-address">
@@ -160,11 +122,52 @@
 							<!-- RETURNE-CONTINUE-SHOP START -->
 							<div class="returne-continue-shop ship-address">
 								<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
-								<input   type="submit" value="Đặt hàng"  > 
+								<input   type="submit" value="TIẾN HÀNH ĐẶT HÀNG"  > 
 							</div>	
 							<!-- RETURNE-CONTINUE-SHOP END -->		
 					   </div>
-	          </form>	
+			  </form>
+			  <script type="text/javascript">
+					    // function truyenbien()
+						// {
+						// 	var d=document.getElementById("address_tinh");
+						// 	var show=d.options[d.selectedIndex].value;
+						// 	var showstr=JSON.stringify(show);
+						// 	$.ajax=({
+						// 		url:'checkout-address.php',
+						// 		type:'post',
+						// 		data:{show:showstr}
+						// 	});
+						// 	//gobal(document.getElementById("name").value=show);
+						// }
+						$(document).ready(function(){
+							$('#address_tinh').change(function(){
+								var id=$('#address_tinh').val();
+								$.ajax({
+									url:"check_out.php",
+									method:"POST",
+									data:{id:id},
+									success:function(data){
+										$('#address1').html(data);
+									}
+								});
+							});
+						});
+						$(document).ready(function()
+						{
+							$('#address1').change(function(){
+								var mahuyen=$('#address1').val();
+								$.ajax({
+									url:"check_out.php",
+									method:"POST",
+									data:{mahuyen:mahuyen},
+									success:function (data) {
+										$('#deli-address').html(data);
+									}
+								});
+							});
+						});
+					</script>	
 						<!-- RETURNE-CONTINUE-SHOP END -->		
 					</div>					
 				</div>

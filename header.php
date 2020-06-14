@@ -1,16 +1,26 @@
 <?php 
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+		   session_start();
+	  }
+
+	  $sID = session_id();  
+
 	include_once 'classes/product.php';
 	include_once 'classes/category.php';
-	//include_once 'admin/config/config.php';
-	include 'shopping_cart.php';
+	include 'config.php';
+	
+	$ds=mysqli_query($conn,"SELECT `id_giohang`,`sessionID`, SUM(soLuongSanPham) FROM `tbl_giohang` WHERE `sessionID`='$sID' ");
+    $datads = mysqli_fetch_assoc($ds);
+    $soluongsanpham= $datads['SUM(soLuongSanPham)'];
+              
+    $_SESSION['soluong']=$soluongsanpham;
+
 ?>
 <?php 
 	$prod = new product();
 	$cat = new category();
 
 ?>
-
 <!doctype html>
 <!--[if IE]><![endif]-->
 <!--[if lt IE 7 ]> <html lang="en" class="ie6">    <![endif]-->
@@ -18,7 +28,7 @@
 <!--[if IE 8 ]>    <html lang="en" class="ie8">    <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="ie9">    <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html lang="en"><!--<![endif]-->
+<html lang="vi"><!--<![endif]-->
     
 <head>
         <meta charset="utf-8">
@@ -33,7 +43,7 @@
 		<!-- Favicon
 		============================================ -->
 		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-		
+		<script src="library/jquery-3.4.1.min.js"></script>
 		<!-- FONTS
 		============================================ -->	
 		<link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'> 
@@ -106,6 +116,8 @@
 		<!-- MODERNIZR JS 
 		============================================ -->
         <script src="js/check.js"></script>
+		<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script-->
+		<script src="js/jquery.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -164,19 +176,43 @@
 						<div class="header-right-menu">
 							<nav>
 								<ul class="list-inline">
-									<li><a href="checkout.php">KIỂM TRA ĐƠN HÀNG</a></li>
-									<li><a href="wishlist.php">DANH SÁCH YÊU THÍCH</a></li>
+									<li><a href="order_status.php">KIỂM TRA ĐƠN HÀNG</a></li>
+									<!--li><a href="wishlist.php">DANH SÁCH YÊU THÍCH</a></li-->
+									<li><a href="cart.php">GIỎ HÀNG</a></li>
 									<?php
+									//$_SESSION['cart']=isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 									 if(isset($_SESSION['ten']))
 									{
-										echo'<li><a href="my-account.php">TÀI KHOẢN CỦA TÔI</a></li>';
+										$ten=$_SESSION['ten'];
+										$khachhang=mysqli_query($conn,"SELECT `maKhachHang`,`tenDangNhap` FROM `tbl_khachhang` WHERE `tenDangNhap`='$ten' ");
+										$row=mysqli_fetch_assoc($khachhang);
+										$_SESSION['maKhachHang']=$row['maKhachHang'];
+										echo'<li style="font-size:17px" ><a href="my-account.php">'.$ten.'</a></li>';
+									}
+									else {
+										echo'<li class="tenDN"><a href="registration.php">ĐĂNG NHẬP</a></li>';
 									}?>
-									<li><a href="cart.php">GIỎ HÀNG</a></li>
-									<li><a href="registration.php">ĐĂNG NHẬP</a></li>
+									<!--li><a href="registration.php">ĐĂNG NHẬP</a></li-->
 								</ul>									
 							</nav>
 						</div>
 					</div>
+					<!--?php 
+					if(!isset($_SESSION["timeout"]))
+					{
+						$_SESSION["timeout"]=time();
+					}
+					$st=$_SESSION["timeout"]+120*60 ;
+					if(time()>$st)
+					{
+						mysqli_query($conn,"DELETE FROM `tbl_giohang`");
+					}?-->
+					<!--?php
+					if ($_SESSION['timeout'] + 1 * 60 < time()) {
+						// session timed out
+						mysqli_query($conn,"DELETE FROM `tbl_giohang`");
+					} 
+					?-->
 					<!-- HEADER-RIGHT-MENU END -->
 				</div>
 			</div>
@@ -200,49 +236,10 @@
 						<!-- HEADER-RIGHT-CALLUS END tuiddang ráp cái searchc ủa tui dô file Nhung à  -->
 						<!-- CATEGORYS-PRODUCT-SEARCH START -->
 						<div class="categorys-product-search">
-
-							<form action="search-result.php" method="get" class="search-form-cat">
+							<form action="search-result.php" method="get" name="form-search" class="search-form-cat" onsubmit=" return checkSearch();">
 								<div class="search-product form-group">
-									<!-- <select name="catsearch" class="cat-search">
-										<option value="">Thương hiệu</option>
-										
-
-										<option value="2">--Women</option>
-										<option value="3">---T-Shirts</option>
-										<option value="4">--Men</option>
-										<option value="5">----Shoose</option>
-										<option value="6">--Dress</option>
-										<option value="7">----Tops</option>
-										<option value="8">---Casual</option>
-										<option value="9">--Evening</option>
-										<option value="10">--Summer</option>
-										<option value="11">---sports</option>
-										<option value="12">--day</option>
-										<option value="13">--evening</option>
-										<option value="14">-----Blouse</option>
-										<option value="15">--handba</option>
-										<option value="16">--phone</option>
-										<option value="17">-house</option>
-										<option value="18">--Beauty</option>
-										<option value="19">--health</option>
-										<option value="20">---clothing</option>
-										<option value="21">---kids</option>
-										<option value="22">--Dresse</option>
-										<option value="22">---Casual</option>
-										<option value="23">--day</option>
-										<option value="24">--evening</option>
-										<option value="24">---Blouse</option>
-										<option value="25">-handb</option>
-										<option value="66">--phone</option>
-										<option value="27">---house</option>	
-
-																		
-									</select> -->
-									<input type="text" class="form-control search-form" name="nameSearch" placeholder="Tìm kiếm... " value="<?php if (isset($_GET['nameSearch'])) echo $_GET['nameSearch'];  ?>" style="width: 90%;" />
-									<button class="search-button" value="Tìm kiếm" name="search" type="submit">
-
-										<i class="fa fa-search"></i>
-									</button>										 
+									<input type="text" style="width:90%;" class="form-control search-form" name="nameSearch" placeholder="Tìm kiếm... " value="<?php if(isset($_GET['nameSearch'])) echo $_GET['nameSearch'] ?>" />
+									<input class="search-button" style="width:15%; text-align: center;" value="Tìm kiếm" name="search" id="search" type="submit">
 								</div>
 							</form>
 						</div>
@@ -264,7 +261,18 @@
 									<i class="fa fa-shopping-cart cart-icon"></i>
 									<b>GIỎ HÀNG</b>
 									<span class="ajax-cart-quantity">
-									   <?php echo$_SESSION['cart'][$id];?>
+									   <?php 
+									     if(isset($_SESSION['soluong']))
+									       {
+										  $sanpham= $_SESSION['soluong'];
+										  echo $sanpham;
+										 // var_dump($_SESSION['cart']);
+										 } 
+										   else{
+										   	echo 0;
+										   }
+									   ?>
+									   
 									</span>
 								</a>
 								<!--div class="shipping-cart-overly">

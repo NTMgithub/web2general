@@ -51,8 +51,16 @@
                                             <i class="fa fa-area-chart" style="font-size: 70px;"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">120k</div>
-                                            <div>Doanh thu!</div>
+                                            <div class="huge">
+                                            <?php 
+                                                $DHCount = $donhang->count_donhangdagiao();
+                                                $resultCount = $DHCount->fetch_assoc();
+                                                echo $resultCount['soluongDHdagiao'];  
+
+                                            ?> 
+
+                                            </div>
+                                            <div>Đơn hàng đã giao!</div>
                                         </div>
                                     </div>
                                 </div>
@@ -74,8 +82,15 @@
                                             <i class="fa fa-shopping-cart" style="font-size: 70px;"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">124</div>
-                                            <div>Đơn hàng!</div>
+                                            <div class="huge">
+                                                <?php 
+                                                $DHCount = $donhang->count_donhangchuagiao();
+                                                $resultCount = $DHCount->fetch_assoc();
+                                                echo $resultCount['soluongDHchuagiao']; 
+
+                                            ?> 
+                                            </div>
+                                            <div>Đơn hàng chưa giao!</div>
                                         </div>
                                     </div>
                                 </div>

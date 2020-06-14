@@ -61,7 +61,7 @@
 							</div>
 							<!-- SINGLE SIDEBAR ENABLED FILTERS END -->
 							<!-- SINGLE SIDEBAR CATEGORIES START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">THƯƠNG HIỆU</span>
 								<ul>
 									<li>
@@ -93,10 +93,10 @@
 										<a href="#">Giày VANS<span> (10)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR CATEGORIES END -->
 							<!-- SINGLE SIDEBAR AVAILABILITY START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Tình trạng hàng</span>
 								<ul>
 									<li>
@@ -107,10 +107,10 @@
 										<a href="#">Còn hàng<span> (17)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR AVAILABILITY END -->
 							<!-- SINGLE SIDEBAR CONDITION START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Điều kiện</span>
 								<ul>
 									<li>
@@ -128,10 +128,10 @@
 										<a href="#">Khuyễn mãi<span> (13)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR CONDITION END -->
 							<!-- SINGLE SIDEBAR MANUFACTURER START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Nhà cung cấp</span>
 								<ul>
 									<li>
@@ -149,7 +149,7 @@
 										<a href="#">Shopee<span> (13)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR MANUFACTURER END -->
 							<!-- SINGLE SIDEBAR PRICE START -->
 							<div class="product-single-sidebar">
@@ -168,39 +168,27 @@
 							<div class="product-single-sidebar">
 								<span class="sidebar-title">Size</span>
 								<ul>
+									<?php 
+										
+										$querySize = mysqli_query($conn, "SELECT *, COUNT(maSanPham) FROM `tbl_sanpham` WHERE trangThaiSanPham = '1' AND maLoai = '$idLoai' GROUP BY sizeSanPham ");
+										while ($fetchSize = mysqli_fetch_assoc($querySize)){
+
+									?>
 									<li>
-										<label class="cheker">
-											<input type="checkbox" name="size"/>
-											<span></span>
-										</label>
-										<a href="#">38<span> (10)</span></a>
+										<span class="fa fa-angle-double-right"></span>
+										<a href="shop-list.php?maLoai=<?php echo $idLoai; ?>&size=<?php echo $fetchSize['sizeSanPham'];  ?>"><?php echo $fetchSize['sizeSanPham'];  ?><span> (<?php echo $fetchSize['COUNT(maSanPham)'];  ?>)</span></a>
+										<?php 
+
+										?>
 									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="size"/>
-											<span></span>
-										</label>
-										<a href="#">39<span> (10)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="size"/>
-											<span></span>
-										</label>
-										<a href="#">40<span> (10)</span></a>
-									</li>
-									<li>
-										<label class="cheker">
-											<input type="checkbox" name="size"/>
-											<span></span>
-										</label>
-										<a href="#">41<span> (10)</span></a>
-									</li>
+									<?php 
+										}
+									?>
 								</ul>
 							</div>
 							<!-- SINGLE SIDEBAR SIZE END -->
 							<!-- SINGLE SIDEBAR COLOR START -->
-							<div class="product-single-sidebar">
+							<!-- <div class="product-single-sidebar">
 								<span class="sidebar-title">Màu</span>
 								<ul class="product-color-var">
 									<li>
@@ -236,7 +224,7 @@
 										<a href="#">Hồng<span> (6)</span></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 							<!-- SINGLE SIDEBAR COLOR END -->
 							
 						</div>
@@ -301,8 +289,7 @@
 												<option value="">--</option>
 												<option value="">Giá: Thấp nhất trước</option>
 												<option value="">Giá: Cao nhất trước</option>
-												<option value="">Tên sản phẩm: A đến Z</option>
-												<option value="">Tên sản phẩm: Z đến A</option>
+												
 	
 											</select>												
 										</div>
@@ -364,6 +351,7 @@
 								<!-- PRODUCT-SHOOTING-RESULT END -->
 							</div>
 						</div>
+						
 						<!-- ALL GATEGORY-PRODUCT START -->
 						<div class="all-gategory-product">
 							<div class="row">
@@ -411,15 +399,13 @@
                                                         </p>
 														</div>
 														<div class="price-box">
-															<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+															<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 														</div>
 													</div>
 													<div class="overlay-content-list">
 														<ul>
-															<li><a href="#" title="Add to cart" class="add-cart-text">THÊM VÀO GIỎ HÀNG</a></li>
-															<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-															<li><a href="#" title="Add to compare"><i class="fa fa-retweet"></i></a></li>
-															<li><a href="#" title="Add to wishlist"><i class="fa fa-heart-o"></i></a></li>
+															<li><a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>" title="chitiet" class="add-cart-text">Xem chi tiết</a></li>
+															
 														</ul>
 													</div>												
 												</div>														
@@ -461,26 +447,49 @@
                                                         $trangHienTai = $_GET['trang'];
                                                     }
 
-                                                    
-                                                    //Button Prev
-                                                    if ($trangHienTai > 1 && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
-                                                    }
+                                                    if (isset($_GET['size']) && !empty($_GET['size'])){
+                                                    	$sizeSP = $_GET['size'];
+                                                    	//Button Prev
+	                                                    if ($trangHienTai > 1 && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+	                                                    }
 
-                                                    //Create Button between start
-                                                    for ($i = 1; $i <= $productButton; $i++ ){
-                                                        if ($i == $trangHienTai ){
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
-                                                        }else{
-                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
-                                                        }
-                                                        
-                                                    }
-                                                    //Create Button between end
+	                                                    //Create Button between start
+	                                                    for ($i = 1; $i <= $productButton; $i++ ){
+	                                                        if ($i == $trangHienTai ){
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+	                                                        }else{
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.$i.' ">' .$i. '</a>';
+	                                                        }
+	                                                        
+	                                                    }
+	                                                    //Create Button between end
 
-                                                    //Button Next
-                                                    if ($trangHienTai < $productButton && $productButton > 1){
-                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+	                                                    //Button Next
+	                                                    if ($trangHienTai < $productButton && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&size='.$sizeSP.'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+	                                                    }
+                                                    }else{
+                                                    	//Button Prev
+	                                                    if ($trangHienTai > 1 && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai - 1).' "><i class="fa fa-angle-double-left"></i> Trang trước</a>';
+	                                                    }
+
+	                                                    //Create Button between start
+	                                                    for ($i = 1; $i <= $productButton; $i++ ){
+	                                                        if ($i == $trangHienTai ){
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' " style="background-color: grey;">' .$i. '</a>';   //echo và Active màu trang hiện tại
+	                                                        }else{
+	                                                            echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.$i.' ">' .$i. '</a>';
+	                                                        }
+	                                                        
+	                                                    }
+	                                                    //Create Button between end
+
+	                                                    //Button Next
+	                                                    if ($trangHienTai < $productButton && $productButton > 1){
+	                                                        echo '<a href="?maLoai='.$resultCat['maLoai'].'&trang='.($trangHienTai + 1).' ">Trang sau <i class="fa fa-angle-double-right"></i></a>';
+	                                                    }
                                                     }
 
                                                 ?>

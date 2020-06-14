@@ -18,63 +18,6 @@
 			$this->fm = new Format();
 		}
 
-		//START ADMIN
-		// public function insert_product($data, $files)
-		// {
-
-		// 	$tenSanPham = mysqli_real_escape_string($this->db->link, $data['tenSanPham']); //Connect database
-		// 	$maLoai = mysqli_real_escape_string($this->db->link, $data['maLoai']);
-		// 	$sizeSanPham = mysqli_real_escape_string($this->db->link, $data['sizeSanPham']);
-		// 	$mieuTaSanPham = mysqli_real_escape_string($this->db->link, $data['mieuTaSanPham']);
-		// 	$soLuongSanPham = mysqli_real_escape_string($this->db->link, $data['soLuongSanPham']);
-		// 	$giaSanPham = mysqli_real_escape_string($this->db->link, $data['giaSanPham']);
-
-			
-
-		// 	//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
-		// 	$permited = array('jpg','jpeg','png','gif');
-		// 	$file_name = $_FILES['image']['name'];
-		// 	$file_size = $_FILES['image']['size'];
-		// 	$file_temp = $_FILES['image']['tmp_name'];
-
-		// 	$div = explode('.', $file_name);
-		// 	$file_ext = strtolower(end($div));
-		// 	$unique_image = substr((time()), 0, 10).'.'.$file_ext ;
-		// 	$uploaded_image  = 'uploads/'.$unique_image;
-		// 	//Kiểm tra hình ảnh và lấy hình ảnh cho vào folder uploads
-
-		// 	if ($tenSanPham == "" || $maLoai == "" || $sizeSanPham == "" || $mieuTaSanPham == ""|| $giaSanPham == "" || $soLuongSanPham == "" || $file_name == "")
-		// 	{
-		// 		$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
-		// 		return $alert;
-		// 	}
-		// 	else
-		// 	{
-		// 		move_uploaded_file($file_temp, $uploaded_image);
-
-		// 		$query = "INSERT INTO tbl_sanpham(tenSanPham, maLoai, sizeSanPham, mieuTaSanPham, giaSanPham, hinhAnhSanPham, soLuongSanPham) VALUES('$tenSanPham','$maLoai', '$sizeSanPham', '$mieuTaSanPham', '$giaSanPham', '$unique_image','$soLuongSanPham') ";
-
-				
-		// 		//$query2 = "UPDATE tbl_category SET catNumberProducts = $productAmount + (SELECT catNumberProducts FROM tbl_category WHERE catID = '$category')  WHERE catID = '$category' " ; //Tăng số lượng vào catNumberProduct của danh mục tương ứng
-		// 		//$result2 = $this->db->update($query2);
-
-
-
-		// 		$result = $this->db->insert($query);
-
-		// 		if ($result)
-		// 		{
-		// 			$alert = "<div class= 'alert alert-success'>Thêm sản phẩm thành công!</div>";
-		// 			return $alert;
-		// 		}
-		// 		else
-		// 		{
-		// 			$alert = "<div class= 'alert alert-danger'>Thêm sản phẩm không thành công!</div>";
-		// 			return $alert;
-		// 		}
-				
-		// 	}
-		// }
 
 		public function show_product()
 		{
@@ -95,15 +38,58 @@
 			$tungTrang = ($trang - 1) * $sanPhamTungTrang; //Vị trí bắt đầu $trang
 
 			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham ASC LIMIT $tungTrang, $sanPhamTungTrang "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+
+			if (isset($_GET['size'])){
+				$sizeSP = $_GET['size'];
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' AND sizeSanPham = '$sizeSP' ORDER BY maSanPham ASC LIMIT $tungTrang, $sanPhamTungTrang";
+			}
+
+			//Sắp xếp theo giá thấp cao start
+			if (isset($_POST['sortby']) && !empty($_POST['sortby'])){
+				$sortby = $_POST['sortby'];
+
+				if (isset($_GET['size'])){
+					$sizeSP = $_GET['size'];
+
+					if ($sortby == 'Cao thấp'){
+						$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' AND sizeSanPham = '$sizeSP' ORDER BY giaSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang";
+					}else if ($sortby == 'Thấp cao'){
+						$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' AND sizeSanPham = '$sizeSP' ORDER BY giaSanPham ASC LIMIT $tungTrang, $sanPhamTungTrang";
+					}
+				
+				}else{
+					if ($sortby == 'Cao thấp'){
+						$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY giaSanPham DESC LIMIT $tungTrang, $sanPhamTungTrang ";
+					}else if ($sortby == 'Thấp cao'){
+						$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY giaSanPham ASC LIMIT $tungTrang, $sanPhamTungTrang ";
+					}
+				}
+
+			}
+
+			if (isset($_POST['sortby']) && empty($_POST['sortby'])){
+				echo "<script>alert('Vui lòng chọn loại sắp xếp!');</script>";
+			}
+			//Sắp xếp theo giá thấp cao end
+
+
 			$result = $this->db->select($query);
 			return $result;
 
 			
 		}
 
-		public function getAllProductbyCat($idLoai)
+		public function getAllProductbyCat($idLoai) //Dùng cho phân trang
 		{
 			$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' ORDER BY maSanPham ASC "; //DESC: sản phẩm mới nhất sẽ lên đầu danh sách
+
+			if (isset($_GET['size'])){
+				$sizeSP = $_GET['size'];
+				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.maLoai = '$idLoai' AND tbl_sanpham.trangThaiSanPham = '1' AND sizeSanPham = '$sizeSP' ORDER BY maSanPham ASC ";
+			}
+
+			
+
 			$result = $this->db->select($query);
 			return $result;
 		}
@@ -143,7 +129,6 @@
 			return $result;
 		}
 
-
 		public function show_search_result($nameSearch)// Show product ,có tìm kiếm theo tên, kết quả tìm kiếm phân trang
 		{
 			//Phân trang
@@ -172,16 +157,12 @@
 		{
 			    
 				$query = "SELECT * FROM tbl_sanpham, tbl_loaisanpham WHERE tbl_sanpham.maLoai = tbl_loaisanpham.maLoai AND tbl_sanpham.trangThaiSanPham = '1' 
-					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%'
-
-					ORDER BY maSanPham DESC ";
+					AND tbl_sanpham.tenSanPham LIKE '%$nameSearch%' ORDER BY maSanPham DESC ";
 			
 
 			$result = $this->db->select($query);
 			return $result;
 		}
-
-
 		// public function edit_product($data, $files, $id) //Sửa 
 		// {
 		// 	$tenSanPham = mysqli_real_escape_string($this->db->link, $data['tenSanPham']); //Connect database

@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type:text/html;charset=utf-8');
- include_once 'admin/config/config.php';
+ include_once 'config.php';
  // khởi tạo giá trị 
  $firstname='';
  $password='';
@@ -12,6 +12,7 @@ header('Content-Type:text/html;charset=utf-8');
  if($_SERVER['REQUEST_METHOD']=="POST")
  {
         if(isset($_POST['firstname'])) $firstname=$_POST['firstname'];
+        if(isset($_POST['name'])) $name=$_POST['name'];
         if(isset($_POST['password'])) $password=$_POST['password'];
         //if(isset($_POST['sex'])) $sex=$_POST['sex'];
         if(isset($_POST['email'])) $mail=$_POST['email'];
@@ -36,8 +37,8 @@ header('Content-Type:text/html;charset=utf-8');
         if(!$check && !$check1){
            //lưu thông tin vào csdl
                $addmember=mysqli_query($conn,"
-               INSERT INTO `web2`.`tbl_khachhang`(`maKhachHang`,`tenDangNhap`,`thuDienTuKH`,`matKhau`)
-               VALUES(NULL,'$firstname','$mail',md5('$password'))
+               INSERT INTO `web2`.`tbl_khachhang`(`maKhachHang`,`tenDangNhap`,`hoTenKhachHang`,`thuDienTuKH`,`matKhau`)
+               VALUES(NULL,'$firstname','$name','$mail',md5('$password'))
                ");
                if($addmember)
                {

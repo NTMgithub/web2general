@@ -4,8 +4,9 @@ session_start();
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
 	<?php }
-    include_once 'admin/config/config.php';
+    include_once 'config.php';
 	include 'header.php';
+	//include 'add_cart.php';
 ?>
 		<!-- MAIN-CONTENT-SECTION START -->
 		<section class="main-content-section">
@@ -24,7 +25,16 @@ session_start();
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- SHOPPING-CART SUMMARY START -->
-						<h2 class="page-title">GIỎ HÀNG<span class="shop-pro-item">Giỏ hàng bao gồm: 1 sản phẩm</span></h2>
+						<h2 class="page-title">GIỎ HÀNG<span class="shop-pro-item">Giỏ hàng bao gồm:
+						 <?php if(isset($_SESSION['soluong']))
+						   {
+							   $m=$_SESSION['soluong'];
+							   echo $m;
+						   }
+						   else {
+							   echo 0;
+						   }
+						?> sản phẩm</span></h2>
 						<!-- SHOPPING-CART SUMMARY END -->
 					</div>	
 					
@@ -67,133 +77,189 @@ session_start();
 									</tr>
 								</thead>
 								<!-- TABLE HEADER END -->
-								<!-- TABLE BODY START -->
+								<!--Chức năng xóa sản phẩm khỏi giỏ hàng-->
+								<!--Xóa số lượng trong giỏ hàng-->			
+								<?php
+								$sId=session_id();
+								?>
+							  	<?php 
+							  if(isset($_GET['id_cart']))
+							  {
+									   $id_cart=$_GET['id_cart'];
+							  
+							  $query=mysqli_query($conn,"SELECT `soLuongSanPham`,`maSanPham`,`sessionID`FROM `tbl_giohang` WHERE `sessionID`='$sId'AND `maSanPham`='$id_cart'");
+									 $rows=mysqli_fetch_assoc($query);
+									$xemma= $rows['maSanPham'] ;
+									//$xemsoluong=$rows['soLuongSanPham'];
+							  if($id_cart==$xemma){
+										//$dem=$n-1;
+										//$soluongsp=$dem-1;
+									   // echo $soluongsp;
+										$rowsp=mysqli_query($conn,"DELETE FROM `tbl_giohang` WHERE `maSanPham`='$id_cart' AND `sessionID`='$sId' ");//xóa sản phẩm trong giỏ hàng*/
+										//$_SESSION['soluong']=$soluong;
+									
+									if($rowsp)
+										{
+										
+										echo "<script>window.location = 'cart.php';</script>";
+										}
+
+									}
+								}
+								?>
+								<!-- TABLE BODY START   -->
 								<tbody>	
 									<!-- SINGLE CART_ITEM START -->
-									<div id="infocart">
+									<!--div id="infocart"-->
 									 <?php  
-										foreach($_SESSION['cart']as $key=>$value)//lặp danh sách masanpham.
-										{
-											$item[]=$key;//($key như masanpham)
-										}
-										$str=implode(",",$item);
+									   $danhsach=mysqli_query($conn,"SELECT *,sum(`soLuongSanPham`) FROM `tbl_giohang` WHERE `sessionID`='$sId' and `soLuongSanPham`>0 GROUP BY `maSanPham`");
+									   $sup_total=0;
+									   while($rows=mysqli_fetch_assoc($danhsach))
+									   { ?>
+										   
+									<tr>
+										<td class="cart-product">
+											<a href="#"><img alt="Blouse" src="admin/pages/uploads/<?php echo $rows['hinhAnhSanPham']; ?>"></a>
+										</td>
+										<td class="cart-description">
+											<p class="product-name"><a href="#"><?php echo $rows['tenSanPham'];?></a></p>
+											
+											<small><a href="#">Size : <?php echo $rows['sizeSanPham'];?></a></small>
+										</td>
+										<td class="cart-avail"><span class="label label-success">Còn hàng</span></td>
+										<td class="cart-unit">
+											<ul class="price text-right">
+												<li class="price special-price"><?php echo number_format($rows['giaSanPham']);?> VNĐ</li>
+												<!--li class="price-percent-reduction small">&nbsp;-3%&nbsp;</li->
+												<li class="old-price">$27.00</li-->
+											</ul>
+										</td>
+										<td class="cart_quantity text-center">
 
-									    $ds=mysqli_query($conn,"SELECT `tenSanPham`,`mieuTaSanPham`,`trangThaiSanPham`,`giaSanPham` FROM `web2`.`tbl_sanpham`WHERE `maSanPham`IN ('$str')");
-											while($row=mysqli_fetch_array($ds))
-											{?>
-											<tr>
-												<td class="cart-product">
-													<a href="#"><img alt="Blouse" src="admin/pages/uploads/<?php echo $row['hinhAnhSanPham'];?>"></a>
-												</td>
-												<td class="cart-description">
-													<p class="product-name"><a href="#"><?php echo $row['tenSanPham'];?></a></p>
-													<small>SKU : demo_1</small>
-													<small><a href="#">Size : 41, Màu : Aqua Pink</a></small>
-												</td>
-												<td class="cart-avail"><span class="label label-success">Còn hàng</span></td>
-												<td class="cart-unit">
-													<ul class="price text-right">
-														<li class="price"><?php echo $row['giaSanPham'];?></li>
-													</ul>
-												</td>
-												<td class="cart_quantity text-center">
-													<div class="cart-plus-minus-button">
-														<input class="cart-plus-minus" type="text" name="qtybutton" value="1">
-													</div>
-												</td>
-												<td class="cart-delete text-center">
-													<span>
-														<a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
-													</span>
-												</td>
-												<td class="cart-total">
-													<span class="price">4,500,000 VND</span>
-												</td>
-											</tr>
-											<?php}?>
-												
-											</div>
+												<input class="cart-plus-minus" type="text" name="quantybutton" value="<?php echo $rows['sum(`soLuongSanPham`)'];?>" readonly="readonly" >
+												<a href="?maSPTru=<?php echo $rows['maSanPham'];?>&soluonght=<?php echo $rows['soLuongSanPham'];?>"><div class="dec qtybutton" name="dec">-</div></a>
+
+												<?php 
+												  if(isset($_GET['maSPTru']) && isset($_GET['soluonght']))
+												  {
+												  	$maSPTru=$_GET['maSPTru'];
+													$queryTru=mysqli_query($conn,"SELECT `soLuongSanPham`,`maSanPham`,`sessionID`FROM `tbl_giohang` WHERE `sessionID`='$sId'AND `maSanPham`='$maSPTru'");
+													$rows=mysqli_fetch_assoc($queryTru);
+													$xemma= $rows['maSanPham'] ;
+												  	$soluonght = $_GET['soluonght'];
+
+												  	if ($soluonght <= 1){  		
+													  
+													  	if($maSPTru==$xemma){
+															$rowsp=mysqli_query($conn,"DELETE FROM `tbl_giohang` WHERE `maSanPham`='$maSPTru' AND `sessionID`='$sId' ");
+
+																if($rowsp)
+																{
+																
+																echo "<script>window.location = 'cart.php';</script>";
+																}else{
+																	echo "That bai!";
+																}
+
+														}
+
+													}else{			
+														if($maSPTru==$xemma){
+																	
+															$rowsp=mysqli_query($conn,"UPDATE tbl_giohang SET soLuongSanPham = $soluonght - 1 WHERE `sessionID`='$sId'AND `maSanPham`='$maSPTru' ");
+																if($rowsp){
+																	echo "<script>window.location = 'cart.php';</script>";
+																}else{
+																	echo "That bai!";
+																}
+
+														}
+														
+												  	}
+												}
+										
+												?> 
+												<a href="?maSPCong=<?php echo $rows['maSanPham'];?>&soluonght=<?php echo $rows['soLuongSanPham'];?>"><div class="inc qtybutton" name="inc">+</div></a>
+												<?php //Trừ sản phẩm start
+												  if(isset($_GET['maSPCong']) && isset($_GET['soluonght']))
+												  {
+													$maSPCong=$_GET['maSPCong'];
+													$soluonght = $_GET['soluonght'];
+
+												  	$queryCong=mysqli_query($conn,"SELECT `soLuongSanPham`,`maSanPham`,`sessionID`FROM `tbl_giohang` WHERE `sessionID`='$sId'AND `maSanPham`='$maSPCong'");
+													$rows=mysqli_fetch_assoc($queryCong);
+
+													$xemma= $rows['maSanPham'] ;
+													//Lấy số lượng hiện có để só sánh
+													$querySLHC=mysqli_query($conn,"SELECT `soLuongSanPham` FROM `tbl_sanpham` WHERE `maSanPham`='$maSPCong'");
+													$resultSLHC=mysqli_fetch_assoc($querySLHC);
+													$soluonghienco = $resultSLHC['soLuongSanPham'];
+													//Lấy số lượng hiện có để só sánh
+
+													if ($soluonght > $soluonghienco){
+														echo "<script>alert('Vượt quá số lượng còn lại!');
+																window.location = 'cart.php';</script>";
+
+													}else{
+														if($maSPCong==$xemma){
+																
+														$rowsp=mysqli_query($conn,"UPDATE tbl_giohang SET soLuongSanPham = $soluonght + 1 WHERE `sessionID`='$sId'AND `maSanPham`='$maSPCong' ");
+															if($rowsp){
+																echo "<script>window.location = 'cart.php';</script>";
+															}else{
+																echo "That bai!";
+															}
+
+														}
+													}
+													
+												}
+										?> 
+										</td>
+										<td class="cart-delete text-center">
+											<a href="?id_cart=<?php echo $rows['maSanPham'];?>"  class="cart_quantity_delete" title="Xóa"><i class="fa fa-trash-o"></i></a>	
+										</td>
+										<td class="cart-total">
+										  <?php 
+										   //$gia=(string)$rows['soLuongSanPham'];
+										  $total=$rows['giaSanPham'] *$rows['sum(`soLuongSanPham`)'];?>
+											<span class="price"><?php echo number_format($total);?> VNĐ</span>
+										</td>
+									</tr> 
+									<?php $sup_total+=$total;?><!--tính tổng tiền-->
+									  <?php }
+									 ?>
+									<!--/div-->
 									<!-- SINGLE CART_ITEM END -->
 									
 									<!-- SINGLE CART_ITEM START -->
-									<!--
-									<tr>
-										<td class="cart-product">
-											<a href="#"><img alt="Blouse" src="img/product/cart-image2.jpg"></a>
-										</td>
-										<td class="cart-description">
-											<p class="product-name"><a href="#">Blouse</a></p>
-											<small>SKU : demo_2</small>
-											<small><a href="#">Size : S, Color : Black</a></small>
-										</td>
-										<td class="cart-avail"><span class="label label-success">In stock</span></td>
-										<td class="cart-unit">
-											<ul class="price text-right">
-												<li class="price special-price">$24.00</li>
-												<li class="price-percent-reduction small">&nbsp;-3%&nbsp;</li>
-												<li class="old-price">$27.00</li>
-											</ul>
-										</td>
-										<td class="cart_quantity text-center">
-											<div class="cart-plus-minus-button">
-												<input class="cart-plus-minus" type="text" name="qtybutton" value="0">
-											</div>
-										</td>
-										<td class="cart-delete text-center">
-											<a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
-										</td>
-										<td class="cart-total">
-											<span class="price">$22.95</span>
-										</td>
-									</tr> -->
-									<!-- SINGLE CART_ITEM END -->
-									<!-- SINGLE CART_ITEM START -->
-									<!--
-									<tr>
-										<td class="cart-product">
-											<a href="#"><img alt="Blouse" src="img/product/cart-image3.jpg"></a>
-										</td>
-										<td class="cart-description">
-											<p class="product-name"><a href="#">Printed Summer Dress</a></p>
-											<small>SKU : demo_5</small>
-											<small><a href="#">Size : M, Color : Blue</a></small>
-										</td>
-										<td class="cart-avail"><span class="label label-success">In stock</span></td>
-										<td class="cart-unit">
-											<ul class="price text-right">
-												<li class="price special-price">$30.45</li>
-												<li class="price-percent-reduction small">&nbsp;-7.05%&nbsp;</li>
-												<li class="old-price">$37.50</li>
-											</ul>
-										</td>
-										<td class="cart_quantity text-center">
-											<div class="cart-plus-minus-button">
-												<input class="cart-plus-minus" type="text" name="qtybutton" value="0">
-											</div>
-										</td>
-										<td class="cart-delete text-center">
-											<a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
-										</td>
-										<td class="cart-total">
-											<span class="price">$30.45</span>
-										</td>
-									</tr> -->
+									
+								
 									<!-- SINGLE CART_ITEM END --> 
 								</tbody>
 								<!-- TABLE BODY END -->
 								<!-- TABLE FOOTER START -->
-								<tfoot>										
+								<tfoot>	
+								<!-- Tính số lượng sản phẩm trong giỏ hàng-->	
+								<!--?php $ds=mysqli_query($conn,"SELECT `id_giohang`,`sID` FROM `tbl_giohang` WHERE `sID`='$sId' ");
+												$soluongsanpham=mysqli_num_rows($ds);
+												//$demsoluong=count($soluongsanpham);
+												$_SESSION['soluong']=$soluongsanpham;
+												//echo $soluongsanpham;?-->
+												<!-------------------------------------------------->									
 									<tr class="cart-total-price">
 										<td class="cart_voucher" colspan="3" rowspan="4"></td>
-										<td class="text-right" colspan="3">Tạm tính (Đã bao gồm thuế.v.v.)</td>
-										<td id="total_product" class="price" colspan="1">4,500,000 VND</td>
+										<td class="text-right" colspan="3">Tổng thanh toán:</td>
+										
+										<td id="total_product" class="price" colspan="1"><?php echo number_format($sup_total);?> VNĐ</td>
 									</tr>
-									<tr>
+									<!--tr>
 										<td class="text-right" colspan="3">Phí vận chuyển</td>
 										<td id="total_shipping" class="price" colspan="1">0 VND</td>
-									</tr>
-									<tr>
-												<!-- CART TABLE_BLOCK END -->
+									</tr-->
+								<tfoot>
+							</table>
+										<!-- CART TABLE_BLOCK END -->
 					</div>
 					<!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<div class="first_item primari-box mycartaddress-info">
@@ -241,10 +307,30 @@ session_start();
 						<!-- RETURNE-CONTINUE-SHOP START -->
 						<div class="returne-continue-shop">
 							<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
-							<?php	
-						        if( isset($_SESSION['ten']))
+							<!--?php
+							if(isset($_SESSION['soluong']))	
+							{
+								$so=$_SESSION['soluong'];
+								if($so>0)
+								{
+									echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+								}
+							}
+							else{
+								echo'<script>alert("Chưa có sản phẩm trong giỏ hàng");</script>';
+							}-->
+						      <?php  if( isset($_SESSION['ten']) )
 						            {
-										echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+										if(isset($_SESSION['soluong'])){
+											$so=$_SESSION['soluong'];
+											if($so>0)
+											{
+												echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+											}
+										}
+										else{
+											echo '<input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" onClick="alert(\'Chưa có sản phẩm trong giỏ hàng\')";>';
+										}
 									}
 								else {
 										echo'<a  href="registration.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
@@ -289,7 +375,6 @@ session_start();
 		<script>
 			new WOW().init();
 		</script>
-
 		<!-- Google Map js -->
         <script src="https://maps.googleapis.com/maps/api/js"></script>	
 		<script>
@@ -305,12 +390,10 @@ session_start();
 				position: map.getCenter(),
 				map: map
 			  });
-
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);				
 		</script>
 		<!-- main js -->
         <script src="js/main.js"></script>
     </body>
-
 </html>

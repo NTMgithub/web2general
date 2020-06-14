@@ -1,29 +1,26 @@
 <?php 
+//header('Content-Type:text/html;charset=utf-8');
+session_start();
 	include_once 'classes/product.php';
 	include_once 'admin/helpers/format.php';
 ?>
-
 <?php 
 	if (!isset($_GET['maSanPham']) || $_GET['maSanPham'] == ''){
         echo "<script>window.location = '404.php'</script>";
     }else{
         $idSanPham = $_GET['maSanPham'];
     }
-
     $fm = new Format();
 	$prod = new product();
 	$prodList = $prod->getproductbyId($idSanPham);
 	$resultProd = $prodList->fetch_assoc();
-
-
+	//echo session_id();
 ?>		
-
 <?php
 	$pageTitle = $resultProd['tenSanPham']. " | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
 	<?php }
-
 	include 'header.php';
 ?>
 		<!-- MAIN-CONTENT-SECTION START -->
@@ -40,7 +37,6 @@
 								$resultCat = $catList->fetch_assoc();
 							?>
 							<a href="shop-gird.php?maLoai=<?php echo $resultCat['maLoai']; ?>"> Giày <?php echo $resultCat['tenLoai']; ?> </a>
-
 							<span><?php echo $resultProd['tenSanPham']; ?></span>
 						</div>
 						<!-- BSTORE-BREADCRUMB END -->
@@ -81,9 +77,7 @@
 												<!-- <a class="new-mark-box" href="#">mới</a> -->
 												<a class="fancybox" href="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" data-fancybox-group="gallery"><span class="btn large-btn">Phóng to <i class="fa fa-search-plus"></i></span></a>
 											</div>	
-										</div>
-										
-										
+										</div>	
 									</div>										
 								</div>
 								<div class="select-product">
@@ -100,14 +94,13 @@
 										</li>
 										<li>
 											<a href="#thumbnail_4" data-toggle="tab"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="pro-thumbnail" /></a>
-										</li>
-										
+										</li>	
 									</ul>										
 								</div>
 							</div>
 							<div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
-								<div class="single-product-descirption">
-									<h2><?php echo $resultProd['tenSanPham']; ?></h2>
+								<div class="single-product-descirption">	
+									<h2 name="m"><?php echo $resultProd['tenSanPham']; ?></h2>
 									<div class="single-product-social-share">
 										<ul>
 											<li><a href="#" class="twi-link"><i class="fa fa-twitter"></i>Tweet</a></li>
@@ -132,18 +125,21 @@
 										</div>		
 									</div>
 									<div class="single-product-condition">
-										<p>Mã sản phẩm: <span><?php echo $resultProd['maSanPham']; ?></span></p>
+									<p>Mã sản phẩm: <span > <?php echo $resultProd['maSanPham']; ?></span></p>
 										<!-- <p>Màu: <span>Aqua Pink</span></p> -->
 										<p>Tình trạng: <span>Hàng mới</span></p>
 									</div>
 									<div class="single-product-price">
-										<h2><?php echo $resultProd['giaSanPham']; ?> VND</h2>
+										<h2><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</h2>
 									</div>
 									<div class="single-product-desc">
 										<p><?php echo $resultProd['mieuTaSanPham']; ?></p>
 										<div class="product-in-stock">
-											<p><?php if ($resultProd['trangThaiSanPham'] == '1') echo 'Còn lại '.$resultProd['soLuongSanPham'].' sản phẩm' ?><?php if ($resultProd['trangThaiSanPham'] == '1') echo ' <button class="btn btn-success" >Còn hàng</button>'; else echo ' <button class="btn btn-danger" >Hết hàng</button>'; ?>
-												
+											<p><?php if ($resultProd['trangThaiSanPham'] == '1')
+											 echo 'Còn lại '.$resultProd['soLuongSanPham'].' sản phẩm' ?>
+											 <!--?php if ($resultProd['trangThaiSanPham'] == '1') echo ' <button class="btn btn-success" >Còn hàng</button>'; -->
+											<?php if($resultProd['soLuongSanPham']>0) echo ' <button class="btn btn-success" >Còn hàng</button>';
+											 else if($resultProd['soLuongSanPham']<0)   echo ' <button class="btn btn-danger" >Hết hàng</button>'; ?>										
 											</p>
 										</div>
 									</div>
@@ -152,8 +148,6 @@
 										<a href="#"><i class="fa fa-print"></i></a>
 										<a href="#"><i class="fa fa-heart"></i></a>
 									</div>
-									
-									
 									<!--
 									<div class="single-product-color">
 										<p class="small-title">Color </p> 
@@ -162,23 +156,55 @@
 									</div>
 									-->
 									<div class="single-product-add-cart">
-												<div class="single-product-quantity">
+												<!--div class="single-product-quantity">
 													<p class="small-title">Số lượng:</p> 
 													<div class="cart-quantity">
 														<div class="cart-plus-minus-button single-qty-btn">
 															<input class="cart-plus-minus sing-pro-qty" type="text" name="qtybutton" value="1">
 														</div>
 													</div>
-												</div>
+												</div-->
 												<div class="single-product-size">
 													<p class="small-title">Size: </p> 
 													<select name="product-size" id="product-size">
-														<option value="<?php echo $resultProd["sizeSanPham"]; ?>"><?php echo $resultProd["sizeSanPham"]; ?></option>
-														
+														<option value="<?php echo $resultProd["sizeSanPham"]; ?>"><?php echo $resultProd["sizeSanPham"]; ?></option>	
 													</select>
 												</div>
-												<a class="add-cart-text" title="Add to cart" href="#">THÊM VÀO GIỎ HÀNG</a>
-										
+												<form method="post" action="add_cart.php?id=<?php echo $resultProd['maSanPham'];?>">
+												<div class="single-product-quantity">
+													<!--p class="small-title">Số lượng:</p--> 
+													<!--div class="cart-quantity">
+														<div class="cart-plus-minus-button single-qty-btn"-->
+														<?php 
+														//$masp = $resultProd['maSanPham'];
+														if($resultProd['soLuongSanPham']>0)
+														{ echo '<p class="small-title">Số lượng:</p>
+															<div class="cart-quantity">
+															<div class="cart-plus-minus-button single-qty-btn">
+															<input class="cart-plus-minus sing-pro-qty" type="text" name="qtybutton" value="1"  readonly="readonly">
+															</div>
+															</div>';
+														}
+														/*else {
+															echo '<div id="soluong">
+															SẢN PHẨM ĐÃ HẾT HÀNG!!
+															</div>';
+														}*/?>
+															<!--input class="cart-plus-minus sing-pro-qty" type="text" name="qtybutton" value="1"  -->
+														<!--/div>
+													</div-->
+												</div>
+												<?php 
+												  if($resultProd['soLuongSanPham']>0)
+												  {
+													echo '<input type="submit" name ="add_to_cart" class="add-cart-text" value="Thêm vào giỏ hàng" title="Add to cart">';
+												  }
+												  else {
+													echo '<input type="submit" disabled name ="add_to_cart" class="add-cart-text" value="Sản Phẩm Hết">';
+												  }?>
+												<!--input type="submit" name ="add_to_cart" class="add-cart-text" value="Thêm vào giỏ hàng" title="Add to cart"-->
+												</form>
+											   <!--?php include 'add_cart.php'?-->      
 									</div>
 								</div>
 							</div>
@@ -212,8 +238,7 @@
 														<tr class="even">
 															<td class="td-bg">Mã sản phẩm: </td>
 															<td class="td-bg"><?php echo $resultProd['maSanPham']; ?></td>
-														</tr>
-														
+														</tr>	
 													</tbody>
 												</table>				
 											</div>
@@ -271,8 +296,7 @@
 														if ($prodListSame){
 														while ($resultProdSame = $prodListSame->fetch_assoc()){
 															if (($resultProdSame['trangThaiSanPham'] == '1') && ($resultProdSame['maLoai'] == $resultProd['maLoai']) && ($resultProdSame['maSanPham'] != $resultProd['maSanPham']) ){
-											//Show sản phẩm cùng loại, còn hàng, khác sản phẩm hiện tại
-															
+											//Show sản phẩm cùng loại, còn hàng, khác sản phẩm hiện tại														
 											?>
 											<div class="item">	
 												<div class="single-product-item">	
@@ -300,22 +324,18 @@
                                                         	</span>
 														</a>
 														<div class="price-box">
-															<span class="price"><?php echo $resultProdSame['giaSanPham']; ?> VND</span>
+															<span class="price"><?php echo number_format($resultProdSame['giaSanPham']); ?> VNĐ</span>
 															<!-- <span class="old-price">1,400,000 VND</span> -->
 														</div>
 													</div>
-													
-												</div>	
-																		
+												</div>									
 											</div>
-											<?php 
-														
+											<?php 				
 													}
 												}
 											}
 											?>
-											<!-- SINGLE-PRODUCT-ITEM END -->
-																			
+											<!-- SINGLE-PRODUCT-ITEM END -->									
 										</div>
 										<!-- RELATED-CAROUSEL END -->
 									</div>	
@@ -335,10 +355,8 @@
 									if ($prodListOther){
 										while ($resultProdOther = $prodListOther->fetch_assoc()){
 											if (($resultProdOther['trangThaiSanPham'] == '1') && ($resultProdOther['maSanPham'] != $resultProd['maSanPham']) ){
-
 								//Show sản phẩm khác sản phẩm ở trang hiện tại, còn hàng					
 								?>
-
 								<li>
 									<a href="single-product.php?maSanPham=<?php echo $resultProdOther['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProdOther['hinhAnhSanPham']; ?>" width='80' alt="" /></a>
 									<div class="r-sidebar-pro-content">
@@ -360,20 +378,20 @@
 						<div class="single-product-right-sidebar clearfix">
 							<h2 class="left-title">Tags </h2>
 							<div class="category-tag">
-								<a href="#">Adidas</a>
-								<a href="#">Nike</a>
-								<a href="#">CONVERSE</a>
-								<a href="#">VANS</a>
-								<a href="#">Newbalance</a>
-								<a href="#">Asics</a>
-								
+								<a href="shop-gird.php?maLoai=1">Adidas</a>
+								<a href="shop-gird.php?maLoai=2">Nike</a>
+								<a href="shop-gird.php?maLoai=3">CONVERSE</a>
+								<a href="shop-gird.php?maLoai=4">VANS</a>
+								<a href="shop-gird.php?maLoai=11">Newbalance</a>
+								<a href="shop-gird.php?maLoai=6">Asics</a>
+
 							</div>							
 						</div>	
 						<!-- SINGLE SIDE BAR END -->
 						<!-- SINGLE SIDE BAR START -->						
 						<div class="single-product-right-sidebar">
 							<div class="slider-right zoom-img">
-								<a href="#"><img class="img-responsive" src="img/product/cms111.png" alt="sidebar left" /></a>
+								<a href="single-product.php?maSanPham=7"><img class="img-responsive" src="img/product/cms111.png" alt="sidebar left" /></a>
 							</div>							
 						</div>
 					</div>

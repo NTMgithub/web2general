@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type:text/html;charset=utf-8');
-include_once 'admin/config/config.php';
+include_once 'config.php';
  // khởi tạo giá trị 
    $loginname='';
    $loginpassword='';
@@ -19,12 +19,11 @@ include_once 'admin/config/config.php';
                 //window.location='index.php';
                  header("location: index.php"); 
         }
-        else {?>
-           <script>
-                 alert("Tên đăng nhập hoặc password của bạn bị sai");
-                 window.location='registration.php';     
-           </script>      
-       <?php }
+        else {
+                $_SESSION['success']='SAI THÔNG TIN ĐĂNG NHẬP!!!';
+        header("location: registration.php"); 
+                //echo "<div class= 'alert alert-danger'>Sai thông tin đăng nhập!</div>";    
+        }
 }
  mysqli_close($conn);
  ?>

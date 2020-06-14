@@ -14,7 +14,7 @@
 								<div id="wrapper">
 									<div class="slider-wrapper">
 										<div id="mainSlider" class="nivoSlider">
-											<img src="img/slider/2.png" alt="main slider" title="#htmlcaption"/>
+											<img src="img/slider/2.png " alt="main slider" title="#htmlcaption"/>
 											<img src="img/slider/1.png" alt="main slider" title="#htmlcaption2"/>
 										</div>
 										<div id="htmlcaption" class="nivo-html-caption slider-caption">
@@ -23,7 +23,7 @@
 												<div class="d-table-cell">
 													<h2 class="animated bounceInDown">ADIDAS COLLECTION</h2>
 												<p class="animated bounceInUp" style="font-weight: bold;color: #fff;">Bộ sưu tập Adidas mới nhất.</p>
-													<a class="wow zoomInDown" data-wow-duration="0.5s" data-wow-delay="1s" href="#">XEM NGAY <i class="fa fa-caret-right"></i></a>						
+													<a class="wow zoomInDown" data-wow-duration="0.5s" data-wow-delay="1s" href="shop-gird.php?maLoai=1">XEM NGAY <i class="fa fa-caret-right"></i></a>						
 												</div>
 											</div>
 										</div>
@@ -33,7 +33,7 @@
 												<div class="d-table-cell">
 													<h2 class="animated bounceInDown">CONVERSE COLLECTION</h2>
 													<p class="animated bounceInUp" style="font-weight: bold;color: #fff;">Bộ sưu tập Converse mới nhất.</p>
-													<a class="wow zoomInDown" data-wow-duration="0.5s" data-wow-delay="1s" href="#">XEM NGAY <i class="fa fa-caret-right"></i></a>
+													<a class="wow zoomInDown" data-wow-duration="0.5s" data-wow-delay="1s" href="shop-gird.php?maLoai=3">XEM NGAY <i class="fa fa-caret-right"></i></a>
 												</div>
 											</div>
 										</div>
@@ -45,7 +45,7 @@
 						<!-- SLIDER-RIGHT START -->
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 							<div class="slider-right zoom-img m-top">
-								<a href="#"><img class="img-responsive" src="img/product/cms111.png" alt="sidebar left" /></a>
+								<a href="single-product.php?maSanPham=7"><img class="img-responsive" src="img/product/cms111.png" alt="sidebar left" /></a>
 							</div>
 						</div>
 						<!-- SLIDER-RIGHT END -->
@@ -79,14 +79,14 @@
 														<div class="product-image">
 															<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" width="800px" /></a>
 															<a href="#" class="new-mark-box">mới</a>
-															<div class="overlay-content">
+															<!--div class="overlay-content">
 																<ul>
 																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
 																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
 																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
 																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
 																</ul>
-															</div>
+															</div-->
 														</div>
 														<div class="product-info">
 															<div class="customar-comments-box">
@@ -105,7 +105,7 @@
 															<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>" ><span style="text-transform: uppercase;"><?php echo $resultProd['tenSanPham']; ?></span></a>
 															</div>
 															<div class="price-box" >
-																<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+																<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 															</div>
 														</div>
 													</div>
@@ -138,20 +138,19 @@
 										<!-- SALE-CAROUSEL START -->
 										<div class="sale-carousel">
 											<!-- SALE-PRODUCTS-SINGLE-ITEM START -->
+												<?php 
+														$querySPLimit8 = mysqli_query($conn, "SELECT * FROM tbl_sanpham LIMIT 8");
+													
+														while ($resultKM = mysqli_fetch_array($querySPLimit8)) {
+														
+											?>
 											<div class="item">
+											
 												<div class="new-product">
+													
 													<div class="single-product-item">
 														<div class="product-image">
-															<a href="#"><img src="img/product/sale/012.jpg" alt="product-image" /></a>
-															<a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-13%</a>
-															<div class="overlay-content">
-																<ul>
-																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-																</ul>
-															</div>
+															<a href="single-product.php?maSanPham=<?php echo $resultKM['maSanPham'] ?>"><img src="admin/pages/uploads/<?php echo $resultKM['hinhAnhSanPham'] ?>" alt="product-image" /></a>
 														</div>
 														<div class="product-info">
 															<div class="customar-comments-box">
@@ -166,173 +165,23 @@
 																	<span>2 Đánh giá</span>
 																</div>
 															</div>
-															<a href="single-product.php">NIKE LEGEND REACT 2<br>BLUE</a>
+															<a href="single-product.php?maSanPham=<?php echo $resultKM['maSanPham'] ?>"><?php echo $resultKM['tenSanPham'] ?></a>
 															<div class="price-box">
-																<span class="price">2,590,000 VND</span>
-																<span class="old-price">2,990,000 VND</span>
+																<span class="price"><?php echo number_format($resultKM['giaSanPham']) ?> VNĐ</span>
+																
 															</div>
 														</div>
 													</div>
+													
 												</div>
+													
 											</div>
 											<!-- SALE-PRODUCTS-SINGLE-ITEM END -->
-											<!-- SALE-PRODUCTS-SINGLE-ITEM START -->
-											<div class="item">
-												<div class="new-product">
-													<div class="single-product-item">
-														<div class="product-image">
-															<a href="#"><img src="img/product/sale/09.jpg" alt="product-image" /></a>
-															<a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-11%</a>
-															<div class="overlay-content">
-																<ul>
-																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="product-info">
-															<div class="customar-comments-box">
-																<div class="rating-box">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-empty"></i>
-																	<i class="fa fa-star-half-empty"></i>
-																</div>
-																<div class="review-box">
-																	<span>1 Đánh giá</span>
-																</div>
-															</div>
-															<a href="single-product.php">BITI'S HUNTER X 2019 JET <br>BLACK</a>
-															<div class="price-box">
-																<span class="price">800,000 VND</span>
-																<span class="old-price">899,000 VND</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- SALE-PRODUCTS-SINGLE-ITEM END -->
-											<!-- SALE-PRODUCTS-SINGLE-ITEM START -->		
-											<div class="item">
-												<div class="new-product">
-													<div class="single-product-item">
-														<div class="product-image">
-															<a href="#"><img src="img/product/sale/001.jpg" alt="product-image" /></a>
-															<a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-30%</a>
-															<div class="overlay-content">
-																<ul>
-																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="product-info">
-															<div class="customar-comments-box">
-																<div class="rating-box">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																</div>
-																<div class="review-box">
-																	<span>1 Đánh giá</span>
-																</div>
-															</div>
-															<a href="single-product.php">VANS CLASSIC SLIP ON SKULLS<br>BLACK</a>
-															<div class="price-box">
-																<span class="price">980,000 VND</span>
-																<span class="old-price">1,400,000 VND</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- SALE-PRODUCTS-SINGLE-ITEM END -->
-											<!-- SALE-PRODUCTS-SINGLE-ITEM START -->									
-											<div class="item">
-												<div class="new-product">
-													<div class="single-product-item">
-														<div class="product-image">
-															<a href="#"><img src="img/product/sale/06.jpg" alt="product-image" /></a>
-															<a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-5%</a>
-															<div class="overlay-content">
-																<ul>
-																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="product-info">
-															<div class="customar-comments-box">
-																<div class="rating-box">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																</div>
-																<div class="review-box">
-																	<span>1 Đánh giá</span>
-																</div>
-															</div>
-															<a href="single-product.php">NIKE AIR MAX 90<br>ORANGE BLUE</a>
-															<div class="price-box">
-																<span class="price">3,600,000 VND</span>
-																<span class="old-price">3,800,000 VND</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- SALE-PRODUCTS-SINGLE-ITEM END -->
-											<!-- SALE-PRODUCTS-SINGLE-ITEM START -->									
-											<div class="item">
-												<div class="new-product">
-													<div class="single-product-item">
-														<div class="product-image">
-															<a href="#"><img src="img/product/sale/07.jpg" alt="product-image" /></a>
-															<a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-30%</a>
-															<div class="overlay-content">
-																<ul>
-																	<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-																	<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-																</ul>
-															</div>
-														</div>
-														<div class="product-info">
-															<div class="customar-comments-box">
-																<div class="rating-box">
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star"></i>
-																	<i class="fa fa-star-half-empty"></i>
-																	<i class="fa fa-star-half-empty"></i>
-																</div>
-																<div class="review-box">
-																	<span>1 Đánh giá</span>
-																</div>
-															</div>
-															<a href="single-product.php">PUMA CELL PHASE<br>WHITE RED</a>
-															<div class="price-box">
-																<span class="price">1,990,000 VND</span>
-																<span class="old-price">2,830,000 VND</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- SALE-PRODUCTS-SINGLE-ITEM END -->									
+													<?php 
+														}
+												?>						
 										</div>
+										
 										<!-- SALE-CAROUSEL END -->
 									</div>
 								</div>
@@ -347,12 +196,12 @@
 					<div class="add-two-by-one-column">
 						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 							<div class="tow-column-add zoom-img">
-								<a href="#"><img src="img/product/shope-add11.jpg" alt="shope-add" /></a>
+								<a href="shop-gird.php?maLoai=2"><img src="img/product/shope-add11.jpg" alt="shope-add" /></a>
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 							<div class="one-column-add zoom-img">
-								<a href="#"><img src="img/product/shope-add22.png" alt="shope-add" /></a>
+								<a href="shop-gird.php?maLoai=4"><img src="img/product/shope-add22.png" alt="shope-add" /></a>
 							</div>								
 						</div>
 					</div>
@@ -383,14 +232,14 @@
 											<div class="product-image">
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 												<!-- <a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-30%</a> -->
-												<div class="overlay-content">
+												<!--div class="overlay-content">
 													<ul>
 														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
 													</ul>
-												</div>
+												</div-->
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
@@ -407,7 +256,7 @@
 												</div>
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><span style="text-transform: uppercase;"><?php echo $resultProd['tenSanPham']; ?></span></a>
 												<div class="price-box">
-													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+													<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 														<!-- <span class="old-price">1,400,000 VND</span> -->
 												</div>
 											</div>
@@ -451,14 +300,14 @@
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 
 												<!-- <a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-30%</a> -->
-												<div class="overlay-content">
+												<!--div class="overlay-content">
 													<ul>
 														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
 													</ul>
-												</div>
+												</div-->
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
@@ -475,7 +324,7 @@
 												</div>
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><span style="text-transform: uppercase;"><?php echo $resultProd['tenSanPham']; ?></span></a>
 												<div class="price-box">
-													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+													<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 														<!-- <span class="old-price">1,400,000 VND</span> -->
 												</div>
 											</div>
@@ -519,14 +368,14 @@
 											<div class="product-image">
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><img src="admin/pages/uploads/<?php echo $resultProd['hinhAnhSanPham']; ?>" alt="product-image" /></a>
 												<!-- <a href="#" class="new-mark-box" style="background-color: rgb(66, 139, 202);">-30%</a> -->
-												<div class="overlay-content">
+												<!--div class="overlay-content">
 													<ul>
 														<li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
 														<li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
 													</ul>
-												</div>
+												</div-->
 											</div>
 											<div class="product-info">
 												<div class="customar-comments-box">
@@ -543,7 +392,7 @@
 												</div>
 												<a href="single-product.php?maSanPham=<?php echo $resultProd['maSanPham']; ?>"><span style="text-transform: uppercase;"><?php echo $resultProd['tenSanPham']; ?></span></a>
 												<div class="price-box">
-													<span class="price"><?php echo $resultProd['giaSanPham']; ?> VND</span>
+													<span class="price"><?php echo number_format($resultProd['giaSanPham']); ?> VNĐ</span>
 														<!-- <span class="old-price">1,400,000 VND</span> -->
 												</div>
 											</div>

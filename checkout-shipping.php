@@ -53,7 +53,7 @@
 						<!-- PRODUCT-DELIVERY-OPTION START -->
 						<div class="product-delivery-option">
 							<div class="product-delivery-address">
-								<p>Chọn một phương thức vận chuyển cho địa chỉ: demo address</p>
+								<p>Chọn một phương thức vận chuyển:</p>
 							</div>
 							<!-- PRODUCT-DELIVERY-ITEM START -->
 							<div class="product-delivery-item">
@@ -125,7 +125,7 @@
 						<!-- PRODUCT-DELIVERY-OPTION END -->
 						<!-- RETURNE-CONTINUE-SHOP START -->
 						<div class="returne-continue-shop">
-							<a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a>
+							<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
 							<a href="checkout.php" class="procedtocheckout">Tiếp tục đơn hàng<i class="fa fa-chevron-right"></i></a>
 						</div>	
 						<!-- RETURNE-CONTINUE-SHOP END -->	

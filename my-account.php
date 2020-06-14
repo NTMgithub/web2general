@@ -34,16 +34,16 @@ session_start();
 						<div class="account-info">
 							<div class="single-account-info">
 								<ul>
-									<li><a href="#"><i class="fa fa-building"></i><span>Thêm địa chỉ</span>	</a></li>
-									<li><a href="#"><i class="fa fa-list-ol"></i><span>Chi tiết và lịch sử đơn hàng</span>	</a></li>
-									<li><a href="#"><i class="fa fa-file-o"></i><span>Thẻ tín dụng</span>	</a></li>
-									<li><a href="checkout-address.php"><i class="fa fa-building"></i><span>Sổ địa chỉ</span>	</a></li>
-									<li><a href="checkout-registration.php"><i class="fa fa-user"></i><span>Thông tin cá nhân</span>	</a></li>
+									<!--li><a href="#"><i class="fa fa-building"></i><span>Thêm địa chỉ</span>	</a></li-->
+									<li><a href="order_status.php"><i class="fa fa-list-ol"></i><span>Chi tiết và lịch sử đơn hàng</span>	</a></li>
+									<!--li><a href="#"><i class="fa fa-file-o"></i><span>Thẻ tín dụng</span>	</a></li-->
+									<!--li><a href="checkout-address.php"><i class="fa fa-building"></i><span>Sổ địa chỉ</span>	</a></li-->
+									<li><a href="information.php"><i class="fa fa-user"></i><span>Thông tin cá nhân</span>	</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+					<!--div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 						<div class="account-info">
 							<div class="single-account-info">
 								<ul>
@@ -51,15 +51,29 @@ session_start();
 								</ul>
 							</div>
 						</div>
-					</div>
+					</div-->
 					<!-- ACCOUNT-INFO-TEXT END -->
+					<!--logout-->
+					<?php 
+					  if($_SERVER['REQUEST_METHOD']=="POST")
+					  {
+						  if(isset($_POST['logout']))
+						  {
+							  unset($_SESSION['ten']);?>
+							  <script>window.location="index.php";</script>
+						 <?php }
+					  }
+					?>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- BACK TO HOME START -->
 						<div class="home-link-menu">
 							<ul>
-							<?php if(isset($_SESSION['ten']))
-								unset($_SESSION['ten']);
-								echo'<li><a href="index.php"><i class="fa fa-chevron-left"></i> ĐĂNG XUẤT</a></li>';?>
+							<!--?php if(isset($_SESSION['ten']))-->
+								<form method="post" action="">
+								<?php
+								echo '<input type="submit" value="ĐĂNG XUẤT" name="logout">';
+								 ?>
+								 </form>
 							</ul>
 						</div>
 						<!-- BACK TO HOME END -->
@@ -68,6 +82,15 @@ session_start();
 			</div>
 		</section>
 		<!-- MAIN-CONTENT-SECTION END -->
+		<!--script>
+		   function xoa()
+		   {
+			   <!?php
+					  unset($_SESSION['ten']);
+					  header("location:index.php");
+				?>
+		   }
+		</script-->
 <?php
 	include 'footer.php';
 ?>

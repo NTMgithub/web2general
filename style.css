@@ -2261,10 +2261,13 @@ span.after{
 	margin: 40px 0 28px;
 	padding: 20px 0 0;
 }
+ .home-link{
+	margin: 40px 0 28px;
+	padding: 20px 0 0;
+}
 .home-link-menu ul{
 	overflow:hidden;
 }
-.home-link-menu ul li{}
 .home-link-menu ul li a{
 	background: #ff4f4f none repeat scroll 0 0;
 	color: #fff;
@@ -3083,7 +3086,7 @@ form.error-ser-form .error-ser-btn:hover{
 /*--------------------
 17. Sign in page
 ----------------------*/
-.create-new-account{}
+
 .primari-box{
 	background: #fbfbfb none repeat scroll 0 0;
 	border: 1px solid #d6d4d4;
@@ -3103,7 +3106,7 @@ form.error-ser-form .error-ser-btn:hover{
 	padding: 0 0 15px;
 	text-transform: uppercase;
 } 
-.primary-box-content{} 
+
 .primary-box-content p{
 	font-size: 13px;
 	margin:11px 0 4px;
@@ -3113,8 +3116,9 @@ form.error-ser-form .error-ser-btn:hover{
 	margin: 14px 0 13px;
 } 
 .primary-form-group{
-	margin-bottom: 1px;
+	margin-bottom: 5px;
 	overflow:hidden;
+	margin-top: 35px;
 } 
 .primary-form-group label{
 	color: #333;
@@ -3922,7 +3926,7 @@ p.filup-below{
 	background:rgba(0, 0, 0, 0) url("img/sprite.png") no-repeat scroll -221px -27px;
 } 
 .deli-address-group label{
-	margin-top:0;
+	margin-top:45px;
 	text-transform:none;
 }
 .chose-address{
@@ -3944,6 +3948,21 @@ textarea.addinfobox:focus, textarea.addinfobox:active{
 p.assign-address{
 	margin:5px 0 7px;
 } 
+
+#thongbao{
+	color:red;
+	font-size:20px;
+}
+#soluong{
+	color:red;
+	font-size:20px;
+	margin-top:20px;
+	margin-bottom:8px;
+}
+#giohang{
+	font-size:30px;
+	color:red;
+	text-align:center;}
 .update-button{
 	margin: 20px 0 10px;
 	display:block;
@@ -3976,6 +3995,7 @@ p.assign-address{
 }
 .type-address-group label{
 	color:#333;
+	margin-top: 28px;
 }
 .type-address-group textarea{
 	height:135px;

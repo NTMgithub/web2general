@@ -1,4 +1,5 @@
 <?php
+session_start();
 	$pageTitle = "THANH TOÁN | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
@@ -6,9 +7,11 @@
 
 	include 'header.php';
 ?>
+	
 		<!-- MAIN-CONTENT-SECTION START -->
 		<section class="main-content-section">
 			<div class="container">
+			<form action="order.php" method="post">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- BSTORE-BREADCRUMB START -->
@@ -22,7 +25,14 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h2 class="page-title">Chọn một phương thức thanh toán <span class="shop-pro-item">Giỏ hàng bao gồm: 1 sản phẩm </span></h2>
+						<h2 class="page-title">Chọn một phương thức thanh toán <span class="shop-pro-item">Giỏ hàng bao gồm: 
+						<?php if(isset($_SESSION['soluong']))
+						   {
+							   $m=$_SESSION['soluong'];
+							   echo $m;
+						   }
+						?>
+						 sản phẩm </span></h2>
 					</div>	
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- SHOPING-CART-MENU START -->
@@ -65,32 +75,44 @@
 								<!-- TABLE BODY START -->
 								<tbody>
 									<!-- SINGLE CART_ITEM START -->
+									<?php 
+									 $sId=session_id();
+									   $danhsach=mysqli_query($conn,"SELECT *,sum(`soLuongSanPham`) FROM `tbl_giohang` WHERE `sessionID`='$sId' GROUP BY `maSanPham` ");
+									   $sup_total=0;
+									   while($rows=mysqli_fetch_assoc($danhsach))
+									   { ?>
 									<tr>
 										<td class="cart-product">
 											<a href="#">
-												<img alt="Faded" src="img/product/cart-image1.png">
+												<img alt="Faded" src="admin/pages/uploads/<?php echo $rows['hinhAnhSanPham']; ?>">
 											</a>
 										</td>
 										<td class="cart-description">
-											<p class="product-name"><a href="#">AIR FORCE 1 SHADOW AQUA PINK</a></p>
-											<small>SKU : demo_1</small>
-											<small><a href="#">Size : 41, Màu : Aqua Pink</a></small>
+											<p class="product-name"><a href="#"><?php echo $rows['tenSanPham']?></a></p>
+											<small name="ma">Mã sản phẩm: <?php echo $rows['maSanPham'];?></small>
+											<small><a href="#">Size : <?php echo $rows['sizeSanPham'];?></a></small>
 										</td>
 										<td class="cart-avail">
 											<span class="label label-success">Còn hàng</span>
 										</td>
 										<td class="cart-unit">
 											<ul class="price text-right">
-												<li class="price">4,500,000 VND</li>
+												<li class="price"><?php echo number_format($rows['giaSanPham']);?> VNĐ</li>
 											</ul>
 										</td>
 										<td class="cart_quantity text-center">
-											<span>1</span>
+											<span><?php echo $rows['sum(`soLuongSanPham`)'];?></span>
 										</td>
 										<td class="cart-total">
-											<span class="price">4,500,000 VND</span>
+										<?php 
+										   //$gia=(string)$rows['soLuongSanPham'];
+										  $total=$rows['giaSanPham'] *$rows['sum(`soLuongSanPham`)'];?>
+										<span class="price" ><?php echo number_format($total);?> VNĐ</span>
+										
 										</td>
 									</tr>
+									<?php $sup_total+=$total;?><!--tính tổng tiền-->
+									<?php }?>
 									<!-- SINGLE CART_ITEM END -->
 								</tbody>
 								<!-- TABLE BODY END -->
@@ -98,27 +120,50 @@
 								<tfoot>
 									<tr>
 										<td class="text-right" colspan="4">Tạm tính</td>
-										<td class="price" colspan="2">4,500,000 VND</td>
+										<td class="price" colspan="2"><?php echo number_format($sup_total);?>VNĐ</td>
 									</tr>
 									<tr>
 										<td class="text-right" colspan="4">Chi phí gói quà</td>
-										<td class="price" colspan="2">0 VND</td>
+										<td class="price" colspan="2">0 VNĐ</td>
 									</tr>
 									<tr>
 										<td class="text-right" colspan="4">Phí vận chuyển</td>
-										<td class="price" colspan="2">0 VND</td>
+										<td class="price" colspan="2">0 VNĐ</td>
 									</tr>
 									<tr>
-										<td class="text-right" colspan="4">Khuyễn mãi</td>
-										<td class="price" colspan="2">0 VND</td>
+										<td class="text-right" colspan="4">Khuyến mãi</td>
+										<td class="price" colspan="2">0 VNĐ</td>
 									</tr>
 									<tr>
 										<td class="total-price-container text-right" colspan="4">
 											<span>Tổng thanh toán</span>
 										</td>
 										<td id="total-price-container" class="price" colspan="2">
-											<span id="total-price">4,500,000 VND</span>
+											<span id="total-price"><?php echo number_format($sup_total);?> VNĐ</span>
+											<input type='hidden' name="price" value="<?php echo ($sup_total);?>">
 										</td>
+									</tr>
+									<?php
+									$makhachhang=$_SESSION['maKhachHang'];//lấy mã khách hàng
+									$sessionid = session_id();
+									$idthongtin =mysqli_query($conn,"SELECT IDTTGH FROM tbl_thongtingiaohang1 ORDER BY IDTTGH DESC LIMIT 1");
+									$dataTT = mysqli_fetch_assoc($idthongtin);
+									$idTTGH =  $dataTT['IDTTGH'];
+
+									$khach_hang=mysqli_query($conn,"SELECT * FROM `tbl_thongtingiaohang1` WHERE `maKhachHang`='$makhachhang' AND `IDTTGH` = '$idTTGH' ");
+									$thong_tin=mysqli_fetch_assoc($khach_hang);
+									?>
+									<tr>
+										<td class="text-right" colspan="4">Địa chỉ giao hàng</td>
+										<td class="price" colspan="2"><?php echo $thong_tin['diaChiTinh'].", " .$thong_tin['diaChiHuyen']." ,".$thong_tin['diaChiXa'];?></td>
+									</tr>
+									<tr>
+										<td class="text-right" colspan="4">Số điện thoại</td>
+										<td class="price" colspan="2"><?php echo "+84".$thong_tin['soDienThoai'];?> </td>
+									</tr>
+									<tr>
+										<td class="text-right" colspan="4">Người nhận</td>
+										<td class="price" colspan="2"><?php echo $thong_tin['tenNguoiNhan'];?></td>
 									</tr>
 								</tfoot>
 								<!-- TABLE FOOTER END -->								
@@ -132,22 +177,22 @@
 						<div class="four-payment-method">
 							<!-- SINGLE-PAYMENT-METHOD START -->
 							<div class="single-payment-method payment-method-one">
-								<a href="#">CHUYỂN KHOẢN NGÂN HÀNG<span></span><i class="fa fa-chevron-right"></i></a>
+								<a href="#" style="pointer-events:none;">CHUYỂN KHOẢN NGÂN HÀNG <span style="color: #7b8696">(ĐANG PHÁT TRIỂN)</span><i class="fa fa-chevron-right"></i></a>
 							</div>
 							<!-- SINGLE-PAYMENT-METHOD END -->
 							<!-- SINGLE-PAYMENT-METHOD START -->							
 							<div class="single-payment-method payment-method-three">
-								<a href="#">THANH TOÁN BẰNG PAYPAL<span></span><i class="fa fa-chevron-right"></i></a>
+								<a href="#" style="pointer-events:none;">THANH TOÁN BẰNG PAYPAL <span style="color: #7b8696">(ĐANG PHÁT TRIỂN)</span><span></span><i class="fa fa-chevron-right"></i></a>
 							</div>
 							<!-- SINGLE-PAYMENT-METHOD END -->
 							<!-- SINGLE-PAYMENT-METHOD START -->							
 							<div class="single-payment-method payment-method-four">
-								<a href="#">THANH TOÁN BẰNG MASTERCARD<span></span><i class="fa fa-chevron-right"></i></a>
+								<a href="#" style="pointer-events:none;">THANH TOÁN BẰNG MASTERCARD <span style="color: #7b8696">(ĐANG PHÁT TRIỂN)</span><span></span><i class="fa fa-chevron-right"></i></a>
 							</div>	
 							<!-- SINGLE-PAYMENT-METHOD END -->		
 							<!-- SINGLE-PAYMENT-METHOD START -->							
 							<div class="single-payment-method payment-method-two" style="background: rgba(0, 0, 0, 0) url('img/cod1.png') no-repeat scroll 12px 15px;">
-								<a href="#">THANH TOÁN KHI NHẬN HÀNG (COD)<span></span><i class="fa fa-chevron-right"></i></a>
+								<a href="#" style="background: rgba(51, 46, 46, 0.05);">THANH TOÁN KHI NHẬN HÀNG (COD)<span></span><i class="fa fa-chevron-right"></i></a>
 							</div>	
 							<!-- SINGLE-PAYMENT-METHOD END -->						
 						</div>
@@ -156,11 +201,12 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- RETURNE-CONTINUE-SHOP START -->
 						<div class="returne-continue-shop">
-							<a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a>
+							<input type="submit" value="ĐẶT HÀNG" onClick="alert('Đặt hàng thành công'); "><a href="" class="continueshoping"><!--i class="fa fa-chevron-left"-></i--></a>
 						</div>	
 						<!-- RETURNE-CONTINUE-SHOP END -->								
 					</div>
 				</div>
+			</form>
 			</div>
 		</section>
 		<!-- MAIN-CONTENT-SECTION END -->
@@ -169,6 +215,12 @@
 ?>
 		<!-- JS 
 		===============================================-->
+		<script type="text/javascript">
+			function clickDatHang(){
+				//alert('Đã đặt hàng thành công');
+				
+			}
+		</script>
 		<!-- jquery js -->
 		<script src="js/vendor/jquery-1.11.3.min.js"></script>
 		

@@ -1,28 +1,28 @@
-<?php
+<!--?php
 	$pageTitle = "DANH SÁCH YÊU THÍCH | GIÀY B.STORE - Hệ thống giày thể thao chính hãng";
 	function customPageHeader(){?>
 		<title>$pageTitle</title>
-	<?php }
+	<--?php }
 
 	include 'header.php';
 ?>
-		<!-- MAIN-CONTENT-SECTION START -->
+		<!- MAIN-CONTENT-SECTION START ->
 		<section class="main-content-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<!-- BSTORE-BREADCRUMB START -->
+						<!- BSTORE-BREADCRUMB START ->
 						<div class="bstore-breadcrumb">
 							<a href="index.php">TRANG CHỦ <span><i class="fa fa-caret-right"></i> </span> </a>
 							<a href="my-account.php"> TÀI KHOẢN CỦA TÔI <span><i class="fa fa-caret-right"></i></span></a>
 							<span> Danh sách yêu thích</span>
 						</div>
-						<!-- BSTORE-BREADCRUMB END -->
+						<!- BSTORE-BREADCRUMB END ->
 					</div>
 				</div>
 				<div class="row">					
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<!-- SINGLE SIDEBAR TAG START -->
+						<!- SINGLE SIDEBAR TAG START ->
 						<div class="product-left-sidebar">
 							<h2 class="left-title pro-g-page-title">Tags </h2>
 							<div class="category-tag">
@@ -36,11 +36,11 @@
 							
 							</div>
 						</div>	
-						<!-- SINGLE SIDEBAR TAG END -->
+						<!- SINGLE SIDEBAR TAG END ->
 					</div>
 					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 						<h2 class="page-title">Danh sách yêu thích của tôi</h2>
-						<!-- WISHLISTS-AREA START -->
+						<!- WISHLISTS-AREA START ->
 						<div class="wishlists-area">
 							<form class="new-wishlists-box primari-box" id="savewishlist" method="post" action="#">
 								<h3 class="box-subheading">Danh sách mới</h3>
@@ -55,8 +55,8 @@
 								</div>
 							</form>								
 						</div>
-						<!-- WISHLISTS-AREA END -->
-						<!-- WISHLISTS-CHART START -->
+						<!- WISHLISTS-AREA END -->
+						<!-- WISHLISTS-CHART START ->
 						<div class="wishlists-chart table-responsive">
 							<table class="table table-bordered">
 								<tr>
@@ -93,8 +93,8 @@
 								</tr>
 							</table>
 						</div>	
-						<!-- WISHLISTS-CHART END -->
-						<!-- WISHLISTS-ITEM START -->
+						<!- WISHLISTS-CHART END -->
+						<!-- WISHLISTS-ITEM START ->
 						<div class="wishlists-item">
 							<div class="wishlists-item-title">
 								<a href="#">Ẩn thông tin sản phẩm đã mua. <i class="fa fa-close"></i></a>
@@ -107,7 +107,7 @@
 							<div class="wishlists-all-item">
 								<div class="row">
 									<div class="col-md-3 col-sm-4 col-xs-12">
-										<!-- WISHLISTS-SINGLE-ITEM START -->
+										<!- WISHLISTS-SINGLE-ITEM START ->
 										<div class="wishlists-single-item">
 											<div class="wishlist-image">
 												<a href="#"><img src="img/wishlist/01.png" alt="" /></a>
@@ -131,10 +131,10 @@
 											</div>	
 											<a class="wish-save" href="#">Lưu</a>									
 										</div>
-										<!-- WISHLISTS-SINGLE-ITEM END -->
+										<!- WISHLISTS-SINGLE-ITEM END ->
 									</div>	
 									<div class="col-md-3 col-sm-4 col-xs-12">
-										<!-- WISHLISTS-SINGLE-ITEM START -->
+										<!- WISHLISTS-SINGLE-ITEM START ->
 										<div class="wishlists-single-item">
 											<div class="wishlist-image">
 												<a href="#"><img src="img/wishlist/02.png" alt="" /></a>
@@ -158,10 +158,10 @@
 											</div>	
 											<a class="wish-save" href="#">Lưu</a>								
 										</div>
-										<!-- WISHLISTS-SINGLE-ITEM END -->
+										<!- WISHLISTS-SINGLE-ITEM END ->
 									</div>	
 									<div class="col-md-3 col-sm-4 col-xs-12">
-										<!-- WISHLISTS-SINGLE-ITEM START -->
+										<!- WISHLISTS-SINGLE-ITEM START ->
 										<div class="wishlists-single-item">
 											<div class="wishlist-image">
 												<a href="#"><img src="img/wishlist/03.png" alt="" /></a>
@@ -185,10 +185,10 @@
 											</div>	
 											<a class="wish-save" href="#">Lưu</a>								
 										</div>
-										<!-- WISHLISTS-SINGLE-ITEM END -->
+										<!- WISHLISTS-SINGLE-ITEM END ->
 									</div>
 									<div class="col-md-3 col-sm-4 col-xs-12 hidden-sm">
-										<!-- WISHLISTS-SINGLE-ITEM START -->
+										<!- WISHLISTS-SINGLE-ITEM START ->
 										<div class="wishlists-single-item">
 											<div class="wishlist-image">
 												<a href="#"><img src="img/wishlist/04.png" alt="" /></a>
@@ -212,59 +212,59 @@
 											</div>	
 											<a class="wish-save" href="#">Lưu</a>								
 										</div>
-										<!-- WISHLISTS-SINGLE-ITEM END -->
+										<!- WISHLISTS-SINGLE-ITEM END ->
 									</div>										
 								</div>
-								<!-- WISH-LIST BACT HOME START-->
+								<!- WISH-LIST BACT HOME START->
 								<div class="wish-back-link">
 									<a  class="wish-save" href="my-account.php"><i class="fa fa-chevron-left"></i> Quay lại tài khoản của bạn</a>
 									<a  class="wish-save" href="index.php"><i class="fa fa-chevron-left"></i> Trang chủ</a>
 								</div>
-								<!-- WISH-LIST BACT HOME END -->
+								<!- WISH-LIST BACT HOME END ->
 							</div>
 						</div>	
-						<!-- WISHLISTS-ITEM END -->
+						<!- WISHLISTS-ITEM END ->
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- MAIN-CONTENT-SECTION END -->
-<?php
+		<!- MAIN-CONTENT-SECTION END ->
+<-?php
 	include 'footer.php';
-?>
+?-->
 		<!-- JS 
 		===============================================-->
-		<!-- jquery js -->
+		<!-- jquery js ->
 		<script src="js/vendor/jquery-1.11.3.min.js"></script>
 		
-		<!-- fancybox js -->
+		<!- fancybox js ->
         <script src="js/jquery.fancybox.js"></script>
 		
-		<!-- bxslider js -->
+		<!- bxslider js ->
         <script src="js/jquery.bxslider.min.js"></script>
 		
-		<!-- meanmenu js -->
+		<!- meanmenu js ->
         <script src="js/jquery.meanmenu.js"></script>
 		
-		<!-- owl carousel js -->
+		<!- owl carousel js ->
         <script src="js/owl.carousel.min.js"></script>
 		
-		<!-- nivo slider js -->
+		<!- nivo slider js ->
         <script src="js/jquery.nivo.slider.js"></script>
 		
-		<!-- jqueryui js -->
+		<!- jqueryui js ->
         <script src="js/jqueryui.js"></script>
 		
-		<!-- bootstrap js -->
+		<!- bootstrap js ->
         <script src="js/bootstrap.min.js"></script>
 		
-		<!-- wow js -->
+		<!- wow js ->
         <script src="js/wow.js"></script>		
 		<script>
 			new WOW().init();
 		</script>
 
-		<!-- Google Map js -->
+		<!- Google Map js ->
         <script src="https://maps.googleapis.com/maps/api/js"></script>	
 		<script>
 			function initialize() {
@@ -283,8 +283,8 @@
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);				
 		</script>
-		<!-- main js -->
+		<!- main js ->
         <script src="js/main.js"></script>
     </body>
 
-</html>
+</html-->

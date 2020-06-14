@@ -43,8 +43,12 @@
 										</span>
 									</div>
 									<div class="form-group primary-form-group p-info-group">
-										<label for="firstname">Tên<sup>*</sup></label>
+										<label for="firstname">Tên đăng nhập<sup>*</sup></label>
 										<input type="text" value="" name="firstname" id="firstname" class="form-control input-feild">
+									</div>
+									<div class="form-group primary-form-group p-info-group">
+										<label for="firstname">Họ tên<sup>*</sup></label>
+										<input type="text" value="" name="name" id="name" class="form-control input-feild">
 									</div>
 									<!--div class="form-group primary-form-group p-info-group">
 										<label for="lastname">Họ <sup>*</sup></label>
@@ -251,7 +255,7 @@
 										<a href="#">Nhận ưu đãi từ đối tác của chúng tôi!</a>
 									</div>
 									<div class="submit-button p-info-submit-button">
-										<input type="submit" id="SubmitCreate" class="btn main-btn">
+										<input type="submit" id="SubmitCreate" class="btn main-btn" value="ĐĂNG KÍ">
 											<!--span>
 												ĐĂNG KÝ
 												<i class="fa fa-chevron-right"></i>

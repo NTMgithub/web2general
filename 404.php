@@ -8,8 +8,10 @@
 ?>
 
 <section class="main-content-section">
-	<h1>404</h1>
-	<h2>Không tìm thấy trang bạn yêu cầu!</h2>
+	<div>
+		<h1>404</h1>
+		<h2>Không tìm thấy trang bạn yêu cầu!</h2>
+	</div>
 </section>
 
 <?php
