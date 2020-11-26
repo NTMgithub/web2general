@@ -80,7 +80,7 @@
                                         <label class="labelAddProduct">Địa chỉ giao: </label>
                                     </td>
                                     <td>
-                                        <h5 style="font-size: 16px;"><?php echo $resultDH['diaChiXa'] ?>, <?php echo $resultDH['diaChiHuyen'] ?>, <?php echo $resultDH['diaChiTinh'] ?></h5>
+                                        <h5 style="font-size: 16px;">+84<?php echo $resultDH['diachi'] ?></h5>
                                     </td>
                                 </tr>
 

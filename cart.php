@@ -325,15 +325,15 @@ session_start();
 											$so=$_SESSION['soluong'];
 											if($so>0)
 											{
-												echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+												echo'<a  href="checkout-address.php" class="continueshoping"><input type="submit" class="procedtocheckout" style="color: white;" value="Tiếp tục đơn hàng" ></a>';
 											}
 										}
 										else{
-											echo '<input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" onClick="alert(\'Chưa có sản phẩm trong giỏ hàng\')";>';
+											echo '<input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" style="color: white;" onClick="alert(\'Chưa có sản phẩm trong giỏ hàng\')";>';
 										}
 									}
 								else {
-										echo'<a  href="registration.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" ></a>';
+										echo'<a  href="registration.php" class="continueshoping"><input type="submit" class="procedtocheckout" value="Tiếp tục đơn hàng" style="color: white;"></a>';
 									}?>
 						</div>	
 						<!-- RETURNE-CONTINUE-SHOP END -->						

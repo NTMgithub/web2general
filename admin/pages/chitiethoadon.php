@@ -71,7 +71,7 @@
                                         <label class="labelAddProduct">Số điện thoại: </label>
                                     </td>
                                     <td>
-                                       <h5 style="font-size: 16px;"><?php echo $resultHD['sdtKH'] ?></h5>
+                                       <h5 style="font-size: 16px;">+84<?php echo $resultHD['sdtKH'] ?></h5>
                                     </td>
                                 </tr>
 
@@ -80,7 +80,7 @@
                                         <label class="labelAddProduct">Địa chỉ giao: </label>
                                     </td>
                                     <td>
-                                        <h5 style="font-size: 16px;"><?php echo $resultHD['diaChiXa'] ?>, <?php echo $resultHD['diaChiHuyen'] ?>, <?php echo $resultHD['diaChiTinh'] ?></h5>
+                                        <h5 style="font-size: 16px;"><?php echo $resultHD['diachi'] ?></h5>
                                     </td>
                                 </tr>
 

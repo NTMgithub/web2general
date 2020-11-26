@@ -145,9 +145,7 @@
             while ($dataGH = $resultdataGH->fetch_assoc()){
                 $tenNN = $dataGH['tenNguoiNhan'];
                 $SDTKH = $dataGH['sdtKH'];
-                $DCTinh = $dataGH['diaChiTinh'];
-                $DCHuyen = $dataGH['diaChiHuyen'];
-                $DCXa = $dataGH['diaChiXa'];
+                $diachiNN = $dataGH['diachi'];
                 $ghiChu = $dataGH['ghiChuCuaKhachhang'];
 
                 $maSP = $dataGH['maSanPham']; 
@@ -159,8 +157,8 @@
                 $hinhanhSP = $dataGH['hinhAnhSP'];
 
 
-                $querychitietdonhang="INSERT INTO `web2`.`tbl_chitiethoadon` (`maHoaDon` ,`tenNguoiNhan`, `sdtKH`, `diaChiTinh`, `diaChiHuyen`,`diaChiXa`,`ghiChu`, `maSP`, `tenSP`, `soLuongSP`, `sizeSP`, `giaSP`, `mieuTaSP`, `hinhAnhSP`)
-                  VALUES('$dataMHDNew','$tenNN','$SDTKH','$DCTinh','$DCHuyen','$DCXa','$ghiChu','$maSP', '$tenSP','$SLSP','$sizeSP','$giaSP','$mieutaSP', '$hinhanhSP') ";
+                $querychitietdonhang="INSERT INTO `web2`.`tbl_chitiethoadon` (`maHoaDon` ,`tenNguoiNhan`, `sdtKH`,`ghiChu`, `maSP`, `tenSP`, `soLuongSP`, `sizeSP`, `giaSP`, `mieuTaSP`, `hinhAnhSP`, `diachi`)
+                  VALUES('$dataMHDNew','$tenNN','$SDTKH','$ghiChu','$maSP', '$tenSP','$SLSP','$sizeSP','$giaSP','$mieutaSP', '$hinhanhSP', '$diachiNN') ";
                 $themCTHD = $this->db->insert($querychitietdonhang);
 
             }

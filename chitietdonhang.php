@@ -87,7 +87,7 @@ session_start();
                                         <label class="labelAddProduct">Địa chỉ giao: </label>
                                     </td>
                                     <td>
-                                        <h5 style="font-size: 16px;"><?php echo $resultCTDH['diaChiXa'] ?>, <?php echo $resultCTDH['diaChiHuyen'] ?>, <?php echo $resultCTDH['diaChiTinh'] ?></h5>
+                                        <h5 style="font-size: 16px;"><?php echo $resultCTDH['diachi'] ?></h5>
                                     </td>
                                 </tr>
 

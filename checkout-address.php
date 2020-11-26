@@ -52,26 +52,27 @@
 					
 					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
 						<div class="form-group primary-form-group p-info-group deli-address-group">
-						<?php $db=mysqli_query($conn,"SELECT *FROM `web2`.`tbl_diachi`");?>
+						<?php $db=mysqli_query($conn,"SELECT * FROM `donvihanhchinh`.`devvn_tinhthanhpho`"); ?>
 						<form class="primari-box personal-info-box" id="personalinfo" name="Formaddress" onsubmit="return validateAdress()" method="post" action="address.php" >
 						  <center >ĐỊA CHỈ</center>
-						<label>Chọn một địa chỉ giao hàng:</label>
+						<label>Chọn tỉnh/thành phố:</label>
 							<div class="birth-day delivery-address">
-							<select id="address_tinh" name="address_tinh">
-								<?php  while($row=mysqli_fetch_array($db))
-						{ ?>
-										<option value="<?php echo $row['id'];?>"><?php echo $row['address'];?></option>
+								<select id="address_tinh" name="address_tinh" style="width: 100%;" onchange="document.getElementById('diaChiTinh').value = this.options[this.selectedIndex].text;" >
+								<?php  while($row=mysqli_fetch_array($db)) { ?>
+										<option value="<?php echo $row['matp'];?>"><?php echo $row['name'];?></option>
 
-									<?php	}?> 
-								</select>
-																		
+								<?php	}?> 
+								</select>	
+								<input id="diaChiTinh" type = "hidden" name = "diaChiTinh" value = "" />					
 							</div>
 							
+			
 							<label>Chọn Quận/Huyện:</label>
-							<div class="birth-day delivery-address">
-								<select id="address1" name="address1" >
+							<div class="birth-day delivery-address" >
+								<select id= "address1" name="address1" style="width: 100%;"  onchange="document.getElementById('diaChiHuyen').value = this.options[this.selectedIndex].text;">
 								
-								</select>												
+								</select>
+								<input id="diaChiHuyen" type = "hidden" name = "diaChiHuyen" value = "" />											
 							</div>
 							
 							<label>Chọn Xã</label>
@@ -81,15 +82,17 @@
 								</select>													
 							</div>
 							
+							<label for="diachinh">Địa chỉ nhận hàng<sup>*</sup></label>
+							<input type="text" value="" name="diachinh" id="diachinh" class="form-control input-feild">
 							
-							       <div class="form-group primary-form-group p-info-group">
+							<div class="form-group primary-form-group p-info-group">
 										<label for="firstname">Tên người nhận<sup>*</sup></label>
 										<input type="text" value="" name="firstname" id="firstname" class="form-control input-feild">
-									</div>
-									<div class="form-group primary-form-group p-info-group">
+							</div>
+							<div class="form-group primary-form-group p-info-group">
 										<label for="lastname">Số điện thoại <sup>*</sup></label>
 										<input type="text" value="" name="phone" id="phone" class="form-control input-feild">
-									</div>
+							</div>
 									<!--div class="form-group primary-form-group p-info-group">
 										<label for="email">Địa chỉ giao hàng<sup>*</sup></label>
 										<input type="text" value="" name="address" id="address" class="form-control input-feild">
@@ -122,7 +125,7 @@
 							<!-- RETURNE-CONTINUE-SHOP START -->
 							<div class="returne-continue-shop ship-address">
 								<!--a href="index.php" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắm</a-->
-								<input   type="submit" value="TIẾN HÀNH ĐẶT HÀNG"  > 
+								<input type="submit" value="TIẾN HÀNH ĐẶT HÀNG" style="color: white;"  > 
 							</div>	
 							<!-- RETURNE-CONTINUE-SHOP END -->		
 					   </div>
@@ -151,6 +154,9 @@
 										$('#address1').html(data);
 									}
 								});
+
+								document.getElementById('deli-address').value='';
+
 							});
 						});
 						$(document).ready(function()
@@ -167,6 +173,7 @@
 								});
 							});
 						});
+
 					</script>	
 						<!-- RETURNE-CONTINUE-SHOP END -->		
 					</div>					

@@ -38,9 +38,7 @@
 
       $tenNN = $dataTTGH['tenNguoiNhan'];
       $SDTKH = $dataTTGH['soDienThoai'];
-      $DCTinh = $dataTTGH['diaChiTinh'];
-      $DCHuyen = $dataTTGH['diaChiHuyen'];
-      $DCXa = $dataTTGH['diaChiXa'];
+      $diachiNN = $dataTTGH['diachi'];
       $ghiChu = $dataTTGH['ghiChuKH'];
       //Lấy tbl_thongtingiaohang1 end
 
@@ -70,8 +68,8 @@
             $mieutaSP = $dataGH['mieuTaSanPham'];
             $hinhanhSP = $dataGH['hinhAnhSanPham'];
 
-               $chitietdonhang=mysqli_query($conn," INSERT INTO `web2`.`tbl_chitietdonhang` (`maDonHang` ,`tenNguoiNhan`, `sdtKH`, `diaChiTinh`, `diaChiHuyen`,`diaChiXa`,`ghiChuCuaKhachhang`, `maSanPham`, `tenSanPham`, `soLuongSP`, `sizeSanPham`, `giaSanPham`, `mieuTaSP`, `hinhAnhSP`)
-              VALUES('$dataMDHNew','$tenNN','$SDTKH','$DCTinh','$DCHuyen','$DCXa','$ghiChu','$maSP', '$tenSP','$SLSP','$sizeSP','$giaSP','$mieutaSP', '$hinhanhSP') ");
+               $chitietdonhang=mysqli_query($conn," INSERT INTO `web2`.`tbl_chitietdonhang` (`maDonHang` ,`tenNguoiNhan`, `sdtKH`, `ghiChuCuaKhachhang`, `maSanPham`, `tenSanPham`, `soLuongSP`, `sizeSanPham`, `giaSanPham`, `mieuTaSP`, `hinhAnhSP`, `diachi`)
+              VALUES('$dataMDHNew','$tenNN','$SDTKH', '$ghiChu','$maSP', '$tenSP','$SLSP','$sizeSP','$giaSP','$mieutaSP', '$hinhanhSP', '$diachiNN') ");
 
                
                $capnhatSL = mysqli_query($conn, "UPDATE tbl_sanpham SET soLuongSanPham = soLuongSanPham - $SLSP WHERE maSanPham = '$maSP' ");

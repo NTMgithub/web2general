@@ -155,7 +155,7 @@ session_start();
 									?>
 									<tr>
 										<td class="text-right" colspan="4">Địa chỉ giao hàng</td>
-										<td class="price" colspan="2"><?php echo $thong_tin['diaChiTinh'].", " .$thong_tin['diaChiHuyen']." ,".$thong_tin['diaChiXa'];?></td>
+										<td class="price" colspan="2"><?php echo $thong_tin['diachi'];?></td>
 									</tr>
 									<tr>
 										<td class="text-right" colspan="4">Số điện thoại</td>
@@ -201,7 +201,7 @@ session_start();
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<!-- RETURNE-CONTINUE-SHOP START -->
 						<div class="returne-continue-shop">
-							<input type="submit" value="ĐẶT HÀNG" onClick="alert('Đặt hàng thành công'); "><a href="" class="continueshoping"><!--i class="fa fa-chevron-left"-></i--></a>
+							<input type="submit" value="ĐẶT HÀNG" onClick="alert('Đặt hàng thành công'); " style="color: white;"><a href="" class="continueshoping" ><!--i class="fa fa-chevron-left"-></i--></a>
 						</div>	
 						<!-- RETURNE-CONTINUE-SHOP END -->								
 					</div>
