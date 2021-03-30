@@ -4739,3 +4739,8 @@ a.write-review-btn{
     border: 1px solid #999499;
     font-weight: bold;
 }
+
+.errorMessage {
+    color: red;
+    border-color: red;
+}

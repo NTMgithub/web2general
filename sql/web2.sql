@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 26, 2020 lúc 10:42 AM
--- Phiên bản máy phục vụ: 10.4.14-MariaDB
--- Phiên bản PHP: 7.3.23
+-- Thời gian đã tạo: Th3 30, 2021 lúc 07:20 PM
+-- Phiên bản máy phục vụ: 10.4.18-MariaDB
+-- Phiên bản PHP: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -310,32 +310,25 @@ CREATE TABLE `tbl_khachhang` (
   `tenDangNhap` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `matKhau` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `hoTenKhachHang` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `SDT` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `diaChi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `diaChiGiaoHang` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `thuDienTuKH` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `trangThai` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Active'
+  `trangThai` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Active',
+  `ngaySinh` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tbl_khachhang`
 --
 
-INSERT INTO `tbl_khachhang` (`maKhachHang`, `tenDangNhap`, `matKhau`, `hoTenKhachHang`, `SDT`, `diaChi`, `diaChiGiaoHang`, `thuDienTuKH`, `trangThai`) VALUES
-(1, 'user1', '123', 'Nguyễn Văn A', '01234', 'TPHCM', 'TPHCM', 'user1@gmail.com', 'Active'),
-(2, 'user2', '123', 'Nguyễn Văn B', '4793224185', 'Hcm', 'Hcm', 'user@yahoo.com', 'Inactive'),
-(6, 'ronaldo', '1234', 'Ronaldo', '02393249', 'Portugal', 'Portugal', 'ronaldo@gmail.com', 'Active'),
-(7, 'pepe', '123', 'pepe', '1214919', 'Portugal', 'Portugal', 'pepe@gm.com', 'Inactive'),
-(8, 'men1', '123', 'Nguyễn Thương Mến', '345654', '7', '454343', 'menpro58@gmail.com', 'Inactive'),
-(9, 'nhung', '827ccb0eea8a706c4c34a16891f84e7b', 'káksạdj', '', '', '', 'menpro@gmail.com', 'Active'),
-(12, 'khach1', '827ccb0eea8a706c4c34a16891f84e7b', 'Khách', '', '', '', 'khachhhh@gmail.com', 'Active'),
-(13, 'men', '827ccb0eea8a706c4c34a16891f84e7b', 'meens', '', '', '', 'menkajdajd@yahoo.com', 'Active'),
-(14, 'taipro', '827ccb0eea8a706c4c34a16891f84e7b', 'taipro', '', '', '', 'taipr@gmail.com', 'Active'),
-(15, 'rainbow', '827ccb0eea8a706c4c34a16891f84e7b', 'rainbow', '', '', '', 'rainbow@gmail.cm', 'Active'),
-(16, 'beyeu', 'f43df3f122fc4eb0f119f46d11b0c7d0', 'beyeu', '', '', '', 'beyeu@gmail.com', 'Active'),
-(17, 'xinchào', 'e10adc3949ba59abbe56e057f20f883e', 'dsa', '', '', '', 'dsadsa@g', 'Active'),
-(18, 'test1', 'cc03e747a6afbbcbf8be7668acfebee5', 'test', '', '', '', 'test@gmail.com', 'Active'),
-(19, 'test12', '60474c9c10d7142b7508ce7a50acf414', 'test12', '', '', '', 'test12@gmail.com', 'Active');
+INSERT INTO `tbl_khachhang` (`maKhachHang`, `tenDangNhap`, `matKhau`, `hoTenKhachHang`, `thuDienTuKH`, `trangThai`, `ngaySinh`) VALUES
+(9, 'nhung', '827ccb0eea8a706c4c34a16891f84e7b', 'káksạdj', 'menpro@gmail.com', 'Active', NULL),
+(12, 'khach1', '827ccb0eea8a706c4c34a16891f84e7b', 'Khách', 'khachhhh@gmail.com', 'Active', NULL),
+(13, 'men', '827ccb0eea8a706c4c34a16891f84e7b', 'meens', 'menkajdajd@yahoo.com', 'Active', NULL),
+(14, 'taipro', '827ccb0eea8a706c4c34a16891f84e7b', 'taipro', 'taipr@gmail.com', 'Active', NULL),
+(15, 'rainbow', '827ccb0eea8a706c4c34a16891f84e7b', 'rainbow', 'rainbow@gmail.cm', 'Active', NULL),
+(16, 'beyeu', 'f43df3f122fc4eb0f119f46d11b0c7d0', 'beyeu', 'beyeu@gmail.com', 'Active', NULL),
+(17, 'xinchào', 'e10adc3949ba59abbe56e057f20f883e', 'dsa', 'dsadsa@g', 'Active', NULL),
+(18, 'test1', 'cc03e747a6afbbcbf8be7668acfebee5', 'test', 'test@gmail.com', 'Active', NULL),
+(19, 'test12', '60474c9c10d7142b7508ce7a50acf414', 'test12', 'test12@gmail.com', 'Active', NULL);
 
 -- --------------------------------------------------------
 

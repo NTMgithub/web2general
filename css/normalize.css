@@ -528,3 +528,9 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+
+.errorMessage {
+    color: red;
+    border-color: red;
+}
