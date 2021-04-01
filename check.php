@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $email = $_POST['email_input'];
       $ngaySinh = $_POST['ngaySinh_input'];
       $tenDangNhap = $_POST['tenDangNhap_input'];
-      $matKhau = $_POST['matKhau_input'];
+      $matKhau = md5($_POST['matKhau_input']); 
 
       $date = getdate();
       $yearDate = $date['year'];
@@ -50,12 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
          if (!$check && !$check1) {
          //lưu thông tin vào csdl
-         $addmember = mysqli_query($conn, "
-                  INSERT INTO `web2`.`tbl_khachhang`(`maKhachHang`,`tenDangNhap`,`hoTenKhachHang`,`thuDienTuKH`,`matKhau`, `ngaySinh`)
-                  VALUES(NULL,'$tenDangNhap','$hoTen','$email',md5('$matKhau'), `$ngaySinh`)
-                  ");
+         $sqlquery = "INSERT INTO `web2`.`tbl_khachhang`(`maKhachHang`,`tenDangNhap`,`hoTenKhachHang`,`thuDienTuKH`,`matKhau`, `ngaySinh`)
+         VALUES(NULL,'$tenDangNhap','$hoTen','$email','$matKhau', $ngaySinh)";
+         echo $sqlquery;
+
+         $addmember = mysqli_query($conn, $sqlquery);
             if ($addmember) {
-               $_SESSION['ten'] = $firstname;
+               $_SESSION['ten'] = $tenDangNhap;
                header('location:index.php');
             } else {
                echo "thất bại";
