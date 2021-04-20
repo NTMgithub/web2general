@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
          if (!$check && !$check1) {
          //lưu thông tin vào csdl
          $sqlquery = "INSERT INTO `web2`.`tbl_khachhang`(`maKhachHang`,`tenDangNhap`,`hoTenKhachHang`,`thuDienTuKH`,`matKhau`, `ngaySinh`)
-         VALUES(NULL,'$tenDangNhap','$hoTen','$email','$matKhau', $ngaySinh)";
+         VALUES(NULL,'$tenDangNhap','$hoTen','$email','$matKhau', '$ngaySinh')";
          echo $sqlquery;
 
          $addmember = mysqli_query($conn, $sqlquery);
