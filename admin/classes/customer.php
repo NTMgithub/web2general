@@ -22,14 +22,14 @@
 		{
 			$hoTenKhachHang = mysqli_real_escape_string($this->db->link, $data['hoTenKhachHang']);
 			$thuDienTuKH = mysqli_real_escape_string($this->db->link, $data['thuDienTuKH']);
-			$SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
-			$diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
-			$diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
+			// $SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
+			// $diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
+			// $diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
 			$tenDangNhap = mysqli_real_escape_string($this->db->link, $data['tenDangNhap']);
 			$matKhau = mysqli_real_escape_string($this->db->link, $data['matKhau']);
 
 
-			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $SDT == "" || $diaChi == ""|| $diaChiGiaoHang == "" || $tenDangNhap == "" || $matKhau == "" )
+			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $tenDangNhap == "" || $matKhau == "" )
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
@@ -41,7 +41,7 @@
 				$resultTemp = $temp->fetch_assoc();
 
 				if ($resultTemp['tenDangNhap'] != $tenDangNhap) {
-					$query = "INSERT INTO tbl_khachhang(hoTenKhachHang, thuDienTuKH, SDT, diaChi, diaChiGiaoHang, tenDangNhap, matKhau) VALUES('$hoTenKhachHang', '$thuDienTuKH', '$SDT', '$diaChi', '$diaChiGiaoHang', '$tenDangNhap', '$matKhau') ";
+					$query = "INSERT INTO tbl_khachhang(hoTenKhachHang, thuDienTuKH, tenDangNhap, matKhau) VALUES('$hoTenKhachHang', '$thuDienTuKH', '$tenDangNhap', '$matKhau') ";
 
 					$result = $this->db->insert($query);
 
@@ -145,15 +145,15 @@
 		{
 			$hoTenKhachHang = mysqli_real_escape_string($this->db->link, $data['hoTenKhachHang']);
 			$thuDienTuKH = mysqli_real_escape_string($this->db->link, $data['thuDienTuKH']);
-			$SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
-			$diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
-			$diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
+			// $SDT = mysqli_real_escape_string($this->db->link, $data['SDT']);
+			// $diaChi = mysqli_real_escape_string($this->db->link, $data['diaChi']);
+			// $diaChiGiaoHang = mysqli_real_escape_string($this->db->link, $data['diaChiGiaoHang']);
 			$tenDangNhap = mysqli_real_escape_string($this->db->link, $data['tenDangNhap']);
 			$matKhau = mysqli_real_escape_string($this->db->link, $data['matKhau']);
 			$id = mysqli_real_escape_string($this->db->link, $id); //Connect database
 
 
-			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $SDT == "" || $diaChi == ""|| $diaChiGiaoHang == "" || $tenDangNhap == "" || $matKhau == "" )
+			if ($hoTenKhachHang == "" || $thuDienTuKH == "" || $tenDangNhap == "" || $matKhau == "" )
 			{
 				$alert = "<div class= 'alert alert-danger'>Không được để trống!</div>";
 				return $alert;
@@ -173,9 +173,7 @@
 					$query = "UPDATE tbl_khachhang SET 
 									hoTenKhachHang = '$hoTenKhachHang', 
 									thuDienTuKH = '$thuDienTuKH',
-									SDT = '$SDT',
-									diaChi = '$diaChi',
-									diaChiGiaoHang = '$diaChiGiaoHang',
+									
 									tenDangNhap = '$tenDangNhap',
 									matKhau = '$matKhau'
 									WHERE maKhachHang = '$id' ";

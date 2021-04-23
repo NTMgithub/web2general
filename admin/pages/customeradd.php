@@ -49,32 +49,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Số điện thoại: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="SDT" placeholder="Nhập số điện thoại..." class="inputAddProduct" required>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Địa chỉ: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="diaChi" placeholder="Nhập địa chỉ..." class="inputAddProduct" required>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Địa chỉ giao hàng: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="diaChiGiaoHang" placeholder="Nhập địa chỉ giao hàng..." class="inputAddProduct" required>
-                                    </td>
-                                </tr>
+                                
 
                                 <tr>
                                     <td class="tabLabel">

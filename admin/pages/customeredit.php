@@ -58,33 +58,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Số điện thoại: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="SDT" value="<?php echo $result_customer['SDT'] ?>" class="inputAddProduct" >
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Địa chỉ: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="diaChi" value="<?php echo $result_customer['diaChi'] ?>" class="inputAddProduct" >
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="tabLabel">
-                                        <label class="labelAddProduct">Địa chỉ giao hàng: </label>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="diaChiGiaoHang" value="<?php echo $result_customer['diaChiGiaoHang'] ?>" class="inputAddProduct" >
-                                    </td>
-                                </tr>
-
+                               
                                 <tr>
                                     <td class="tabLabel">
                                         <label class="labelAddProduct">Tên đăng nhập: </label>

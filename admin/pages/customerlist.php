@@ -58,9 +58,7 @@
                                                     <th>Họ tên</th>
                                                     <th>Tên đăng nhập</th>
                                                     <th>Email</th>
-                                                    <th>SDT</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Địa chỉ giao hàng</th>
+                                                  
                                                     <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
@@ -79,10 +77,7 @@
                                                     <td><?php echo $result['hoTenKhachHang']; ?></td>
                                                     <td><?php echo $result['tenDangNhap']; ?></td>
                                                     <td><?php echo $result['thuDienTuKH']; ?></td>
-                                                    <td><?php echo $result['SDT']; ?></td>
-                                                    <td><?php echo $result['diaChi']; ?></td>
-                                                    <td><?php echo $result['diaChiGiaoHang']; ?></td>
-
+                                                
                                                     <td class="center">
                                                     <?php 
                                                         if ($result['trangThai'] == 'Active') {

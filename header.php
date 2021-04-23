@@ -197,7 +197,7 @@
 										$khachhang=mysqli_query($conn,"SELECT `maKhachHang`,`tenDangNhap` FROM `tbl_khachhang` WHERE `tenDangNhap`='$ten' ");
 										$row=mysqli_fetch_assoc($khachhang);
 										$_SESSION['maKhachHang']=$row['maKhachHang'];
-										echo'<li style="font-size:17px" ><a href="my-account.php">'.$ten.'</a></li>';
+										echo'<li style="font-size:17px" ><a href="my-account.php" id="userNameAccount" >'.$ten.'</a></li>';
 									}
 									else {
 										echo'<li class="tenDN"><a href="registration.php">ĐĂNG NHẬP</a></li>';
